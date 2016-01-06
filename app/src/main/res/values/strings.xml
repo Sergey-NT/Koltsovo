@@ -1,0 +1,47 @@
+<resources>
+    <string name="app_name">Кольцово</string>
+    <string name="tabs_item_arrival">Прибытие</string>
+    <string name="tabs_item_departure">Отправление</string>
+    <string name="plane_desc_type">Тип воздушного судна:</string>
+    <string name="plane_desc_time_plan">Плановое время:</string>
+    <string name="plane_desc_time_fast">Ожидаемое время:</string>
+    <string name="plane_desc_status">Статус:</string>
+    <string name="plane_desc_flight">Рейс</string>
+    <string name="about_developer">Разработчик приложения: <a href="http://vk.com/id5170658" title="Сергей Ухарский">Сергей Ухарский</a></string>
+    <string name="about_version">Версия приложения: 1.0.1</string>
+    <string name="about_text">В приложении используются следующие иконки:
+        Airplane outline free icon made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a>
+    </string>
+    <string name="about_text_content">Источник данных: <a href="http://www.koltsovo.ru" title="www.koltsovo.ru">www.koltsovo.ru</a></string>
+    <string name="dialog_title">Информация</string>
+    <string name="dialog_message">В тестовом режиме запущено Push уведомление об изменениях в статусе выбранного рейса. Для того, чтоб воспользоваться данной функцией, удерживайте выбранный рейс до вибрации телефона.</string>
+    <string name="dialog_button_positive">Больше не показывать</string>
+    <string name="dialog_button_negative">Напомнить позже</string>
+    <string name="menu_about">О приложении</string>
+    <string name="menu_title">аэропорт Кольцово</string>
+    <string name="menu_ads_disable_toast">Оплата за отключение показа рекламы прошла успешно.</string>
+    <string name="menu_billing_not_initialized">Биллинг не инициализирован.</string>
+    <string name="menu_ads_ads_disable_recovery_true">Покупка восстановлена.</string>
+    <string name="menu_ads_ads_disable_recovery_false">Вы не совершали покупки отключения показа рекламы в приложении.</string>
+    <string name="toast_plane_arrive">Рейс прибыл отслеживание информации невозможно</string>
+    <string name="toast_plane_departure">Рейс вылетел отслеживание информации невозможно</string>
+    <string name="toast_plane_tracking">Включено отслеживание информации</string>
+    <string name="button_feedback">Оставить отзыв</string>
+    <string name="button_ads_disable">Отключить рекламу:</string>
+    <string name="button_ads_disable_recovery">Восстановить покупку</string>
+    <string name="button_repeat">Попробовать еще раз</string>
+    <string name="button_clear_edit_text">Очистить</string>
+    <string name="image_tracking">Отслеживать изменения</string>
+    <string name="ad_view_banner">ca-app-pub-3253485608797245/4635220305</string>
+    <string name="analytics_category_button">Button</string>
+    <string name="analytics_action_ads_disable">Отключение рекламы</string>
+    <string name="analytics_action_ads_disable_recovery">Восстановление покупки</string>
+    <string name="analytics_action_feedback">Оставить отзыв</string>
+    <string name="analytics_action_clear_text">Очистка от текста поля поиска</string>
+    <string name="analytics_action_repeat">Повторно загрузить данные</string>
+    <string name="analytics_action_refresh">Обновить данные</string>
+    <string name="analytics_action_plane_tacking">Отслеживание самолета</string>
+    <string name="main_no_internet">Для работы сервиса нужен доспут к сети Интернет. Проверьте подключение к сети и повторите попытку.</string>
+    <string name="main_load_dialog">Пожалуйста, подождите…</string>
+    <string name="edit_text_hint">Начните ввод названия города или номера рейса</string>
+</resources>
