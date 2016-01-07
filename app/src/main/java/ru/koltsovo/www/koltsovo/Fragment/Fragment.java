@@ -68,7 +68,6 @@ public class Fragment extends android.support.v4.app.Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private EditText editText;
     private ObjectPlaneAdapter adapter;
-    private String token;
 
     public static Fragment getInstance(String direction) {
         Bundle args = new Bundle();
@@ -96,9 +95,6 @@ public class Fragment extends android.support.v4.app.Fragment {
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.fragment_swipe_refresh);
         direction = getArguments().getString("direction");
         editText = (EditText) view.findViewById(R.id.searchListView);
-
-        SharedPreferences settings = getActivity().getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
-        token = settings.getString(Constants.APP_TOKEN, "");
 
         clearEditText();
         editTextListeners();
@@ -204,6 +200,9 @@ public class Fragment extends android.support.v4.app.Fragment {
                         break;
                     default:
                         if (!adapter.getInfoTracking(position)) {
+                            SharedPreferences settings = getActivity().getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
+                            String token = settings.getString(Constants.APP_TOKEN, "");
+
                             showToast(getString(R.string.toast_plane_tracking));
                             adapter.setInfoTracking(position);
                             adapter.notifyDataSetChanged();
@@ -338,6 +337,7 @@ public class Fragment extends android.support.v4.app.Fragment {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
+                            progressDialogDismiss();
                             setErrorTextAndButton();
                         }
                     });

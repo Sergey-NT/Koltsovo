@@ -28,10 +28,11 @@ public class AppGcmListenerService extends GcmListenerService {
         String title = getString(R.string.plane_desc_flight) + " " + data.getString("title") + " " + data.getString("plane_direction");
         String direction = data.getString("direction");
 
-
         if (Constants.LOG_ON) {
             Log.d(TAG, "From: " + from);
             Log.d(TAG, "Message: " + message);
+            Log.d(TAG, "Title: " + title);
+            Log.d(TAG, "Direction: " + direction);
         }
 
         assert direction != null;
@@ -45,7 +46,6 @@ public class AppGcmListenerService extends GcmListenerService {
     }
 
     private void sendNotification(String title, String message, int icon) {
-
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
@@ -60,7 +60,6 @@ public class AppGcmListenerService extends GcmListenerService {
                 .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
 }
