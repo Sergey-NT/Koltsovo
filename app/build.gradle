@@ -7,8 +7,8 @@ android {
         applicationId "ru.koltsovo.www.koltsovo"
         minSdkVersion 10
         targetSdkVersion 23
-        versionCode 13
-        versionName "1.0.2"
+        versionCode 14
+        versionName "1.0.3"
     }
     buildTypes {
         release {
@@ -21,10 +21,6 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile('com.mikepenz:materialdrawer:4.6.3@aar') {
-        transitive = true
-    }
-    compile 'com.mikepenz:google-material-typeface:2.1.0.1.original@aar'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
     compile 'com.google.android.gms:play-services-ads:8.4.0'
@@ -33,6 +29,11 @@ dependencies {
     compile 'org.jsoup:jsoup:1.8.3'
     compile 'com.anjlab.android.iab.v3:library:1.0.30'
     compile 'com.mcxiaoke.volley:library:1.0.19'
+    compile('com.mikepenz:materialdrawer:4.6.4@aar') {
+        transitive = true
+    }
+    compile 'com.mikepenz:google-material-typeface:2.1.0.1.original@aar'
+    compile 'de.psdev.licensesdialog:licensesdialog:1.8.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

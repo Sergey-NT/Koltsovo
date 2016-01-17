@@ -20,6 +20,8 @@ import com.anjlab.android.iab.v3.TransactionDetails;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
+import de.psdev.licensesdialog.LicensesDialog;
+
 public class AboutActivity extends AppCompatActivity implements BillingProcessor.IBillingHandler {
 
     private static final int LAYOUT = R.layout.activity_about;
@@ -153,6 +155,20 @@ public class AboutActivity extends AppCompatActivity implements BillingProcessor
             }
         return null;
         }
+    }
+
+    public void  btnLicenseOnClick (View view) {
+        // Google Analytics
+        Tracker t = ((AppController) getApplication()).getTracker(AppController.TrackerName.APP_TRACKER);
+        t.send(new HitBuilders.EventBuilder()
+                .setCategory(getString(R.string.analytics_category_button))
+                .setAction(getString(R.string.analytics_action_license))
+                .build());
+
+        new LicensesDialog.Builder(this)
+                .setNotices(R.raw.notices)
+                .build()
+                .showAppCompat();
     }
 
     public void btnAdsDisableOnClick (View view) {

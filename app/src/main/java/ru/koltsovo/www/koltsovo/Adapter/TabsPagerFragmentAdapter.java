@@ -10,9 +10,14 @@ import ru.koltsovo.www.koltsovo.R;
 public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
 
     private String[] tabs;
+    private String planeNumber;
+    private String direction;
 
-    public TabsPagerFragmentAdapter(Context context, FragmentManager fm) {
+    public TabsPagerFragmentAdapter(Context context, String planeNumber, String direction, FragmentManager fm) {
         super(fm);
+
+        this.planeNumber = planeNumber;
+        this.direction = direction;
 
         tabs = new String[] {
                 context.getString(R.string.tabs_item_arrival),
@@ -24,9 +29,17 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
     public android.support.v4.app.Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return Fragment.getInstance("arrival");
+                if (direction != null && direction.equals("arrival")) {
+                    return Fragment.getInstance("arrival", planeNumber);
+                } else {
+                    return Fragment.getInstance("arrival", null);
+                }
             case 1:
-                return Fragment.getInstance("departure");
+                if (direction != null && direction.equals("departure")) {
+                    return Fragment.getInstance("departure", planeNumber);
+                } else {
+                    return Fragment.getInstance("departure", null);
+                }
         }
         return null;
     }

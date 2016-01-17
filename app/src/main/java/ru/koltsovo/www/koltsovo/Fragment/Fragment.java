@@ -69,10 +69,11 @@ public class Fragment extends android.support.v4.app.Fragment {
     private EditText editText;
     private ObjectPlaneAdapter adapter;
 
-    public static Fragment getInstance(String direction) {
+    public static Fragment getInstance(String direction, String planeNumber) {
         Bundle args = new Bundle();
         Fragment fragment = new Fragment();
         args.putString("direction", direction);
+        args.putString("planeNumber", planeNumber);
         fragment.setArguments(args);
 
         return fragment;
@@ -81,6 +82,8 @@ public class Fragment extends android.support.v4.app.Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        String planeNumber;
+
         View view = inflater.inflate(LAYOUT, container, false);
 
         // Google Analytics
@@ -94,6 +97,7 @@ public class Fragment extends android.support.v4.app.Fragment {
         btnClearEditText = (ImageButton) view.findViewById(R.id.btnClearEditText);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.fragment_swipe_refresh);
         direction = getArguments().getString("direction");
+        planeNumber = getArguments().getString("planeNumber");
         editText = (EditText) view.findViewById(R.id.searchListView);
 
         clearEditText();
@@ -101,6 +105,10 @@ public class Fragment extends android.support.v4.app.Fragment {
         listViewListeners();
         uploadListView();
         refreshListener();
+
+        if (planeNumber != null) {
+            editText.setText(planeNumber);
+        }
 
         return view;
     }
@@ -379,8 +387,13 @@ public class Fragment extends android.support.v4.app.Fragment {
                 if (Constants.LOG_ON) {
                     Log.d(TAG, "Exception", e);
                 }
-                progressDialogDismiss();
-                setErrorTextAndButton();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        progressDialogDismiss();
+                        setErrorTextAndButton();
+                    }
+                });
             }
             return list;
         }

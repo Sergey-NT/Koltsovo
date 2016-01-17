@@ -20,8 +20,8 @@ import ru.koltsovo.www.koltsovo.R;
 
 public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
 
-    private List<ObjectPlane> originalList = null;
-    private List<ObjectPlane> filteredList = null;
+    private List<ObjectPlane> originalList;
+    private List<ObjectPlane> filteredList;
     private LayoutInflater layoutInflater;
     private Context myContext;
     private ItemFilter itemsFilter = new ItemFilter();

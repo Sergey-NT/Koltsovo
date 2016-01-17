@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
     private AdView adView;
     private SharedPreferences settings;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private String planeNumber;
+    private String direction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,9 +63,6 @@ public class MainActivity extends AppCompatActivity {
         settings = getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
         boolean adDisable = settings.getBoolean(Constants.APP_PREFERENCES_ADS_DISABLE, false);
 
-        initToolbar(R.string.app_name);
-        initTabs();
-        initNavigationDrawer();
         if (!adDisable) {
             initAd(R.id.main_activity_layout);
         }
@@ -71,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onReceive(Context context, Intent intent) {}
         };
+
         if (checkPlayServices()) {
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
@@ -80,6 +80,24 @@ public class MainActivity extends AppCompatActivity {
             FragmentManager manager = getSupportFragmentManager();
             InfoDialogFragment dialogFragment = new InfoDialogFragment();
             dialogFragment.show(manager, "dialog");
+        }
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null){
+            direction = extras.getString("direction");
+            planeNumber = extras.getString("planeNumber");
+        }
+
+        initToolbar(R.string.app_name);
+        initTabs();
+        initNavigationDrawer();
+
+        if (direction != null) {
+            if (direction.equals("arrival")) {
+                viewPager.setCurrentItem(Constants.TAB_ONE);
+            } else {
+                viewPager.setCurrentItem(Constants.TAB_TWO);
+            }
         }
     }
 
@@ -93,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void initTabs() {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
-        TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getApplicationContext(), getSupportFragmentManager());
+        TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getApplicationContext(), planeNumber, direction, getSupportFragmentManager());
         viewPager.setAdapter(adapter);
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);

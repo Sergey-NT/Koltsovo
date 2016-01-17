@@ -25,30 +25,34 @@ public class AppGcmListenerService extends GcmListenerService {
         int icon;
 
         String message = data.getString("message");
-        String title = getString(R.string.plane_desc_flight) + " " + data.getString("title") + " " + data.getString("plane_direction");
+        String planeNumber = data.getString("title");
         String direction = data.getString("direction");
+        String title = getString(R.string.plane_desc_flight) + " " + planeNumber + " " + data.getString("plane_direction");
 
         if (Constants.LOG_ON) {
             Log.d(TAG, "From: " + from);
             Log.d(TAG, "Message: " + message);
             Log.d(TAG, "Title: " + title);
+            Log.d(TAG, "Plane number: " + planeNumber);
             Log.d(TAG, "Direction: " + direction);
         }
 
-        assert direction != null;
-        if (direction.equals("arrival")) {
-            icon = R.mipmap.ic_flight_land_white_24dp;
-        } else {
-            icon = R.mipmap.ic_flight_takeoff_white_24dp;
+        if (direction != null) {
+            if (direction.equals("arrival")) {
+                icon = R.mipmap.ic_flight_land_white_24dp;
+            } else {
+                icon = R.mipmap.ic_flight_takeoff_white_24dp;
+            }
+            sendNotification(title, message, icon, planeNumber, direction);
         }
-
-        sendNotification(title, message, icon);
     }
 
-    private void sendNotification(String title, String message, int icon) {
+    private void sendNotification(String title, String message, int icon, String planeNumber, String direction) {
         Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_ONE_SHOT);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.putExtra("direction", direction);
+        intent.putExtra("planeNumber", planeNumber);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
