@@ -213,7 +213,6 @@ public class Fragment extends android.support.v4.app.Fragment {
 
                             showToast(getString(R.string.toast_plane_tracking));
                             adapter.setInfoTracking(position);
-                            adapter.notifyDataSetChanged();
                             sendQueryToDb(token, direction, planeFlight, planeDirection, planeTimePlan, planeTimeFact, planeStatus);
                         }
                         break;
@@ -269,11 +268,10 @@ public class Fragment extends android.support.v4.app.Fragment {
 
     private void uploadListView() {
         if (isOnline()) {
-            getHTML(direction);
-            btnRepeat.setVisibility(View.GONE);
             textView.setVisibility(View.GONE);
+            btnRepeat.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
-            list.clear();
+            getHTML(direction);
         } else {
             setErrorTextAndButton();
         }
@@ -334,6 +332,8 @@ public class Fragment extends android.support.v4.app.Fragment {
             String planeTimePlan = null;
             String planeTimeFact = null;
             String planeStatus = null;
+
+            list.clear();
 
             try {
                 String data = html[0];
@@ -403,13 +403,15 @@ public class Fragment extends android.support.v4.app.Fragment {
             super.onPostExecute(list);
             int lengthEditText = editText.getText().toString().length();
 
-            if (list != null && lengthEditText == 0) {
+            if (adapter == null && list != null && lengthEditText == 0) {
                 adapter = new ObjectPlaneAdapter(getActivity(), list);
                 listView.setAdapter(adapter);
-            } else if (list != null && lengthEditText > 0) {
+            } else if (adapter == null && list != null && lengthEditText > 0) {
                 adapter = new ObjectPlaneAdapter(getActivity(), list);
                 adapter.getFilter().filter(editText.getText().toString());
                 listView.setAdapter(adapter);
+            } else if (adapter != null && list != null) {
+                adapter.notifyDataSetChanged();
             }
             if (swipeRefreshLayout != null) {
                 swipeRefreshLayout.setRefreshing(false);
@@ -444,10 +446,10 @@ public class Fragment extends android.support.v4.app.Fragment {
                             .setAction(getString(R.string.analytics_action_repeat))
                             .build());
 
-                    getHTML(direction);
                     textView.setVisibility(View.GONE);
                     btnRepeat.setVisibility(View.GONE);
                     listView.setVisibility(View.VISIBLE);
+                    getHTML(direction);
                 }
             }
         });

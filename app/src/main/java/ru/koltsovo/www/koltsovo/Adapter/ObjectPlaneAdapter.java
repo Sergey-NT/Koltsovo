@@ -66,6 +66,7 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
         ObjectPlane objectPlane = getObjectPlane(i);
         tracking = objectPlane.isPlaneTracking();
         objectPlane.setPlaneTracking(!tracking);
+        notifyDataSetChanged();
     }
 
     public boolean getInfoTracking (int i) {

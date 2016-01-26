@@ -190,6 +190,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        // No call for super(). Bug on API Level > 11.
+    }
+
     public void initAd(int layoutId) {
         adView = new AdView(this);
         adView.setAdUnitId(getString(R.string.ad_view_banner));
