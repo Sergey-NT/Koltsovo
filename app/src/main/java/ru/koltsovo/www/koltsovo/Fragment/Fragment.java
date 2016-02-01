@@ -96,15 +96,15 @@ public class Fragment extends android.support.v4.app.Fragment {
         btnRepeat = (Button) view.findViewById(R.id.btnRepeat);
         btnClearEditText = (ImageButton) view.findViewById(R.id.btnClearEditText);
         swipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.fragment_swipe_refresh);
+        editText = (EditText) view.findViewById(R.id.searchListView);
         direction = getArguments().getString("direction");
         planeNumber = getArguments().getString("planeNumber");
-        editText = (EditText) view.findViewById(R.id.searchListView);
 
-        clearEditText();
+        clearEditTextListener();
         editTextListeners();
         listViewListeners();
-        uploadListView();
         refreshListener();
+        uploadListView();
 
         if (planeNumber != null) {
             editText.setText(planeNumber);
@@ -113,7 +113,7 @@ public class Fragment extends android.support.v4.app.Fragment {
         return view;
     }
 
-    private void clearEditText() {
+    private void clearEditTextListener() {
         btnClearEditText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -341,7 +341,7 @@ public class Fragment extends android.support.v4.app.Fragment {
                 Element table = doc.getElementsByTag("table").first();
                 Elements rows = table.select("tr");
 
-                if (rows.size() == 0) {
+                if (rows.size() < 5) {
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -349,39 +349,39 @@ public class Fragment extends android.support.v4.app.Fragment {
                             setErrorTextAndButton();
                         }
                     });
-                }
+                } else {
+                    for (int i = 5; i < rows.size(); i++) {
+                        Element row = rows.get(i);
+                        Elements cols = row.select("td");
 
-                for (int i = 5; i < rows.size(); i++) {
-                    Element row = rows.get(i);
-                    Elements cols = row.select("td");
-
-                    for (int y = 0; y < cols.size() - 1; y++) {
-                        Element col = cols.get(y);
-                        switch (y) {
-                            case 0:
-                                planeFlight = col.text();
-                                break;
-                            case 1:
-                                planeDirection = col.text();
-                                break;
-                            case 2:
-                                planeType = col.text();
-                                break;
-                            case 3:
-                                planeTimePlan = col.text();
-                                break;
-                            case 4:
-                                planeTimeFact = col.text();
-                                break;
-                            case 5:
-                                planeStatus = col.text();
-                                break;
+                        for (int y = 0; y < cols.size() - 1; y++) {
+                            Element col = cols.get(y);
+                            switch (y) {
+                                case 0:
+                                    planeFlight = col.text();
+                                    break;
+                                case 1:
+                                    planeDirection = col.text();
+                                    break;
+                                case 2:
+                                    planeType = col.text();
+                                    break;
+                                case 3:
+                                    planeTimePlan = col.text();
+                                    break;
+                                case 4:
+                                    planeTimeFact = col.text();
+                                    break;
+                                case 5:
+                                    planeStatus = col.text();
+                                    break;
+                            }
                         }
+                        if (Constants.LOG_ON) {
+                            Log.v(TAG + " " + direction, planeFlight + " " + planeDirection + " " + planeType + " " + planeTimePlan + " " + planeTimeFact + " " + planeStatus);
+                        }
+                        list.add(new ObjectPlane(planeFlight, planeDirection, planeType, planeTimePlan, planeTimeFact, planeStatus, false));
                     }
-                    if (Constants.LOG_ON) {
-                        Log.v(TAG + " " + direction, planeFlight + " " + planeDirection + " " + planeType + " " + planeTimePlan + " " + planeTimeFact + " " + planeStatus);
-                    }
-                    list.add(new ObjectPlane(planeFlight, planeDirection, planeType, planeTimePlan, planeTimeFact, planeStatus, false));
                 }
             } catch (Exception e) {
                 if (Constants.LOG_ON) {
@@ -401,17 +401,17 @@ public class Fragment extends android.support.v4.app.Fragment {
         @Override
         protected void onPostExecute(List<ObjectPlane> list) {
             super.onPostExecute(list);
-            int lengthEditText = editText.getText().toString().length();
 
-            if (adapter == null && list != null && lengthEditText == 0) {
-                adapter = new ObjectPlaneAdapter(getActivity(), list);
-                listView.setAdapter(adapter);
-            } else if (adapter == null && list != null && lengthEditText > 0) {
-                adapter = new ObjectPlaneAdapter(getActivity(), list);
-                adapter.getFilter().filter(editText.getText().toString());
-                listView.setAdapter(adapter);
-            } else if (adapter != null && list != null) {
-                adapter.notifyDataSetChanged();
+            if (list == null || list.size() == 0) {
+                setErrorTextAndButton();
+            } else {
+                if (adapter == null) {
+                    adapter = new ObjectPlaneAdapter(getActivity(), list);
+                    listView.setAdapter(adapter);
+                    adapter.getFilter().filter(editText.getText().toString());
+                } else {
+                    adapter.notifyDataSetChanged();
+                }
             }
             if (swipeRefreshLayout != null) {
                 swipeRefreshLayout.setRefreshing(false);
