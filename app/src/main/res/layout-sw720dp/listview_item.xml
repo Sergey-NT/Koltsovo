@@ -13,7 +13,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:textSize="24sp"
+        android:textSize="26sp"
         android:textColor="@color/colorPrimaryText"
         android:textStyle="bold" />
 
@@ -25,7 +25,7 @@
         android:layout_toRightOf="@+id/tvPlaneFlight"
         android:layout_marginStart="7sp"
         android:layout_marginLeft="7sp"
-        android:textSize="24sp"
+        android:textSize="26sp"
         android:textColor="@color/colorPrimaryText"
         android:textStyle="bold" />
 
@@ -33,8 +33,10 @@
         android:id="@+id/imageTracking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
+        android:layout_toEndOf="@+id/tvPlaneDirection"
+        android:layout_toRightOf="@+id/tvPlaneDirection"
+        android:layout_marginStart="20sp"
+        android:layout_marginLeft="20sp"
         android:src="@mipmap/ic_done_all_green_24dp"
         android:contentDescription="@string/image_tracking"
         android:visibility="gone" />
@@ -45,7 +47,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvPlaneDirection"
         android:text="@string/plane_desc_type"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textColor="@color/colorSecondaryText" />
 
     <TextView
@@ -57,7 +59,7 @@
         android:layout_toRightOf="@+id/tvPlaneTypeDesc"
         android:layout_marginStart="7sp"
         android:layout_marginLeft="7sp"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textColor="@color/colorPrimaryText" />
 
     <TextView
@@ -66,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvPlaneType"
         android:text="@string/plane_desc_time_plan"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textColor="@color/colorSecondaryText" />
 
     <TextView
@@ -78,7 +80,7 @@
         android:layout_toRightOf="@+id/tvPlaneTimePlanDesc"
         android:layout_marginStart="7sp"
         android:layout_marginLeft="7sp"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textColor="@color/colorPrimaryText" />
 
     <TextView
@@ -91,7 +93,7 @@
         android:layout_marginStart="15sp"
         android:layout_marginLeft="15sp"
         android:text="@string/plane_desc_time_fast"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textColor="@color/colorSecondaryText" />
 
     <TextView
@@ -103,7 +105,7 @@
         android:layout_toRightOf="@+id/tvPlaneTimeFactDesc"
         android:layout_marginStart="7sp"
         android:layout_marginLeft="7sp"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textColor="@color/colorPrimaryText" />
 
     <TextView
@@ -112,7 +114,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvPlaneTimeFact"
         android:text="@string/plane_desc_status"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textColor="@color/colorSecondaryText" />
 
     <TextView
@@ -124,7 +126,16 @@
         android:layout_toRightOf="@+id/tvPlaneStatusDesc"
         android:layout_marginStart="7sp"
         android:layout_marginLeft="7sp"
-        android:textSize="16sp"
+        android:textSize="18sp"
         android:textColor="@color/colorPrimaryText" />
+
+    <ImageView
+        android:id="@+id/imageLogo"
+        android:layout_width="170sp"
+        android:layout_height="75sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/image_logo" />
 
 </RelativeLayout>

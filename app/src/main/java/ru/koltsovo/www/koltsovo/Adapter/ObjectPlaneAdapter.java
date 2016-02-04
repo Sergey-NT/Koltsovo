@@ -1,9 +1,7 @@
 package ru.koltsovo.www.koltsovo.Adapter;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,7 +45,6 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
         private RelativeLayout relativeLayout;
         private ImageView imageViewTracking;
         private ImageView imageViewLogo;
-        private Paint textLength;
     }
 
     @Override
@@ -100,7 +97,6 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
             holder.relativeLayout = (RelativeLayout) view.findViewById(R.id.listViewItem);
             holder.imageViewTracking = (ImageView) view.findViewById(R.id.imageTracking);
             holder.imageViewLogo = (ImageView) view.findViewById(R.id.imageLogo);
-            holder.textLength = new Paint();
 
             view.setTag(holder);
         } else {
@@ -115,8 +111,6 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
         holder.item3.setText(objectPlane.getPlaneTimePlan());
         holder.item4.setText(objectPlane.getPlaneTimeFact());
         holder.item5.setText(objectPlane.getPlaneStatus());
-
-        Log.v("Test", String.valueOf(holder.textLength.measureText(objectPlane.getPlaneStatus())));
 
         if (objectPlane.getPlaneType().equals("")) {
             holder.description1.setVisibility(View.GONE);
@@ -182,7 +176,7 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
                 holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_ymal));
                 break;
             case "KO":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.logo_komiaviatrans));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_komiaviatrans));
                 break;
             case "AF":
                 holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_air_france));
@@ -248,6 +242,9 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
                 holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_japan_airlines));
                 break;
             case "5B":
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_euro_asia_air));
+                break;
+            case "6Z":
                 holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_euro_asia_air));
                 break;
             default:

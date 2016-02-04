@@ -211,6 +211,7 @@ public class MainActivity extends AppCompatActivity {
                 .addTestDevice("B84123F681D84922D8ED7BA272410F11")
                 .addTestDevice("57BA423970D0C61804E20647A08CF694")
                 .addTestDevice("CF3563AAE9DCDD827CD723C834CAEC4C")
+                .addTestDevice("07B4BB1F6E99054B7ED99CF142644BBD")
                 .build();
 
         adView.loadAd(request);

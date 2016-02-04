@@ -30,6 +30,7 @@
         android:id="@+id/imageTracking"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:src="@mipmap/ic_done_all_green_24dp"
@@ -123,7 +124,7 @@
     <ImageView
         android:id="@+id/imageLogo"
         android:layout_width="80sp"
-        android:layout_height="30sp"
+        android:layout_height="35sp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
