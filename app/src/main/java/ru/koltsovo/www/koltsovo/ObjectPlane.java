@@ -51,4 +51,14 @@ public class ObjectPlane {
     public void setPlaneTracking(boolean planeTracking) {
         this.planeTracking = planeTracking;
     }
+
+    public String getShotPlaneFlight() {
+        String planeFlight;
+        String shotPlaneFlight;
+
+        planeFlight = getPlaneFlight();
+        shotPlaneFlight = planeFlight.substring(0,2);
+
+        return shotPlaneFlight;
+    }
 }

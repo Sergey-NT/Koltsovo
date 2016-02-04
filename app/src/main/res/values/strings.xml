@@ -8,7 +8,7 @@
     <string name="plane_desc_status">Статус:</string>
     <string name="plane_desc_flight">Рейс</string>
     <string name="about_developer">Разработчик приложения: <a href="http://vk.com/id5170658" title="Сергей Ухарский">Сергей Ухарский</a></string>
-    <string name="about_version">Версия приложения: 1.0.7</string>
+    <string name="about_version">Версия приложения: 1.0.8</string>
     <string name="about_text">В приложении используются следующие иконки:
         Airplane outline free icon made by <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a>
     </string>
@@ -33,6 +33,7 @@
     <string name="button_repeat">Попробовать еще раз</string>
     <string name="button_clear_edit_text">Очистить</string>
     <string name="image_tracking">Отслеживать изменения</string>
+    <string name="image_logo">Логотип компании</string>
     <string name="ad_view_banner">ca-app-pub-3253485608797245/4635220305</string>
     <string name="analytics_category_button">Button</string>
     <string name="analytics_action_ads_disable">Отключение рекламы</string>

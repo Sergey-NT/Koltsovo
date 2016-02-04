@@ -120,4 +120,13 @@
         android:textSize="14sp"
         android:textColor="@color/colorPrimaryText" />
 
+    <ImageView
+        android:id="@+id/imageLogo"
+        android:layout_width="80sp"
+        android:layout_height="30sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/image_logo" />
+
 </RelativeLayout>
