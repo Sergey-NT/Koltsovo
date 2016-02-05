@@ -5,6 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -31,8 +34,13 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
+import org.jsoup.Jsoup;
+
+import java.io.IOException;
+
 import ru.koltsovo.www.koltsovo.Adapter.TabsPagerFragmentAdapter;
 import ru.koltsovo.www.koltsovo.Fragment.InfoDialogFragment;
+import ru.koltsovo.www.koltsovo.Fragment.UpdateDialogFragment;
 import ru.koltsovo.www.koltsovo.gcm.RegistrationIntentService;
 
 public class MainActivity extends AppCompatActivity {
@@ -49,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private String planeNumber;
     private String direction;
+    private String versionGooglePlay = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,6 +100,9 @@ public class MainActivity extends AppCompatActivity {
         initToolbar(R.string.app_name);
         initTabs();
         initNavigationDrawer();
+
+        getVersionFromGooglePlay task = new getVersionFromGooglePlay();
+        task.execute();
 
         if (direction != null) {
             if (direction.equals("arrival")) {
@@ -183,8 +195,21 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        String version = null;
+
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0);
+            version = info.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
         if (drawerResult != null && drawerResult.isDrawerOpen()) {
             drawerResult.closeDrawer();
+        } else if (version != null && versionGooglePlay != null && !version.equals(versionGooglePlay) && !getSettingsParams(Constants.APP_PREFERENCES_CANCEL_CHECK_VERSION)) {
+            FragmentManager manager = getSupportFragmentManager();
+            UpdateDialogFragment dialogFragment = new UpdateDialogFragment();
+            dialogFragment.show(manager, "dialog");
         } else {
             super.onBackPressed();
         }
@@ -265,6 +290,21 @@ public class MainActivity extends AppCompatActivity {
         boolean checkValue;
         checkValue = settings.getBoolean(params, false);
         return checkValue;
+    }
+
+    private class getVersionFromGooglePlay extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                versionGooglePlay = Jsoup.connect("https://play.google.com/store/apps/details?id=ru.koltsovo.www.koltsovo&hl=ru").get()
+                        .select("div[itemprop=softwareVersion]").first()
+                        .ownText();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
     }
 
     private boolean checkPlayServices() {
