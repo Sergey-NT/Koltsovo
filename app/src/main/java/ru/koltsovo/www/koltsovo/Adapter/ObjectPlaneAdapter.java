@@ -265,6 +265,9 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
             case "YK":
                 holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_avia_traffic_company));
                 break;
+            case "HY":
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_uzbekistan_airways));
+                break;
             default:
                 holder.imageViewLogo.setVisibility(View.GONE);
                 break;
