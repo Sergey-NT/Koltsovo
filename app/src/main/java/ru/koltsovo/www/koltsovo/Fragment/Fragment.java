@@ -357,7 +357,7 @@ public class Fragment extends android.support.v4.app.Fragment {
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
                 @Override
                 public void onResponse(String response) {
-                    if (response != null) {
+                    if (response != null && response.length() > 0) {
                         try {
                             JSONObject dataJsonObject = new JSONObject(response);
                             JSONArray arrayJson = dataJsonObject.getJSONArray("query_info");
