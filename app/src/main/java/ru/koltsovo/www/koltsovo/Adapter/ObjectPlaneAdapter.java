@@ -77,6 +77,12 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
         return tracking;
     }
 
+    private void setInfoTrackingToTrue (int i) {
+        ObjectPlane objectPlane = getObjectPlane(i);
+        objectPlane.setPlaneTracking(true);
+        notifyDataSetChanged();
+    }
+
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder holder;
@@ -268,6 +274,15 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
             case "HY":
                 holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_uzbekistan_airways));
                 break;
+            case "4R":
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_royal_flight));
+                break;
+            case "RU":
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_air_bridge_cargo));
+                break;
+            case "ZG":
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_grozny_avia));
+                break;
             default:
                 holder.imageViewLogo.setVisibility(View.GONE);
                 break;
@@ -360,6 +375,19 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
         protected void publishResults(CharSequence constraint, FilterResults results) {
             filteredList = (List<ObjectPlane>) results.values;
             notifyDataSetChanged();
+        }
+    }
+
+    public void setTrackingInfoFromServer(String sentFlight, String sentTimePlan) {
+        int count = originalList.size();
+
+        for (int i = 0; i < count; i++) {
+            String flight = originalList.get(i).getPlaneFlight();
+            String timePlan = originalList.get(i).getPlaneTimePlan();
+
+            if (flight.contains(sentFlight) && timePlan.contains(sentTimePlan)) {
+                setInfoTrackingToTrue(i);
+            }
         }
     }
 }

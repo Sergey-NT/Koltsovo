@@ -15,7 +15,7 @@
     <string name="about_text_content">Источник данных: <a href="http://www.koltsovo.ru" title="www.koltsovo.ru">www.koltsovo.ru</a></string>
     <string name="dialog_title">Информация</string>
     <string name="dialog_title_new_version">Новая версия</string>
-    <string name="dialog_message">В тестовом режиме запущено Push уведомление об изменениях в статусе выбранного рейса. Для того, чтоб воспользоваться данной функцией, удерживайте выбранный рейс до вибрации телефона.</string>
+    <string name="dialog_message">В тестовом режиме запущено Push уведомление об изменениях в статусе выбранного рейса. Для того, чтоб воспользоваться данной функцией, удерживайте выбранный рейс до вибрации телефона. Чтобы отключить отслеживание повторно удержите рейс.</string>
     <string name="dialog_message_new_version">В магазине приложений Google Play появилась новая версия. Обновите приложение Кольцово до последней версии.</string>
     <string name="dialog_button_positive">Больше не показывать</string>
     <string name="dialog_button_negative">Напомнить позже</string>
@@ -30,6 +30,7 @@
     <string name="toast_plane_arrive">Рейс прибыл отслеживание информации невозможно</string>
     <string name="toast_plane_departure">Рейс вылетел отслеживание информации невозможно</string>
     <string name="toast_plane_tracking">Включено отслеживание информации</string>
+    <string name="toast_cancel_plane_tracking">Отслеживание информации отключено</string>
     <string name="button_feedback">Оставить отзыв</string>
     <string name="button_license">Лицензии открытого ПО</string>
     <string name="button_ads_disable">Отключить рекламу:</string>

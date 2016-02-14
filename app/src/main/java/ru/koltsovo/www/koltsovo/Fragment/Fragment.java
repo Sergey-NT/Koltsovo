@@ -39,6 +39,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -68,6 +71,7 @@ public class Fragment extends android.support.v4.app.Fragment {
     private SwipeRefreshLayout swipeRefreshLayout;
     private EditText editText;
     private ObjectPlaneAdapter adapter;
+    private SharedPreferences settings;
 
     public static Fragment getInstance(String direction, String planeNumber) {
         Bundle args = new Bundle();
@@ -99,6 +103,7 @@ public class Fragment extends android.support.v4.app.Fragment {
         editText = (EditText) view.findViewById(R.id.searchListView);
         direction = getArguments().getString("direction");
         planeNumber = getArguments().getString("planeNumber");
+        settings = getActivity().getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
 
         clearEditTextListener();
         editTextListeners();
@@ -207,19 +212,39 @@ public class Fragment extends android.support.v4.app.Fragment {
                         showToast(getString(R.string.toast_plane_departure));
                         break;
                     default:
-                        if (!adapter.getInfoTracking(position)) {
-                            SharedPreferences settings = getActivity().getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
-                            String token = settings.getString(Constants.APP_TOKEN, "");
+                        String token = settings.getString(Constants.APP_TOKEN, "");
 
+                        if (!adapter.getInfoTracking(position)) {
                             showToast(getString(R.string.toast_plane_tracking));
                             adapter.setInfoTracking(position);
                             sendQueryToDb(token, direction, planeFlight, planeDirection, planeTimePlan, planeTimeFact, planeStatus);
+                        } else {
+                            showToast(getString(R.string.toast_cancel_plane_tracking));
+                            adapter.setInfoTracking(position);
+                            sendDeleteQueryToDb(token, direction, planeFlight, planeTimePlan);
                         }
                         break;
                 }
                 return false;
             }
         });
+    }
+
+    private void sendDeleteQueryToDb(String... params) {
+        String timePlane = Uri.encode(params[3]);
+        String url = "http://www.avtovokzal.org/php/app_koltsovo/deleteQuery.php?token="+params[0]+"&direction="+params[1]+"&flight="+params[2]+"&time_plan="+timePlane;
+
+        StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {}
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {}
+        });
+        // Установливаем TimeOut, Retry
+        strReq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        // Добавляем запрос в очередь
+        AppController.getInstance().addToRequestQueue(strReq);
     }
 
     private void sendQueryToDb(String... params) {
@@ -323,6 +348,49 @@ public class Fragment extends android.support.v4.app.Fragment {
         AppController.getInstance().addToRequestQueue(stringRequest);
     }
 
+    private void getQueryFromServer() {
+        String token = settings.getString(Constants.APP_TOKEN, "");
+
+        if (token.length() > 0) {
+            String url = "http://www.avtovokzal.org/php/app_koltsovo/requestQuery.php?token="+token;
+
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                    if (response != null) {
+                        try {
+                            JSONObject dataJsonObject = new JSONObject(response);
+                            JSONArray arrayJson = dataJsonObject.getJSONArray("query_info");
+
+                            if (arrayJson.length() > 0) {
+                                for (int i = 0; i < arrayJson.length(); i++) {
+                                    JSONObject oneObject = arrayJson.getJSONObject(i);
+
+                                    String directionFromServer = oneObject.getString("direction");
+                                    String flight = oneObject.getString("flight");
+                                    String timePlan = oneObject.getString("time_plan");
+
+                                    if (directionFromServer.equals(direction)) {
+                                        adapter.setTrackingInfoFromServer(flight, timePlan);
+                                    }
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {}
+            });
+            // Установливаем TimeOut, Retry
+            stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+            // Добавляем запрос в очередь
+            AppController.getInstance().addToRequestQueue(stringRequest);
+        }
+    }
+
     private class parsingHTML extends AsyncTask<String, Void, List<ObjectPlane>> {
         @Override
         protected List<ObjectPlane> doInBackground(String... html) {
@@ -409,8 +477,10 @@ public class Fragment extends android.support.v4.app.Fragment {
                     adapter = new ObjectPlaneAdapter(getActivity(), list);
                     listView.setAdapter(adapter);
                     adapter.getFilter().filter(editText.getText().toString());
+                    getQueryFromServer();
                 } else {
                     adapter.notifyDataSetChanged();
+                    getQueryFromServer();
                 }
             }
             if (swipeRefreshLayout != null) {
