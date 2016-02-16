@@ -8,9 +8,13 @@ public class ObjectPlane {
     public String planeTimePlan;
     public String planeTimeFact;
     public String planeStatus;
+    public String planeBaggageStatus;
+    public String planeGate;
+    public String planeCheckIn;
+    public String planeCombination;
     public boolean planeTracking;
 
-    public ObjectPlane(String planeFlight, String planeDirection, String planeType, String planeTimePlan, String planeTimeFact, String planeStatus, boolean planeTracking) {
+    public ObjectPlane(String planeFlight, String planeDirection, String planeType, String planeTimePlan, String planeTimeFact, String planeStatus, boolean planeTracking, String planeBaggageStatus, String planeGate, String planeCheckIn, String planeCombination) {
         this.planeFlight = planeFlight;
         this.planeDirection = planeDirection;
         this.planeType = planeType;
@@ -18,6 +22,10 @@ public class ObjectPlane {
         this.planeTimeFact = planeTimeFact;
         this.planeStatus = planeStatus;
         this.planeTracking = planeTracking;
+        this.planeBaggageStatus = planeBaggageStatus;
+        this.planeGate = planeGate;
+        this.planeCheckIn = planeCheckIn;
+        this.planeCombination = planeCombination;
     }
 
     public String getPlaneFlight() {
@@ -42,6 +50,22 @@ public class ObjectPlane {
 
     public String getPlaneStatus() {
         return planeStatus;
+    }
+
+    public String getPlaneBaggageStatus() {
+        return planeBaggageStatus;
+    }
+
+    public String getPlaneGate() {
+        return planeGate;
+    }
+
+    public String getPlaneCheckIn() {
+        return planeCheckIn;
+    }
+
+    public String getPlaneCombination() {
+        return planeCombination;
     }
 
     public boolean isPlaneTracking() {

@@ -42,10 +42,6 @@ import com.google.android.gms.analytics.Tracker;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlPullParserFactory;
@@ -320,21 +316,22 @@ public class Fragment extends android.support.v4.app.Fragment {
     }
 
 
-    private void getHTML(String params) {
+    private void getHTML(final String direction) {
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage(getString(R.string.main_load_dialog));
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String url = "http://www.koltsovo.ru/1linetablo.card.5.19.php?0&0&"+params;
+        String url = "http://www.koltsovo.ru/1linetablo.card.5.19.php?0&0&"+direction;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (response != null) {
                     response = response.substring(61);
+                    response = response.replace("</teaxtarea>","");
                     parsingXML task = new parsingXML();
-                    task.execute(response);
+                    task.execute(response, direction);
                 } else {
                     progressDialogDismiss();
                     setErrorTextAndButton();
@@ -401,12 +398,16 @@ public class Fragment extends android.support.v4.app.Fragment {
 
         @Override
         protected List<ObjectPlane> doInBackground(String... params) {
-
-            String id = null;
-            String route = null;
+            String planeFlight = null;
+            String destination = null;
+            String planeType = null;
+            String timePlan = null;
+            String timeFact = null;
+            String status = null;
             String statusBaggage = null;
-            String statusCheckIn = null;
-            String statusBoarding = null;
+            String gate = null;
+            String checkIn = null;
+            String combination = null;
 
             list.clear();
 
@@ -416,151 +417,69 @@ public class Fragment extends android.support.v4.app.Fragment {
                 XmlPullParser parser = factory.newPullParser();
                 StringReader reader = new StringReader(params[0]);
                 parser.setInput(reader);
-                int eventType = parser.getEventType();
-                while (eventType != XmlPullParser.END_DOCUMENT) {
-                    if (eventType == XmlPullParser.START_TAG) {
-                        if (parser.getName().compareTo("flight") == 0) {
-                            id = parser.getAttributeValue(null, "id");
-                            String planeTypeArrive = parser.getAttributeValue(null, "tws_arrive");
-                            String planeTypeDeparture = parser.getAttributeValue(null, "tws_depart");
-                            String destination = parser.getAttributeValue(null, "daname");
-                            String destinationEN = parser.getAttributeValue(null, "daname_eng");
-                            String flightName = parser.getAttributeValue(null, "rf");
-                            String flightNumber = parser.getAttributeValue(null, "flt");
-                            String timePlan = parser.getAttributeValue(null, "dp");
-                            String timePlanEN = parser.getAttributeValue(null, "dp_eng");
-                            String timeFact = parser.getAttributeValue(null, "dr");
-                            String timeFactEN = parser.getAttributeValue(null, "dr_eng");
-                            String status = parser.getAttributeValue(null, "statuzz");
-                            String statusEN = parser.getAttributeValue(null, "statuzz_eng");
-                            String combination = parser.getAttributeValue(null, "sovm");
-                            String combinationEN = parser.getAttributeValue(null, "sovm_eng");
-                        } else if (parser.getName().compareTo("route") == 0) {
-                            route = parser.getAttributeValue(null, "name");
-                            String routeEN = parser.getAttributeValue(null, "name_eng");
-                            String statusRoute = parser.getAttributeValue(null, "status");
-                            String statusRouteEN = parser.getAttributeValue(null, "status_eng");
-                        } else if (parser.getName().compareTo("baggage") == 0) {
-                            statusBaggage = parser.getAttributeValue(null, "status");
-                        } else if (parser.getName().compareTo("check-in") == 0) {
-                            statusCheckIn = parser.getAttributeValue(null, "status");
-                            String starusCheckInEN = parser.getAttributeValue(null, "status_eng");
-                            String reseption = parser.getAttributeValue(null, "checkins");
-                            String registrationStarts = parser.getAttributeValue(null, "dt_b");
-                            String registrationEnd = parser.getAttributeValue(null, "dt_e");
-                        } else if (parser.getName().compareTo("boarding") == 0) {
-                            statusBoarding = parser.getAttributeValue(null, "status");
-                            String statusBoardingEN = parser.getAttributeValue(null, "status_eng");
-                            String landingEnding = parser.getAttributeValue(null, "dt_e");
-                            String gate = parser.getAttributeValue(null, "gate");
-                        }
-                        Log.e(TAG, " " + id + " " + route + " " + statusBaggage + " " + statusCheckIn + " " + statusBoarding);
-                    }
-                    eventType = parser.next();
-                }
-            } catch (XmlPullParserException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return list;
-        }
-
-        @Override
-        protected void onPostExecute(List<ObjectPlane> list) {
-            super.onPostExecute(list);
-
-            if (list == null || list.size() == 0) {
-                setErrorTextAndButton();
-            } else {
-                if (adapter == null) {
-                    adapter = new ObjectPlaneAdapter(getActivity(), list);
-                    listView.setAdapter(adapter);
-                    adapter.getFilter().filter(editText.getText().toString());
-                    getQueryFromServer();
-                } else {
-                    adapter.notifyDataSetChanged();
-                    getQueryFromServer();
-                }
-            }
-            if (swipeRefreshLayout != null) {
-                swipeRefreshLayout.setRefreshing(false);
-            }
-            progressDialogDismiss();
-        }
-    }
-
-    private class parsingHTML extends AsyncTask<String, Void, List<ObjectPlane>> {
-        @Override
-        protected List<ObjectPlane> doInBackground(String... html) {
-            String planeFlight = null;
-            String planeDirection = null;
-            String planeType = null;
-            String planeTimePlan = null;
-            String planeTimeFact = null;
-            String planeStatus = null;
-
-            list.clear();
-
-            try {
-                String data = html[0];
-                Document doc = Jsoup.parse(data);
-                Element table = doc.getElementsByTag("table").first();
-                Elements rows = table.select("tr");
-
-                if (rows.size() < 5) {
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            progressDialogDismiss();
-                            setErrorTextAndButton();
-                        }
-                    });
-                } else {
-                    for (int i = 5; i < rows.size(); i++) {
-                        Element row = rows.get(i);
-                        Elements cols = row.select("td");
-
-                        for (int y = 0; y < cols.size() - 1; y++) {
-                            Element col = cols.get(y);
-                            switch (y) {
-                                case 0:
-                                    planeFlight = col.text();
-                                    break;
-                                case 1:
-                                    planeDirection = col.text();
-                                    break;
-                                case 2:
-                                    planeType = col.text();
-                                    break;
-                                case 3:
-                                    planeTimePlan = col.text();
-                                    break;
-                                case 4:
-                                    planeTimeFact = col.text();
-                                    break;
-                                case 5:
-                                    planeStatus = col.text();
-                                    break;
+                while (parser.getEventType() != XmlPullParser.END_DOCUMENT) {
+                    switch (parser.getEventType()) {
+                        case XmlPullParser.START_TAG:
+                            if (params[1].equals("a")) {
+                                if (parser.getName().compareTo("flight") == 0) {
+                                    String planeTypeArrive = parser.getAttributeValue(null, "tws_arrive");
+                                    destination = parser.getAttributeValue(null, "daname");
+                                    String flightName = parser.getAttributeValue(null, "rf");
+                                    String flightNumber = parser.getAttributeValue(null, "flt");
+                                    timePlan = parser.getAttributeValue(null, "dp");
+                                    timeFact = parser.getAttributeValue(null, "dr");
+                                    status = parser.getAttributeValue(null, "statuzz");
+                                    combination = parser.getAttributeValue(null, "sovm");
+                                    planeFlight = flightName + "-" + flightNumber;
+                                    planeType = planeTypeArrive;
+                                } else if (parser.getName().compareTo("route") == 0) {
+                                    String route = parser.getAttributeValue(null, "name");
+                                    String statusRoute = parser.getAttributeValue(null, "status");
+                                } else if (parser.getName().compareTo("baggage") == 0) {
+                                    statusBaggage = parser.getAttributeValue(null, "status");
+                                }
+                                break;
+                            } else {
+                                if (parser.getName().compareTo("flight") == 0) {
+                                    String planeTypeDeparture = parser.getAttributeValue(null, "tws_depart");
+                                    destination = parser.getAttributeValue(null, "daname");
+                                    String flightName = parser.getAttributeValue(null, "rf");
+                                    String flightNumber = parser.getAttributeValue(null, "flt");
+                                    timePlan = parser.getAttributeValue(null, "dp");
+                                    timeFact = parser.getAttributeValue(null, "dr");
+                                    status = parser.getAttributeValue(null, "statuzz");
+                                    combination = parser.getAttributeValue(null, "sovm");
+                                    planeFlight = flightName + "-" + flightNumber;
+                                    planeType = planeTypeDeparture;
+                                } else if (parser.getName().compareTo("route") == 0) {
+                                    String route = parser.getAttributeValue(null, "name");
+                                    String statusRoute = parser.getAttributeValue(null, "status");
+                                } else if (parser.getName().compareTo("check-in") == 0) {
+                                    String statusCheckIn = parser.getAttributeValue(null, "status");
+                                    checkIn = parser.getAttributeValue(null, "checkins");
+                                    String registrationStarts = parser.getAttributeValue(null, "dt_b");
+                                    String registrationEnd = parser.getAttributeValue(null, "dt_e");
+                                } else if (parser.getName().compareTo("boarding") == 0) {
+                                    String statusBoarding = parser.getAttributeValue(null, "status");
+                                    String landingEnding = parser.getAttributeValue(null, "dt_e");
+                                    gate = parser.getAttributeValue(null, "gate");
+                                }
+                                break;
                             }
-                        }
-                        if (Constants.LOG_ON) {
-                            Log.v(TAG + " " + direction, planeFlight + " " + planeDirection + " " + planeType + " " + planeTimePlan + " " + planeTimeFact + " " + planeStatus);
-                        }
-                        list.add(new ObjectPlane(planeFlight, planeDirection, planeType, planeTimePlan, planeTimeFact, planeStatus, false));
+                        case XmlPullParser.END_TAG:
+                            if (parser.getName().compareTo("flight") == 0) {
+                                Log.e(TAG, " " + planeFlight + " " + destination + " " + planeType + " " + timePlan + " " + timeFact + " " + status + " " + statusBaggage + " " + checkIn + " " + combination);
+                                list.add(new ObjectPlane(planeFlight, destination, planeType, timePlan, timeFact, status, false, statusBaggage, gate, checkIn, combination));
+                            }
+                            break;
+
+                        default:
+                            break;
                     }
+                    parser.next();
                 }
-            } catch (Exception e) {
-                if (Constants.LOG_ON) {
-                    Log.d(TAG, "Exception", e);
-                }
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressDialogDismiss();
-                        setErrorTextAndButton();
-                    }
-                });
+            } catch (XmlPullParserException | IOException e) {
+                e.printStackTrace();
             }
             return list;
         }
@@ -588,6 +507,105 @@ public class Fragment extends android.support.v4.app.Fragment {
             progressDialogDismiss();
         }
     }
+
+//    private class parsingHTML extends AsyncTask<String, Void, List<ObjectPlane>> {
+//        @Override
+//        protected List<ObjectPlane> doInBackground(String... html) {
+//            String planeFlight = null;
+//            String planeDirection = null;
+//            String planeType = null;
+//            String planeTimePlan = null;
+//            String planeTimeFact = null;
+//            String planeStatus = null;
+//
+//            list.clear();
+//
+//            try {
+//                String data = html[0];
+//                Document doc = Jsoup.parse(data);
+//                Element table = doc.getElementsByTag("table").first();
+//                Elements rows = table.select("tr");
+//
+//                if (rows.size() < 5) {
+//                    getActivity().runOnUiThread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            progressDialogDismiss();
+//                            setErrorTextAndButton();
+//                        }
+//                    });
+//                } else {
+//                    for (int i = 5; i < rows.size(); i++) {
+//                        Element row = rows.get(i);
+//                        Elements cols = row.select("td");
+//
+//                        for (int y = 0; y < cols.size() - 1; y++) {
+//                            Element col = cols.get(y);
+//                            switch (y) {
+//                                case 0:
+//                                    planeFlight = col.text();
+//                                    break;
+//                                case 1:
+//                                    planeDirection = col.text();
+//                                    break;
+//                                case 2:
+//                                    planeType = col.text();
+//                                    break;
+//                                case 3:
+//                                    planeTimePlan = col.text();
+//                                    break;
+//                                case 4:
+//                                    planeTimeFact = col.text();
+//                                    break;
+//                                case 5:
+//                                    planeStatus = col.text();
+//                                    break;
+//                            }
+//                        }
+//                        if (Constants.LOG_ON) {
+//                            Log.v(TAG + " " + direction, planeFlight + " " + planeDirection + " " + planeType + " " + planeTimePlan + " " + planeTimeFact + " " + planeStatus);
+//                        }
+//                        list.add(new ObjectPlane(planeFlight, planeDirection, planeType, planeTimePlan, planeTimeFact, planeStatus, false));
+//                    }
+//                }
+//            } catch (Exception e) {
+//                if (Constants.LOG_ON) {
+//                    Log.d(TAG, "Exception", e);
+//                }
+//                getActivity().runOnUiThread(new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        progressDialogDismiss();
+//                        setErrorTextAndButton();
+//                    }
+//                });
+//            }
+//            return list;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(List<ObjectPlane> list) {
+//            super.onPostExecute(list);
+//
+//            if (list == null || list.size() == 0) {
+//                setErrorTextAndButton();
+//            } else {
+//                if (adapter == null) {
+//                    adapter = new ObjectPlaneAdapter(getActivity(), list);
+//                    listView.setAdapter(adapter);
+//                    adapter.getFilter().filter(editText.getText().toString());
+//                    getQueryFromServer();
+//                } else {
+//                    adapter.notifyDataSetChanged();
+//                    getQueryFromServer();
+//                }
+//            }
+//            if (swipeRefreshLayout != null) {
+//                swipeRefreshLayout.setRefreshing(false);
+//            }
+//            progressDialogDismiss();
+//        }
+//    }
 
     private boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);

@@ -6,6 +6,9 @@
     <string name="plane_desc_time_plan">Плановое время:</string>
     <string name="plane_desc_time_fast">Ожидаемое время:</string>
     <string name="plane_desc_status">Статус:</string>
+    <string name="plane_desc_baggage">Багаж:</string>
+    <string name="plane_desc_gate">Выход:</string>
+    <string name="plane_desc_check_in">Стойки регистрации:</string>
     <string name="plane_desc_flight">Рейс</string>
     <string name="about_developer">Разработчик приложения: <a href="http://vk.com/id5170658" title="Сергей Ухарский">Сергей Ухарский</a></string>
     <string name="about_version">Версия приложения: 1.0.9</string>
