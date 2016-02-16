@@ -46,7 +46,12 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -321,13 +326,14 @@ public class Fragment extends android.support.v4.app.Fragment {
         progressDialog.setCancelable(false);
         progressDialog.show();
 
-        String url = "http://www.koltsovo.ru/ekburg/"+params+"/";
+        String url = "http://www.koltsovo.ru/1linetablo.card.5.19.php?0&0&"+params;
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (response != null) {
-                    parsingHTML task = new parsingHTML();
+                    response = response.substring(61);
+                    parsingXML task = new parsingXML();
                     task.execute(response);
                 } else {
                     progressDialogDismiss();
@@ -388,6 +394,99 @@ public class Fragment extends android.support.v4.app.Fragment {
             stringRequest.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             // Добавляем запрос в очередь
             AppController.getInstance().addToRequestQueue(stringRequest);
+        }
+    }
+
+    private class parsingXML extends AsyncTask<String, Void, List<ObjectPlane>> {
+
+        @Override
+        protected List<ObjectPlane> doInBackground(String... params) {
+
+            String id = null;
+            String route = null;
+            String statusBaggage = null;
+            String statusCheckIn = null;
+            String statusBoarding = null;
+
+            list.clear();
+
+            try {
+                XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+                factory.setNamespaceAware(false);
+                XmlPullParser parser = factory.newPullParser();
+                StringReader reader = new StringReader(params[0]);
+                parser.setInput(reader);
+                int eventType = parser.getEventType();
+                while (eventType != XmlPullParser.END_DOCUMENT) {
+                    if (eventType == XmlPullParser.START_TAG) {
+                        if (parser.getName().compareTo("flight") == 0) {
+                            id = parser.getAttributeValue(null, "id");
+                            String planeTypeArrive = parser.getAttributeValue(null, "tws_arrive");
+                            String planeTypeDeparture = parser.getAttributeValue(null, "tws_depart");
+                            String destination = parser.getAttributeValue(null, "daname");
+                            String destinationEN = parser.getAttributeValue(null, "daname_eng");
+                            String flightName = parser.getAttributeValue(null, "rf");
+                            String flightNumber = parser.getAttributeValue(null, "flt");
+                            String timePlan = parser.getAttributeValue(null, "dp");
+                            String timePlanEN = parser.getAttributeValue(null, "dp_eng");
+                            String timeFact = parser.getAttributeValue(null, "dr");
+                            String timeFactEN = parser.getAttributeValue(null, "dr_eng");
+                            String status = parser.getAttributeValue(null, "statuzz");
+                            String statusEN = parser.getAttributeValue(null, "statuzz_eng");
+                            String combination = parser.getAttributeValue(null, "sovm");
+                            String combinationEN = parser.getAttributeValue(null, "sovm_eng");
+                        } else if (parser.getName().compareTo("route") == 0) {
+                            route = parser.getAttributeValue(null, "name");
+                            String routeEN = parser.getAttributeValue(null, "name_eng");
+                            String statusRoute = parser.getAttributeValue(null, "status");
+                            String statusRouteEN = parser.getAttributeValue(null, "status_eng");
+                        } else if (parser.getName().compareTo("baggage") == 0) {
+                            statusBaggage = parser.getAttributeValue(null, "status");
+                        } else if (parser.getName().compareTo("check-in") == 0) {
+                            statusCheckIn = parser.getAttributeValue(null, "status");
+                            String starusCheckInEN = parser.getAttributeValue(null, "status_eng");
+                            String reseption = parser.getAttributeValue(null, "checkins");
+                            String registrationStarts = parser.getAttributeValue(null, "dt_b");
+                            String registrationEnd = parser.getAttributeValue(null, "dt_e");
+                        } else if (parser.getName().compareTo("boarding") == 0) {
+                            statusBoarding = parser.getAttributeValue(null, "status");
+                            String statusBoardingEN = parser.getAttributeValue(null, "status_eng");
+                            String landingEnding = parser.getAttributeValue(null, "dt_e");
+                            String gate = parser.getAttributeValue(null, "gate");
+                        }
+                        Log.e(TAG, " " + id + " " + route + " " + statusBaggage + " " + statusCheckIn + " " + statusBoarding);
+                    }
+                    eventType = parser.next();
+                }
+            } catch (XmlPullParserException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return list;
+        }
+
+        @Override
+        protected void onPostExecute(List<ObjectPlane> list) {
+            super.onPostExecute(list);
+
+            if (list == null || list.size() == 0) {
+                setErrorTextAndButton();
+            } else {
+                if (adapter == null) {
+                    adapter = new ObjectPlaneAdapter(getActivity(), list);
+                    listView.setAdapter(adapter);
+                    adapter.getFilter().filter(editText.getText().toString());
+                    getQueryFromServer();
+                } else {
+                    adapter.notifyDataSetChanged();
+                    getQueryFromServer();
+                }
+            }
+            if (swipeRefreshLayout != null) {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+            progressDialogDismiss();
         }
     }
 

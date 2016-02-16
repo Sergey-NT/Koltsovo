@@ -30,15 +30,15 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
         switch (position) {
             case 0:
                 if (direction != null && direction.equals("arrival")) {
-                    return Fragment.getInstance("arrival", planeNumber);
+                    return Fragment.getInstance("a", planeNumber);
                 } else {
-                    return Fragment.getInstance("arrival", null);
+                    return Fragment.getInstance("a", null);
                 }
             case 1:
                 if (direction != null && direction.equals("departure")) {
-                    return Fragment.getInstance("departure", planeNumber);
+                    return Fragment.getInstance("d", planeNumber);
                 } else {
-                    return Fragment.getInstance("departure", null);
+                    return Fragment.getInstance("d", null);
                 }
         }
         return null;
