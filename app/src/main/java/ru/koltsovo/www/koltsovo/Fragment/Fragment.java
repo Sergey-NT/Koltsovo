@@ -194,20 +194,29 @@ public class Fragment extends android.support.v4.app.Fragment {
                 RelativeLayout rl = (RelativeLayout) view;
                 TextView tvPlaneFlight = (TextView) rl.getChildAt(0);
                 TextView tvPlaneDirection = (TextView) rl.getChildAt(1);
+                TextView tvPlaneCombination = (TextView) rl.getChildAt(3);
+                TextView tvPlaneType = (TextView) rl.getChildAt(5);
                 TextView tvPlaneTimePlan = (TextView) rl.getChildAt(7);
                 TextView tvPlaneTimeFact = (TextView) rl.getChildAt(9);
                 TextView tvPlaneStatus = (TextView) rl.getChildAt(10);
+                TextView tvBaggageStatus = (TextView) rl.getChildAt(13);
 
+                String planeCombination = null;
                 String registrationBegin = null;
                 String registrationEnd = null;
                 String checkInStatus = null;
+                String baggageStatus = null;
 
                 String planeFlight = tvPlaneFlight.getText().toString();
                 String planeDirection = tvPlaneDirection.getText().toString();
+                String planeType = tvPlaneType.getText().toString();
 
                 String planeRoute = tvPlaneFlight.getTag().toString();
                 String planeRouteStatus = tvPlaneDirection.getTag().toString();
 
+                if (tvPlaneCombination != null) {
+                    planeCombination = tvPlaneCombination.getText().toString();
+                }
                 if (tvPlaneTimePlan.getTag() != null) {
                     registrationBegin = tvPlaneTimePlan.getTag().toString();
                 }
@@ -217,6 +226,9 @@ public class Fragment extends android.support.v4.app.Fragment {
                 if (tvPlaneStatus.getTag() != null) {
                     checkInStatus = tvPlaneStatus.getTag().toString();
                 }
+                if (tvBaggageStatus != null) {
+                    baggageStatus = tvBaggageStatus.getText().toString();
+                }
 
                 Log.e(TAG, planeRoute + " " + planeRouteStatus + " " + registrationBegin + " " + registrationEnd + " " + checkInStatus);
 
@@ -225,6 +237,9 @@ public class Fragment extends android.support.v4.app.Fragment {
                 intent.putExtra("planeDirection", planeDirection);
                 intent.putExtra("planeRoute", planeRoute);
                 intent.putExtra("planeRouteStatus", planeRouteStatus);
+                intent.putExtra("planeCombination", planeCombination);
+                intent.putExtra("planeType", planeType);
+                intent.putExtra("baggageStatus", baggageStatus);
                 startActivity(intent);
             }
         });

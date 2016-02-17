@@ -17,6 +17,9 @@
     </string>
     <string name="about_text_content">Источник данных: <a href="http://www.koltsovo.ru" title="www.koltsovo.ru">www.koltsovo.ru</a></string>
     <string name="info_route_desc">Маршрут</string>
+    <string name="info_combination_desc">Информация о рейсе</string>
+    <string name="info_type_desc">Тип воздушного судна</string>
+    <string name="info_baggage_desc">Багаж</string>
     <string name="dialog_title">Информация</string>
     <string name="dialog_title_new_version">Новая версия</string>
     <string name="dialog_message">В тестовом режиме запущено Push уведомление об изменениях в статусе выбранного рейса. Для того, чтоб воспользоваться данной функцией, удерживайте выбранный рейс до вибрации телефона. Чтобы отключить отслеживание повторно удержите рейс.</string>
