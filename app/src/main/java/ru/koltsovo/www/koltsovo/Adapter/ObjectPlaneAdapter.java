@@ -134,6 +134,14 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
         holder.itemCheckIn.setText(objectPlane.getPlaneCheckIn());
         holder.itemCombination.setText(objectPlane.getPlaneCombination());
 
+        holder.itemFlight.setTag(objectPlane.getPlaneRoute());
+        holder.itemDirection.setTag(objectPlane.getPlaneRouteStatus());
+        holder.itemType.setTag(objectPlane.getRegistrationBegin());
+        holder.itemTimePlan.setTag(objectPlane.getRegistrationEnd());
+        holder.itemTimeFact.setTag(objectPlane.getCheckInStatus());
+        holder.itemStatus.setTag(objectPlane.getBoardingEnd());
+        holder.itemBaggageStatus.setTag(objectPlane.getBoardingStatus());
+
         if (objectPlane.getPlaneCombination() == null || objectPlane.getPlaneCombination().length() < 2) {
             holder.itemCombination.setVisibility(View.GONE);
         } else {

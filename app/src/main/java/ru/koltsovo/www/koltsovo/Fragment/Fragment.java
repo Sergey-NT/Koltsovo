@@ -3,6 +3,7 @@ package ru.koltsovo.www.koltsovo.Fragment;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -54,6 +55,7 @@ import java.util.List;
 import ru.koltsovo.www.koltsovo.Adapter.ObjectPlaneAdapter;
 import ru.koltsovo.www.koltsovo.AppController;
 import ru.koltsovo.www.koltsovo.Constants;
+import ru.koltsovo.www.koltsovo.InfoActivity;
 import ru.koltsovo.www.koltsovo.ObjectPlane;
 import ru.koltsovo.www.koltsovo.R;
 
@@ -179,6 +181,54 @@ public class Fragment extends android.support.v4.app.Fragment {
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {}
         });
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // Google Analytics
+                Tracker t = ((AppController) getActivity().getApplication()).getTracker(AppController.TrackerName.APP_TRACKER);
+                t.send(new HitBuilders.EventBuilder()
+                        .setCategory(getString(R.string.analytics_category_button))
+                        .setAction(getString(R.string.analytics_action_plane_info))
+                        .build());
+
+                RelativeLayout rl = (RelativeLayout) view;
+                TextView tvPlaneFlight = (TextView) rl.getChildAt(0);
+                TextView tvPlaneDirection = (TextView) rl.getChildAt(1);
+                TextView tvPlaneTimePlan = (TextView) rl.getChildAt(7);
+                TextView tvPlaneTimeFact = (TextView) rl.getChildAt(9);
+                TextView tvPlaneStatus = (TextView) rl.getChildAt(10);
+
+                String registrationBegin = null;
+                String registrationEnd = null;
+                String checkInStatus = null;
+
+                String planeFlight = tvPlaneFlight.getText().toString();
+                String planeDirection = tvPlaneDirection.getText().toString();
+
+                String planeRoute = tvPlaneFlight.getTag().toString();
+                String planeRouteStatus = tvPlaneDirection.getTag().toString();
+
+                if (tvPlaneTimePlan.getTag() != null) {
+                    registrationBegin = tvPlaneTimePlan.getTag().toString();
+                }
+                if (tvPlaneTimePlan.getTag() != null) {
+                    registrationEnd = tvPlaneTimeFact.getTag().toString();
+                }
+                if (tvPlaneStatus.getTag() != null) {
+                    checkInStatus = tvPlaneStatus.getTag().toString();
+                }
+
+                Log.e(TAG, planeRoute + " " + planeRouteStatus + " " + registrationBegin + " " + registrationEnd + " " + checkInStatus);
+
+                Intent intent = new Intent(getActivity(), InfoActivity.class);
+                intent.putExtra("planeFlight", planeFlight);
+                intent.putExtra("planeDirection", planeDirection);
+                intent.putExtra("planeRoute", planeRoute);
+                intent.putExtra("planeRouteStatus", planeRouteStatus);
+                startActivity(intent);
+            }
+        });
+
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -226,7 +276,7 @@ public class Fragment extends android.support.v4.app.Fragment {
                         }
                         break;
                 }
-                return false;
+                return true;
             }
         });
     }
@@ -395,19 +445,25 @@ public class Fragment extends android.support.v4.app.Fragment {
     }
 
     private class parsingXML extends AsyncTask<String, Void, List<ObjectPlane>> {
-
         @Override
         protected List<ObjectPlane> doInBackground(String... params) {
             String planeFlight = null;
-            String destination = null;
+            String planeDestination = null;
             String planeType = null;
-            String timePlan = null;
-            String timeFact = null;
-            String status = null;
-            String statusBaggage = null;
+            String planeTimePlan = null;
+            String planeTimeFact = null;
+            String planeStatus = null;
+            String planeRoute = null;
+            String planeRouteStatus = null;
+            String planeCombination = null;
+            String baggageStatus = null;
+            String registrationBegin = null;
+            String registrationEnd = null;
             String gate = null;
             String checkIn = null;
-            String combination = null;
+            String checkInStatus = null;
+            String boardingStatus = null;
+            String boardingEnd = null;
 
             list.clear();
 
@@ -423,53 +479,53 @@ public class Fragment extends android.support.v4.app.Fragment {
                             if (params[1].equals("a")) {
                                 if (parser.getName().compareTo("flight") == 0) {
                                     String planeTypeArrive = parser.getAttributeValue(null, "tws_arrive");
-                                    destination = parser.getAttributeValue(null, "daname");
+                                    planeDestination = parser.getAttributeValue(null, "daname");
                                     String flightName = parser.getAttributeValue(null, "rf");
                                     String flightNumber = parser.getAttributeValue(null, "flt");
-                                    timePlan = parser.getAttributeValue(null, "dp");
-                                    timeFact = parser.getAttributeValue(null, "dr");
-                                    status = parser.getAttributeValue(null, "statuzz");
-                                    combination = parser.getAttributeValue(null, "sovm");
+                                    planeTimePlan = parser.getAttributeValue(null, "dp");
+                                    planeTimeFact = parser.getAttributeValue(null, "dr");
+                                    planeStatus = parser.getAttributeValue(null, "statuzz");
+                                    planeCombination = parser.getAttributeValue(null, "sovm");
                                     planeFlight = flightName + "-" + flightNumber;
                                     planeType = planeTypeArrive;
                                 } else if (parser.getName().compareTo("route") == 0) {
-                                    String route = parser.getAttributeValue(null, "name");
-                                    String statusRoute = parser.getAttributeValue(null, "status");
+                                    planeRoute = parser.getAttributeValue(null, "name");
+                                    planeRouteStatus = parser.getAttributeValue(null, "status");
                                 } else if (parser.getName().compareTo("baggage") == 0) {
-                                    statusBaggage = parser.getAttributeValue(null, "status");
+                                    baggageStatus = parser.getAttributeValue(null, "status");
                                 }
                                 break;
                             } else {
                                 if (parser.getName().compareTo("flight") == 0) {
                                     String planeTypeDeparture = parser.getAttributeValue(null, "tws_depart");
-                                    destination = parser.getAttributeValue(null, "daname");
+                                    planeDestination = parser.getAttributeValue(null, "daname");
                                     String flightName = parser.getAttributeValue(null, "rf");
                                     String flightNumber = parser.getAttributeValue(null, "flt");
-                                    timePlan = parser.getAttributeValue(null, "dp");
-                                    timeFact = parser.getAttributeValue(null, "dr");
-                                    status = parser.getAttributeValue(null, "statuzz");
-                                    combination = parser.getAttributeValue(null, "sovm");
+                                    planeTimePlan = parser.getAttributeValue(null, "dp");
+                                    planeTimeFact = parser.getAttributeValue(null, "dr");
+                                    planeStatus = parser.getAttributeValue(null, "statuzz");
+                                    planeCombination = parser.getAttributeValue(null, "sovm");
                                     planeFlight = flightName + "-" + flightNumber;
                                     planeType = planeTypeDeparture;
                                 } else if (parser.getName().compareTo("route") == 0) {
-                                    String route = parser.getAttributeValue(null, "name");
-                                    String statusRoute = parser.getAttributeValue(null, "status");
+                                    planeRoute = parser.getAttributeValue(null, "name");
+                                    planeRouteStatus = parser.getAttributeValue(null, "status");
                                 } else if (parser.getName().compareTo("check-in") == 0) {
-                                    String statusCheckIn = parser.getAttributeValue(null, "status");
+                                    checkInStatus = parser.getAttributeValue(null, "status");
                                     checkIn = parser.getAttributeValue(null, "checkins");
-                                    String registrationStarts = parser.getAttributeValue(null, "dt_b");
-                                    String registrationEnd = parser.getAttributeValue(null, "dt_e");
+                                    registrationBegin = parser.getAttributeValue(null, "dt_b");
+                                    registrationEnd = parser.getAttributeValue(null, "dt_e");
                                 } else if (parser.getName().compareTo("boarding") == 0) {
-                                    String statusBoarding = parser.getAttributeValue(null, "status");
-                                    String landingEnding = parser.getAttributeValue(null, "dt_e");
+                                    boardingStatus = parser.getAttributeValue(null, "status");
+                                    boardingEnd = parser.getAttributeValue(null, "dt_e");
                                     gate = parser.getAttributeValue(null, "gate");
                                 }
                                 break;
                             }
                         case XmlPullParser.END_TAG:
                             if (parser.getName().compareTo("flight") == 0) {
-                                Log.e(TAG, " " + planeFlight + " " + destination + " " + planeType + " " + timePlan + " " + timeFact + " " + status + " " + statusBaggage + " " + checkIn + " " + combination);
-                                list.add(new ObjectPlane(planeFlight, destination, planeType, timePlan, timeFact, status, false, statusBaggage, gate, checkIn, combination));
+                                Log.e(TAG, " " + planeFlight + " " + planeDestination + " " + planeType + " " + planeTimePlan + " " + planeTimeFact + " " + planeStatus + " " + baggageStatus + " " + checkIn + " " + planeCombination + " " + planeRoute);
+                                list.add(new ObjectPlane(planeFlight, planeDestination, planeType, planeTimePlan, planeTimeFact, planeStatus, false, baggageStatus, gate, checkIn, planeCombination, planeRoute, planeRouteStatus, registrationBegin, registrationEnd, checkInStatus, boardingEnd, boardingStatus));
                             }
                             break;
 

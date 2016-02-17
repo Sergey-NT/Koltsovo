@@ -76,5 +76,10 @@
             android:configChanges="orientation|screenSize" >
         </activity>
 
+        <activity
+            android:name=".InfoActivity"
+            android:configChanges="orientation|screenSize" >
+        </activity>
+
     </application>
 </manifest>
