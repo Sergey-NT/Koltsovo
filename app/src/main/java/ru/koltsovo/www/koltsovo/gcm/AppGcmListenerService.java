@@ -38,7 +38,7 @@ public class AppGcmListenerService extends GcmListenerService {
         }
 
         if (direction != null) {
-            if (direction.equals("arrival")) {
+            if (direction.equals("a")) {
                 icon = R.mipmap.ic_flight_land_white_24dp;
             } else {
                 icon = R.mipmap.ic_flight_takeoff_white_24dp;

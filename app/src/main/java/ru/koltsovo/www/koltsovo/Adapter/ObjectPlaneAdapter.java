@@ -43,11 +43,15 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
         private TextView itemGate;
         private TextView itemBaggageStatus;
         private TextView itemCheckIn;
+        private TextView itemCheckInBegin;
+        private TextView itemCheckInEnd;
         private TextView itemCombination;
         private TextView descriptionStatus;
         private TextView descriptionBaggage;
         private TextView descriptionGate;
         private TextView descriptionCheckIn;
+        private TextView descriptionCheckInBegin;
+        private TextView descriptionCheckInEnd;
         private RelativeLayout relativeLayout;
         private ImageView imageViewTracking;
         private ImageView imageViewLogo;
@@ -107,11 +111,15 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
             holder.itemBaggageStatus = (TextView) view.findViewById(R.id.tvPlaneBaggage);
             holder.itemGate = (TextView) view.findViewById(R.id.tvPlaneGate);
             holder.itemCheckIn = (TextView) view.findViewById(R.id.tvPlaneCheckIn);
+            holder.itemCheckInBegin = (TextView) view.findViewById(R.id.tvPlaneCheckInBegin);
+            holder.itemCheckInEnd = (TextView) view.findViewById(R.id.tvPlaneCheckInEnd);
             holder.itemCombination = (TextView) view.findViewById(R.id.tvPlaneCombination);
             holder.descriptionStatus = (TextView) view.findViewById(R.id.tvPlaneStatusDesc);
             holder.descriptionBaggage = (TextView) view.findViewById(R.id.tvPlaneBaggageDesc);
             holder.descriptionGate = (TextView) view.findViewById(R.id.tvPlaneGateDesc);
             holder.descriptionCheckIn = (TextView) view.findViewById(R.id.tvPlaneCheckInDesc);
+            holder.descriptionCheckInBegin = (TextView) view.findViewById(R.id.tvPlaneCheckInBeginDesc);
+            holder.descriptionCheckInEnd = (TextView) view.findViewById(R.id.tvPlaneCheckInEndDesc);
             holder.relativeLayout = (RelativeLayout) view.findViewById(R.id.listViewItem);
             holder.imageViewTracking = (ImageView) view.findViewById(R.id.imageTracking);
             holder.imageViewLogo = (ImageView) view.findViewById(R.id.imageLogo);
@@ -132,45 +140,16 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
         holder.itemBaggageStatus.setText(objectPlane.getPlaneBaggageStatus());
         holder.itemGate.setText(objectPlane.getPlaneGate());
         holder.itemCheckIn.setText(objectPlane.getPlaneCheckIn());
+        holder.itemCheckInBegin.setText(objectPlane.getRegistrationBegin());
+        holder.itemCheckInEnd.setText(objectPlane.getRegistrationEnd());
         holder.itemCombination.setText(objectPlane.getPlaneCombination());
 
         holder.itemFlight.setTag(objectPlane.getPlaneRoute());
         holder.itemDirection.setTag(objectPlane.getPlaneRouteStatus());
-        holder.itemType.setTag(objectPlane.getRegistrationBegin());
-        holder.itemTimePlan.setTag(objectPlane.getRegistrationEnd());
-        holder.itemTimeFact.setTag(objectPlane.getCheckInStatus());
-        holder.itemStatus.setTag(objectPlane.getBoardingEnd());
-        holder.itemBaggageStatus.setTag(objectPlane.getBoardingStatus());
-
-        if (objectPlane.getPlaneCombination() == null || objectPlane.getPlaneCombination().length() < 2) {
-            holder.itemCombination.setVisibility(View.GONE);
-        } else {
-            holder.itemCombination.setVisibility(View.VISIBLE);
-        }
-
-        if (objectPlane.getPlaneBaggageStatus() == null || objectPlane.getPlaneBaggageStatus().length() < 2) {
-            holder.descriptionBaggage.setVisibility(View.GONE);
-            holder.itemBaggageStatus.setVisibility(View.GONE);
-        } else {
-            holder.descriptionBaggage.setVisibility(View.VISIBLE);
-            holder.itemBaggageStatus.setVisibility(View.VISIBLE);
-        }
-
-        if (objectPlane.getPlaneGate() == null || objectPlane.getPlaneGate().length() < 2) {
-            holder.descriptionGate.setVisibility(View.GONE);
-            holder.itemGate.setVisibility(View.GONE);
-        } else {
-            holder.descriptionGate.setVisibility(View.VISIBLE);
-            holder.itemGate.setVisibility(View.VISIBLE);
-        }
-
-        if (objectPlane.getPlaneCheckIn() == null || objectPlane.getPlaneCheckIn().length() < 2) {
-            holder.descriptionCheckIn.setVisibility(View.GONE);
-            holder.itemCheckIn.setVisibility(View.GONE);
-        } else {
-            holder.descriptionCheckIn.setVisibility(View.VISIBLE);
-            holder.itemCheckIn.setVisibility(View.VISIBLE);
-        }
+        holder.itemType.setTag(objectPlane.getCheckInStatus());
+        holder.itemTimePlan.setTag(objectPlane.getBoardingEnd());
+        holder.itemTimeFact.setTag(objectPlane.getBoardingStatus());
+        holder.itemStatus.setTag(objectPlane.getPlaneAirline());
 
         if (objectPlane.isPlaneTracking()) {
             holder.imageViewTracking.setVisibility(View.VISIBLE);
@@ -182,12 +161,85 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
             holder.imageViewLogo.setVisibility(View.VISIBLE);
         }
 
-        if (holder.descriptionStatus.getVisibility() == View.GONE && holder.itemStatus.getVisibility() == View.GONE) {
-            holder.descriptionStatus.setVisibility(View.VISIBLE);
-            holder.itemStatus.setVisibility(View.VISIBLE);
-        }
+        holder.itemStatus.setVisibility(View.VISIBLE);
+        holder.descriptionStatus.setVisibility(View.VISIBLE);
+        holder.itemBaggageStatus.setVisibility(View.GONE);
+        holder.descriptionBaggage.setVisibility(View.GONE);
+        holder.itemCheckInBegin.setVisibility(View.GONE);
+        holder.descriptionCheckInBegin.setVisibility(View.GONE);
+        holder.itemCheckInEnd.setVisibility(View.GONE);
+        holder.descriptionCheckInEnd.setVisibility(View.GONE);
+        holder.itemCheckIn.setVisibility(View.GONE);
+        holder.descriptionCheckIn.setVisibility(View.GONE);
+        holder.itemGate.setVisibility(View.GONE);
+        holder.descriptionGate.setVisibility(View.GONE);
 
-        switch (objectPlane.getShotPlaneFlight()) {
+        switch (holder.itemStatus.getText().toString()) {
+            case "Прибыл":
+                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundGreen));
+                holder.itemBaggageStatus.setVisibility(View.VISIBLE);
+                holder.descriptionBaggage.setVisibility(View.VISIBLE);
+                break;
+            case "Вылетел":
+                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundGreen));
+                break;
+            case "Идет посадка":
+                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundGreen));
+                holder.itemGate.setVisibility(View.VISIBLE);
+                holder.descriptionGate.setVisibility(View.VISIBLE);
+                break;
+            case "Идет регистрация":
+                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundGreen));
+                holder.itemCheckInBegin.setVisibility(View.VISIBLE);
+                holder.descriptionCheckInBegin.setVisibility(View.VISIBLE);
+                holder.itemCheckInEnd.setVisibility(View.VISIBLE);
+                holder.descriptionCheckInEnd.setVisibility(View.VISIBLE);
+                holder.itemCheckIn.setVisibility(View.VISIBLE);
+                holder.descriptionCheckIn.setVisibility(View.VISIBLE);
+                holder.itemGate.setVisibility(View.VISIBLE);
+                holder.descriptionGate.setVisibility(View.VISIBLE);
+                break;
+            case "Отмена":
+                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundRed));
+                break;
+            case "Регистрация закончена":
+                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
+                holder.itemGate.setVisibility(View.VISIBLE);
+                holder.descriptionGate.setVisibility(View.VISIBLE);
+                break;
+            case "Задержка":
+                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
+                break;
+            case "Задержка Позднее прибытие":
+                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
+                break;
+            case "Задержка Решение АК":
+                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
+                break;
+            case "Задержка Метеоусловия":
+                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
+                break;
+            case "Задержка Подготовка рейса":
+                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
+                break;
+            case "Задержка Регламент АП":
+                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
+                break;
+            case "Посадка закончена":
+                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
+                break;
+            default:
+                holder.itemStatus.setVisibility(View.GONE);
+                holder.descriptionStatus.setVisibility(View.GONE);
+                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorText));
+                break;
+        }
+        setAirlineLogo(holder);
+        return view;
+    }
+
+    private void setAirlineLogo(ViewHolder holder) {
+        switch (holder.itemFlight.getText().toString().substring(0,2)) {
             case "DP":
                 holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_pobeda));
                 break;
@@ -333,96 +385,6 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
                 holder.imageViewLogo.setVisibility(View.GONE);
                 break;
         }
-
-        switch (objectPlane.getPlaneStatus()) {
-            case "Прибыл":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundGreen));
-                break;
-            case "Вылетел":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundGreen));
-                holder.descriptionGate.setVisibility(View.GONE);
-                holder.itemGate.setVisibility(View.GONE);
-                break;
-            case "Идет посадка":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundGreen));
-                if (holder.descriptionGate.getVisibility() == View.GONE && holder.itemGate.getVisibility() == View.GONE) {
-                    holder.descriptionGate.setVisibility(View.VISIBLE);
-                    holder.itemGate.setVisibility(View.VISIBLE);
-                }
-                break;
-            case "Идет регистрация":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundGreen));
-                if (holder.descriptionGate.getVisibility() == View.GONE && holder.itemGate.getVisibility() == View.GONE) {
-                    holder.descriptionGate.setVisibility(View.VISIBLE);
-                    holder.itemGate.setVisibility(View.VISIBLE);
-                }
-                break;
-            case "Отмена":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundRed));
-                holder.descriptionGate.setVisibility(View.GONE);
-                holder.itemGate.setVisibility(View.GONE);
-                break;
-            case "Регистрация закончена":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
-                if (holder.descriptionGate.getVisibility() == View.GONE && holder.itemGate.getVisibility() == View.GONE) {
-                    holder.descriptionGate.setVisibility(View.VISIBLE);
-                    holder.itemGate.setVisibility(View.VISIBLE);
-                }
-                break;
-            case "Задержка":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
-                if (holder.descriptionGate.getVisibility() == View.GONE && holder.itemGate.getVisibility() == View.GONE) {
-                    holder.descriptionGate.setVisibility(View.VISIBLE);
-                    holder.itemGate.setVisibility(View.VISIBLE);
-                }
-                break;
-            case "Задержка Позднее прибытие":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
-                if (holder.descriptionGate.getVisibility() == View.GONE && holder.itemGate.getVisibility() == View.GONE) {
-                    holder.descriptionGate.setVisibility(View.VISIBLE);
-                    holder.itemGate.setVisibility(View.VISIBLE);
-                }
-                break;
-            case "Задержка Решение АК":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
-                if (holder.descriptionGate.getVisibility() == View.GONE && holder.itemGate.getVisibility() == View.GONE) {
-                    holder.descriptionGate.setVisibility(View.VISIBLE);
-                    holder.itemGate.setVisibility(View.VISIBLE);
-                }
-                break;
-            case "Задержка Метеоусловия":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
-                if (holder.descriptionGate.getVisibility() == View.GONE && holder.itemGate.getVisibility() == View.GONE) {
-                    holder.descriptionGate.setVisibility(View.VISIBLE);
-                    holder.itemGate.setVisibility(View.VISIBLE);
-                }
-                break;
-            case "Задержка Подготовка рейса":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
-                if (holder.descriptionGate.getVisibility() == View.GONE && holder.itemGate.getVisibility() == View.GONE) {
-                    holder.descriptionGate.setVisibility(View.VISIBLE);
-                    holder.itemGate.setVisibility(View.VISIBLE);
-                }
-                break;
-            case "Задержка Регламент АП":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
-                if (holder.descriptionGate.getVisibility() == View.GONE && holder.itemGate.getVisibility() == View.GONE) {
-                    holder.descriptionGate.setVisibility(View.VISIBLE);
-                    holder.itemGate.setVisibility(View.VISIBLE);
-                }
-                break;
-            case "Посадка закончена":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
-                holder.descriptionGate.setVisibility(View.GONE);
-                holder.itemGate.setVisibility(View.GONE);
-                break;
-            default:
-                holder.descriptionStatus.setVisibility(View.GONE);
-                holder.itemStatus.setVisibility(View.GONE);
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorText));
-                break;
-            }
-        return view;
     }
 
     private ObjectPlane getObjectPlane(int i) {

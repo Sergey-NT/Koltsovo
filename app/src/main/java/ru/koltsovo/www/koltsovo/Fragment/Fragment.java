@@ -194,18 +194,26 @@ public class Fragment extends android.support.v4.app.Fragment {
                 RelativeLayout rl = (RelativeLayout) view;
                 TextView tvPlaneFlight = (TextView) rl.getChildAt(0);
                 TextView tvPlaneDirection = (TextView) rl.getChildAt(1);
-                TextView tvPlaneCombination = (TextView) rl.getChildAt(3);
-                TextView tvPlaneType = (TextView) rl.getChildAt(5);
-                TextView tvPlaneTimePlan = (TextView) rl.getChildAt(7);
-                TextView tvPlaneTimeFact = (TextView) rl.getChildAt(9);
-                TextView tvPlaneStatus = (TextView) rl.getChildAt(10);
-                TextView tvBaggageStatus = (TextView) rl.getChildAt(13);
+                TextView tvPlaneCombination = (TextView) rl.getChildAt(4);
+                TextView tvPlaneType = (TextView) rl.getChildAt(6);
+                TextView tvPlaneTimePlan = (TextView) rl.getChildAt(8);
+                TextView tvPlaneTimeFact = (TextView) rl.getChildAt(10);
+                TextView tvPlaneStatus = (TextView) rl.getChildAt(12);
+                TextView tvBaggageStatus = (TextView) rl.getChildAt(14);
+                TextView tvCheckInBegin = (TextView) rl.getChildAt(16);
+                TextView tvCheckInEnd = (TextView) rl.getChildAt(18);
+                TextView tvCheckIn = (TextView) rl.getChildAt(20);
+                TextView tvGate = (TextView) rl.getChildAt(22);
 
                 String planeCombination = null;
-                String registrationBegin = null;
-                String registrationEnd = null;
+                String checkInBegin = null;
+                String checkInEnd = null;
+                String checkIn = null;
                 String checkInStatus = null;
                 String baggageStatus = null;
+                String boardingEnd = null;
+                String boardingGate = null;
+                String boardingStatus = null;
 
                 String planeFlight = tvPlaneFlight.getText().toString();
                 String planeDirection = tvPlaneDirection.getText().toString();
@@ -213,24 +221,35 @@ public class Fragment extends android.support.v4.app.Fragment {
 
                 String planeRoute = tvPlaneFlight.getTag().toString();
                 String planeRouteStatus = tvPlaneDirection.getTag().toString();
+                String planeAirline = tvPlaneStatus.getTag().toString();
 
                 if (tvPlaneCombination != null) {
                     planeCombination = tvPlaneCombination.getText().toString();
                 }
-                if (tvPlaneTimePlan.getTag() != null) {
-                    registrationBegin = tvPlaneTimePlan.getTag().toString();
+                if (tvCheckInBegin != null) {
+                    checkInBegin = tvCheckInBegin.getText().toString();
                 }
-                if (tvPlaneTimePlan.getTag() != null) {
-                    registrationEnd = tvPlaneTimeFact.getTag().toString();
+                if (tvCheckInEnd != null) {
+                    checkInEnd = tvCheckInEnd.getText().toString();
                 }
-                if (tvPlaneStatus.getTag() != null) {
-                    checkInStatus = tvPlaneStatus.getTag().toString();
+                if (tvCheckIn != null) {
+                    checkIn = tvCheckIn.getText().toString();
+                }
+                if (tvPlaneType.getTag() != null) {
+                    checkInStatus = tvPlaneType.getTag().toString();
                 }
                 if (tvBaggageStatus != null) {
                     baggageStatus = tvBaggageStatus.getText().toString();
                 }
-
-                Log.e(TAG, planeRoute + " " + planeRouteStatus + " " + registrationBegin + " " + registrationEnd + " " + checkInStatus);
+                if (tvPlaneTimePlan.getTag() != null) {
+                    boardingEnd = tvPlaneTimePlan.getTag().toString();
+                }
+                if (tvGate != null) {
+                    boardingGate = tvGate.getText().toString();
+                }
+                if (tvPlaneTimeFact.getTag() != null) {
+                    boardingStatus = tvPlaneTimeFact.getTag().toString();
+                }
 
                 Intent intent = new Intent(getActivity(), InfoActivity.class);
                 intent.putExtra("planeFlight", planeFlight);
@@ -239,7 +258,15 @@ public class Fragment extends android.support.v4.app.Fragment {
                 intent.putExtra("planeRouteStatus", planeRouteStatus);
                 intent.putExtra("planeCombination", planeCombination);
                 intent.putExtra("planeType", planeType);
+                intent.putExtra("planeAirline", planeAirline);
                 intent.putExtra("baggageStatus", baggageStatus);
+                intent.putExtra("checkInBegin", checkInBegin);
+                intent.putExtra("checkInEnd", checkInEnd);
+                intent.putExtra("checkIn", checkIn);
+                intent.putExtra("checkInStatus", checkInStatus);
+                intent.putExtra("boardingEnd", boardingEnd);
+                intent.putExtra("boardingGate", boardingGate);
+                intent.putExtra("boardingStatus", boardingStatus);
                 startActivity(intent);
             }
         });
@@ -257,9 +284,9 @@ public class Fragment extends android.support.v4.app.Fragment {
                 RelativeLayout rl = (RelativeLayout) view;
                 TextView tvPlaneFlight = (TextView) rl.getChildAt(0);
                 TextView tvPlaneDirection = (TextView) rl.getChildAt(1);
-                TextView tvPlaneTimePlan = (TextView) rl.getChildAt(6);
-                TextView tvPlaneTimeFact = (TextView) rl.getChildAt(8);
-                TextView tvPlaneStatus = (TextView) rl.getChildAt(10);
+                TextView tvPlaneTimePlan = (TextView) rl.getChildAt(8);
+                TextView tvPlaneTimeFact = (TextView) rl.getChildAt(10);
+                TextView tvPlaneStatus = (TextView) rl.getChildAt(12);
 
                 String planeFlight = tvPlaneFlight.getText().toString();
                 String planeDirection = tvPlaneDirection.getText().toString();
@@ -471,6 +498,7 @@ public class Fragment extends android.support.v4.app.Fragment {
             String planeRoute = null;
             String planeRouteStatus = null;
             String planeCombination = null;
+            String planeAirline = null;
             String baggageStatus = null;
             String registrationBegin = null;
             String registrationEnd = null;
@@ -501,6 +529,7 @@ public class Fragment extends android.support.v4.app.Fragment {
                                     planeTimeFact = parser.getAttributeValue(null, "dr");
                                     planeStatus = parser.getAttributeValue(null, "statuzz");
                                     planeCombination = parser.getAttributeValue(null, "sovm");
+                                    planeAirline = parser.getAttributeValue(null, "m2");
                                     planeFlight = flightName + "-" + flightNumber;
                                     planeType = planeTypeArrive;
                                 } else if (parser.getName().compareTo("route") == 0) {
@@ -520,6 +549,7 @@ public class Fragment extends android.support.v4.app.Fragment {
                                     planeTimeFact = parser.getAttributeValue(null, "dr");
                                     planeStatus = parser.getAttributeValue(null, "statuzz");
                                     planeCombination = parser.getAttributeValue(null, "sovm");
+                                    planeAirline = parser.getAttributeValue(null, "m2");
                                     planeFlight = flightName + "-" + flightNumber;
                                     planeType = planeTypeDeparture;
                                 } else if (parser.getName().compareTo("route") == 0) {
@@ -539,8 +569,7 @@ public class Fragment extends android.support.v4.app.Fragment {
                             }
                         case XmlPullParser.END_TAG:
                             if (parser.getName().compareTo("flight") == 0) {
-                                Log.e(TAG, " " + planeFlight + " " + planeDestination + " " + planeType + " " + planeTimePlan + " " + planeTimeFact + " " + planeStatus + " " + baggageStatus + " " + checkIn + " " + planeCombination + " " + planeRoute);
-                                list.add(new ObjectPlane(planeFlight, planeDestination, planeType, planeTimePlan, planeTimeFact, planeStatus, false, baggageStatus, gate, checkIn, planeCombination, planeRoute, planeRouteStatus, registrationBegin, registrationEnd, checkInStatus, boardingEnd, boardingStatus));
+                                list.add(new ObjectPlane(planeFlight, planeDestination, planeType, planeTimePlan, planeTimeFact, planeStatus, false, baggageStatus, gate, checkIn, planeCombination, planeRoute, planeRouteStatus, registrationBegin, registrationEnd, checkInStatus, boardingEnd, boardingStatus, planeAirline));
                             }
                             break;
 
@@ -578,105 +607,6 @@ public class Fragment extends android.support.v4.app.Fragment {
             progressDialogDismiss();
         }
     }
-
-//    private class parsingHTML extends AsyncTask<String, Void, List<ObjectPlane>> {
-//        @Override
-//        protected List<ObjectPlane> doInBackground(String... html) {
-//            String planeFlight = null;
-//            String planeDirection = null;
-//            String planeType = null;
-//            String planeTimePlan = null;
-//            String planeTimeFact = null;
-//            String planeStatus = null;
-//
-//            list.clear();
-//
-//            try {
-//                String data = html[0];
-//                Document doc = Jsoup.parse(data);
-//                Element table = doc.getElementsByTag("table").first();
-//                Elements rows = table.select("tr");
-//
-//                if (rows.size() < 5) {
-//                    getActivity().runOnUiThread(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            progressDialogDismiss();
-//                            setErrorTextAndButton();
-//                        }
-//                    });
-//                } else {
-//                    for (int i = 5; i < rows.size(); i++) {
-//                        Element row = rows.get(i);
-//                        Elements cols = row.select("td");
-//
-//                        for (int y = 0; y < cols.size() - 1; y++) {
-//                            Element col = cols.get(y);
-//                            switch (y) {
-//                                case 0:
-//                                    planeFlight = col.text();
-//                                    break;
-//                                case 1:
-//                                    planeDirection = col.text();
-//                                    break;
-//                                case 2:
-//                                    planeType = col.text();
-//                                    break;
-//                                case 3:
-//                                    planeTimePlan = col.text();
-//                                    break;
-//                                case 4:
-//                                    planeTimeFact = col.text();
-//                                    break;
-//                                case 5:
-//                                    planeStatus = col.text();
-//                                    break;
-//                            }
-//                        }
-//                        if (Constants.LOG_ON) {
-//                            Log.v(TAG + " " + direction, planeFlight + " " + planeDirection + " " + planeType + " " + planeTimePlan + " " + planeTimeFact + " " + planeStatus);
-//                        }
-//                        list.add(new ObjectPlane(planeFlight, planeDirection, planeType, planeTimePlan, planeTimeFact, planeStatus, false));
-//                    }
-//                }
-//            } catch (Exception e) {
-//                if (Constants.LOG_ON) {
-//                    Log.d(TAG, "Exception", e);
-//                }
-//                getActivity().runOnUiThread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        progressDialogDismiss();
-//                        setErrorTextAndButton();
-//                    }
-//                });
-//            }
-//            return list;
-//        }
-//
-//        @Override
-//        protected void onPostExecute(List<ObjectPlane> list) {
-//            super.onPostExecute(list);
-//
-//            if (list == null || list.size() == 0) {
-//                setErrorTextAndButton();
-//            } else {
-//                if (adapter == null) {
-//                    adapter = new ObjectPlaneAdapter(getActivity(), list);
-//                    listView.setAdapter(adapter);
-//                    adapter.getFilter().filter(editText.getText().toString());
-//                    getQueryFromServer();
-//                } else {
-//                    adapter.notifyDataSetChanged();
-//                    getQueryFromServer();
-//                }
-//            }
-//            if (swipeRefreshLayout != null) {
-//                swipeRefreshLayout.setRefreshing(false);
-//            }
-//            progressDialogDismiss();
-//        }
-//    }
 
     private boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);

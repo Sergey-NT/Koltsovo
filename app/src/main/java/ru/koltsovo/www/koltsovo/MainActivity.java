@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         task.execute();
 
         if (direction != null) {
-            if (direction.equals("arrival")) {
+            if (direction.equals("a")) {
                 viewPager.setCurrentItem(Constants.TAB_ONE);
             } else {
                 viewPager.setCurrentItem(Constants.TAB_TWO);

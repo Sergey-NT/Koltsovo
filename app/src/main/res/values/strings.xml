@@ -10,6 +10,8 @@
     <string name="plane_desc_gate">Выход:</string>
     <string name="plane_desc_check_in">Стойки регистрации:</string>
     <string name="plane_desc_flight">Рейс</string>
+    <string name="plane_desc_check_in_begin">Начало регистрации:</string>
+    <string name="plane_desc_check_in_end">Окончание регистрации:</string>
     <string name="about_developer">Разработчик приложения: <a href="http://vk.com/id5170658" title="Сергей Ухарский">Сергей Ухарский</a></string>
     <string name="about_version">Версия приложения: 1.0.9</string>
     <string name="about_text">В приложении используются следующие иконки:
@@ -17,9 +19,20 @@
     </string>
     <string name="about_text_content">Источник данных: <a href="http://www.koltsovo.ru" title="www.koltsovo.ru">www.koltsovo.ru</a></string>
     <string name="info_route_desc">Маршрут</string>
+    <string name="info_route_note_desc">* - В скобках указано время Екатеринбурга</string>
+    <string name="info_airline_desc">Авиакомпания</string>
     <string name="info_combination_desc">Информация о рейсе</string>
     <string name="info_type_desc">Тип воздушного судна</string>
     <string name="info_baggage_desc">Багаж</string>
+    <string name="info_check_in_desc">Регистрация</string>
+    <string name="info_check_in_begin">Начало:</string>
+    <string name="info_check_in_end">Окончание:</string>
+    <string name="info_check_in">Стойка регистрации:</string>
+    <string name="info_check_in_status">Состояние:</string>
+    <string name="info_boarding_desc">Посадка</string>
+    <string name="info_boarding_end_desc">Окончание:</string>
+    <string name="info_boarding_gate_desc">Выход:</string>
+    <string name="info_boarding_status_desc">Состояние:</string>
     <string name="dialog_title">Информация</string>
     <string name="dialog_title_new_version">Новая версия</string>
     <string name="dialog_message">В тестовом режиме запущено Push уведомление об изменениях в статусе выбранного рейса. Для того, чтоб воспользоваться данной функцией, удерживайте выбранный рейс до вибрации телефона. Чтобы отключить отслеживание повторно удержите рейс.</string>

@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -35,7 +34,15 @@ public class InfoActivity extends AppCompatActivity {
         String planeRoute = getIntent().getExtras().getString("planeRoute");
         String planeRouteStatus = getIntent().getExtras().getString("planeRouteStatus");
         String planeCombination = getIntent().getExtras().getString("planeCombination");
+        String planeAirline = getIntent().getExtras().getString("planeAirline");
         String baggageStatus = getIntent().getExtras().getString("baggageStatus");
+        String checkInBegin = getIntent().getExtras().getString("checkInBegin");
+        String checkInEnd = getIntent().getExtras().getString("checkInEnd");
+        String checkIn = getIntent().getExtras().getString("checkIn");
+        String checkInStatus = getIntent().getExtras().getString("checkInStatus");
+        String boardingEnd = getIntent().getExtras().getString("boardingEnd");
+        String boardingGate = getIntent().getExtras().getString("boardingGate");
+        String boardingStatus = getIntent().getExtras().getString("boardingStatus");
 
         String subtitle = getString(R.string.menu_info_subtitle) + " "  + planeFlight + " " + planeDirection;
 
@@ -44,6 +51,8 @@ public class InfoActivity extends AppCompatActivity {
         LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayoutRoute);
         CardView cardViewCombination = (CardView) findViewById(R.id.cardViewCombination);
         CardView cardViewBaggageStatus = (CardView) findViewById(R.id.cardViewBaggage);
+        CardView cardViewCheckIn = (CardView) findViewById(R.id.cardViewCheckIn);
+        CardView cardViewBoarding = (CardView) findViewById(R.id.cardViewBoarding);
 
         assert planeRoute != null;
         assert planeRouteStatus != null;
@@ -52,6 +61,8 @@ public class InfoActivity extends AppCompatActivity {
 
         TextView tvPlaneType = (TextView) findViewById(R.id.tvType);
         tvPlaneType.setText(planeType);
+        TextView tvPlaneAirline = (TextView) findViewById(R.id.tvPlaneAirline);
+        tvPlaneAirline.setText(planeAirline);
 
         if (planeCombination == null || planeCombination.length() < 2) {
             cardViewCombination.setVisibility(View.GONE);
@@ -59,11 +70,36 @@ public class InfoActivity extends AppCompatActivity {
             TextView tvCombination = (TextView) findViewById(R.id.tvPlaneCombination);
             tvCombination.setText(planeCombination);
         }
+
         if (baggageStatus == null || baggageStatus.length() < 2) {
             cardViewBaggageStatus.setVisibility(View.GONE);
         } else {
             TextView tvBaggageStatus = (TextView) findViewById(R.id.tvBaggage);
             tvBaggageStatus.setText(baggageStatus);
+        }
+
+        if (checkInBegin == null || checkInBegin.length() < 2) {
+            cardViewCheckIn.setVisibility(View.GONE);
+        } else {
+            TextView tvCheckInBegin = (TextView) findViewById(R.id.tvCheckInBegin);
+            TextView tvCheckInEnd = (TextView) findViewById(R.id.tvCheckInEnd);
+            TextView tvCheckIn = (TextView) findViewById(R.id.tvCheckIn);
+            TextView tvCheckInStatus = (TextView) findViewById(R.id.tvCheckInStatus);
+            tvCheckInBegin.setText(checkInBegin);
+            tvCheckInEnd.setText(checkInEnd);
+            tvCheckIn.setText(checkIn);
+            tvCheckInStatus.setText(checkInStatus);
+        }
+
+        if (boardingEnd == null || boardingEnd.length() < 2) {
+            cardViewBoarding.setVisibility(View.GONE);
+        } else {
+            TextView tvBoardingEnd = (TextView) findViewById(R.id.tvBoardingEnd);
+            TextView tvBoardingGate = (TextView) findViewById(R.id.tvBoardingGate);
+            TextView tvBoardingStatus = (TextView) findViewById(R.id.tvBoardingStatus);
+            tvBoardingEnd.setText(boardingEnd);
+            tvBoardingGate.setText(boardingGate);
+            tvBoardingStatus.setText(boardingStatus);
         }
 
         addRouteInfoToView(linearLayout, subStringRoute, subStringRouteStatus);
@@ -74,8 +110,6 @@ public class InfoActivity extends AppCompatActivity {
 
         for (int i=0; i<countRoute; i++) {
             String[] subRouteStatus = subStringRouteStatus[i].split("(_!_)");
-            int countSubRouteStatus = subRouteStatus.length;
-            Log.e(TAG, "length= "+ countSubRouteStatus);
             TextView tvRoute = new TextView(this);
             tvRoute.setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             tvRoute.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryText));
@@ -84,8 +118,8 @@ public class InfoActivity extends AppCompatActivity {
             for (String item : subRouteStatus) {
                 TextView tvRouteStatus = new TextView(this);
                 tvRouteStatus.setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                item = item.replace(" )(",")");
-                item = item.replace(" )",")");
+                item = item.replace(" )(",")*");
+                item = item.replace(" )",")*");
                 item = item.replace(")О","О");
                 item = item.replace(")П","П");
                 item = item.replace("  "," ");

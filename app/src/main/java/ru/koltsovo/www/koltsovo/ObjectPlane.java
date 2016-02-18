@@ -14,6 +14,7 @@ public class ObjectPlane {
     public String planeCombination;
     public String planeRoute;
     public String planeRouteStatus;
+    public String planeAirline;
     public String registrationBegin;
     public String registrationEnd;
     public String checkInStatus;
@@ -21,7 +22,7 @@ public class ObjectPlane {
     public String boardingEnd;
     public boolean planeTracking;
 
-    public ObjectPlane(String planeFlight, String planeDirection, String planeType, String planeTimePlan, String planeTimeFact, String planeStatus, boolean planeTracking, String planeBaggageStatus, String planeGate, String planeCheckIn, String planeCombination, String planeRoute, String planeRouteStatus, String registrationBegin, String registrationEnd, String checkInStatus, String boardingEnd, String boardingStatus) {
+    public ObjectPlane(String planeFlight, String planeDirection, String planeType, String planeTimePlan, String planeTimeFact, String planeStatus, boolean planeTracking, String planeBaggageStatus, String planeGate, String planeCheckIn, String planeCombination, String planeRoute, String planeRouteStatus, String registrationBegin, String registrationEnd, String checkInStatus, String boardingEnd, String boardingStatus, String planeAirline) {
         this.planeFlight = planeFlight;
         this.planeDirection = planeDirection;
         this.planeType = planeType;
@@ -35,6 +36,7 @@ public class ObjectPlane {
         this.planeCombination = planeCombination;
         this.planeRoute = planeRoute;
         this.planeRouteStatus = planeRouteStatus;
+        this.planeAirline = planeAirline;
         this.registrationBegin = registrationBegin;
         this.registrationEnd = registrationEnd;
         this.checkInStatus = checkInStatus;
@@ -90,6 +92,10 @@ public class ObjectPlane {
         return planeRouteStatus;
     }
 
+    public String getPlaneAirline() {
+        return planeAirline;
+    }
+
     public String getRegistrationBegin() {
         return registrationBegin;
     }
@@ -116,15 +122,5 @@ public class ObjectPlane {
 
     public void setPlaneTracking(boolean planeTracking) {
         this.planeTracking = planeTracking;
-    }
-
-    public String getShotPlaneFlight() {
-        String planeFlight;
-        String shotPlaneFlight;
-
-        planeFlight = getPlaneFlight();
-        shotPlaneFlight = planeFlight.substring(0,2);
-
-        return shotPlaneFlight;
     }
 }
