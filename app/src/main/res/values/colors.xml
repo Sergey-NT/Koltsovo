@@ -10,6 +10,7 @@
     <color name="colorBackgroundGreen">#C8E6C9</color>
     <color name="colorBackgroundRed">#F8BBD0</color>
     <color name="colorBackgroundYellow">#FFF9C4</color>
+    <color name="colorBackgroundGrey">#EEEEEE</color>
     <color name="colorAccentOrange">#FF5722</color>
     <color name="colorAccentBlue">#448AFF</color>
 </resources>

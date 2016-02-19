@@ -15,7 +15,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -579,6 +578,8 @@ public class Fragment extends android.support.v4.app.Fragment {
                     parser.next();
                 }
             } catch (XmlPullParserException | IOException e) {
+                progressDialogDismiss();
+                setErrorTextAndButton();
                 e.printStackTrace();
             }
             return list;

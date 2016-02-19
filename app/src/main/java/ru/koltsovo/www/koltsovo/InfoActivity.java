@@ -11,12 +11,12 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
 public class InfoActivity extends AppCompatActivity {
 
     private static final int LAYOUT = R.layout.activity_info;
-    private static final String TAG = "InfoActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +48,7 @@ public class InfoActivity extends AppCompatActivity {
 
         initToolbar(R.string.menu_info_title, subtitle);
 
-        LinearLayout linearLayout = (LinearLayout) findViewById(R.id.linearLayoutRoute);
+        LinearLayout linearLayoutRoute = (LinearLayout) findViewById(R.id.linearLayoutRoute);
         CardView cardViewCombination = (CardView) findViewById(R.id.cardViewCombination);
         CardView cardViewBaggageStatus = (CardView) findViewById(R.id.cardViewBaggage);
         CardView cardViewCheckIn = (CardView) findViewById(R.id.cardViewCheckIn);
@@ -78,7 +78,7 @@ public class InfoActivity extends AppCompatActivity {
             tvBaggageStatus.setText(baggageStatus);
         }
 
-        if (checkInBegin == null || checkInBegin.length() < 2) {
+        if (checkInBegin == null || checkInBegin.length() < 2 || checkInEnd == null || checkIn == null || checkInStatus == null) {
             cardViewCheckIn.setVisibility(View.GONE);
         } else {
             TextView tvCheckInBegin = (TextView) findViewById(R.id.tvCheckInBegin);
@@ -91,7 +91,7 @@ public class InfoActivity extends AppCompatActivity {
             tvCheckInStatus.setText(checkInStatus);
         }
 
-        if (boardingEnd == null || boardingEnd.length() < 2) {
+        if (boardingEnd == null || boardingEnd.length() < 2 || boardingGate == null || boardingStatus == null) {
             cardViewBoarding.setVisibility(View.GONE);
         } else {
             TextView tvBoardingEnd = (TextView) findViewById(R.id.tvBoardingEnd);
@@ -102,7 +102,7 @@ public class InfoActivity extends AppCompatActivity {
             tvBoardingStatus.setText(boardingStatus);
         }
 
-        addRouteInfoToView(linearLayout, subStringRoute, subStringRouteStatus);
+        addRouteInfoToView(linearLayoutRoute, subStringRoute, subStringRouteStatus);
     }
 
     private void addRouteInfoToView(LinearLayout linearLayout, String[] subStringRoute, String[] subStringRouteStatus) {
@@ -118,11 +118,7 @@ public class InfoActivity extends AppCompatActivity {
             for (String item : subRouteStatus) {
                 TextView tvRouteStatus = new TextView(this);
                 tvRouteStatus.setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                item = item.replace(" )(",")*");
-                item = item.replace(" )",")*");
-                item = item.replace(")О","О");
-                item = item.replace(")П","П");
-                item = item.replace("  "," ");
+                item = item.replace(" )(",")*").replace(" )",")*").replace(")О","О").replace(")П","П").replace("  "," ");
                 tvRouteStatus.setText(item);
                 tvRouteStatus.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorSecondaryText));
                 linearLayout.addView(tvRouteStatus);
@@ -147,5 +143,17 @@ public class InfoActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        GoogleAnalytics.getInstance(this).reportActivityStart(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        GoogleAnalytics.getInstance(this).reportActivityStop(this);
     }
 }
