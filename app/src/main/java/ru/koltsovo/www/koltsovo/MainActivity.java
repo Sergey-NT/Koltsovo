@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
         task.execute();
 
         if (direction != null) {
-            if (direction.equals("a")) {
+            if (direction.equals("arrival")) {
                 viewPager.setCurrentItem(Constants.TAB_ONE);
             } else {
                 viewPager.setCurrentItem(Constants.TAB_TWO);
@@ -238,6 +238,8 @@ public class MainActivity extends AppCompatActivity {
                 .addTestDevice("CF3563AAE9DCDD827CD723C834CAEC4C")
                 .addTestDevice("07B4BB1F6E99054B7ED99CF142644BBD")
                 .addTestDevice("3E1C4AF79C36409B4E180B56429BD5AE")
+                .addTestDevice("10F044BAE221D85007AC03C8E28ED870")
+                .addTestDevice("ACEEAD14FB750096A2CBF9C245C1EF33")
                 .build();
 
         adView.loadAd(request);

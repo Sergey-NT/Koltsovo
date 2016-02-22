@@ -161,6 +161,12 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
             holder.imageViewLogo.setVisibility(View.VISIBLE);
         }
 
+        if (holder.itemCombination.length() > 0) {
+            holder.itemCombination.setVisibility(View.VISIBLE);
+        } else {
+            holder.itemCombination.setVisibility(View.GONE);
+        }
+
         holder.itemStatus.setVisibility(View.VISIBLE);
         holder.descriptionStatus.setVisibility(View.VISIBLE);
         holder.itemBaggageStatus.setVisibility(View.GONE);
@@ -177,8 +183,10 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
         switch (holder.itemStatus.getText().toString()) {
             case "Прибыл":
                 holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundGreen));
-                holder.itemBaggageStatus.setVisibility(View.VISIBLE);
-                holder.descriptionBaggage.setVisibility(View.VISIBLE);
+                if (holder.itemBaggageStatus.length() > 1) {
+                    holder.itemBaggageStatus.setVisibility(View.VISIBLE);
+                    holder.descriptionBaggage.setVisibility(View.VISIBLE);
+                }
                 break;
             case "Вылетел":
                 holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundGreen));

@@ -43,7 +43,7 @@
                 android:background="@color/colorPrimary"
                 android:padding="10sp"
                 android:text="@string/button_ads_disable"
-                android:textSize="17sp"
+                android:textSize="18sp"
                 android:textColor="@color/colorText" />
 
             <Button
@@ -59,7 +59,7 @@
                 android:background="@color/colorPrimary"
                 android:padding="10sp"
                 android:text="@string/button_ads_disable_recovery"
-                android:textSize="17sp"
+                android:textSize="18sp"
                 android:textColor="@color/colorText" />
 
             <Button
@@ -75,7 +75,7 @@
                 android:background="@color/colorPrimary"
                 android:padding="10sp"
                 android:text="@string/button_license"
-                android:textSize="17sp"
+                android:textSize="18sp"
                 android:textColor="@color/colorText" />
 
             <Button
@@ -91,7 +91,7 @@
                 android:background="@color/colorPrimary"
                 android:padding="10sp"
                 android:text="@string/button_feedback"
-                android:textSize="17sp"
+                android:textSize="18sp"
                 android:textColor="@color/colorText" />
 
             <TextView
@@ -102,7 +102,7 @@
                 android:paddingLeft="15sp"
                 android:paddingRight="15sp"
                 android:text="@string/about_text"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textColor="@color/colorPrimaryText"
                 android:textColorLink="@color/colorSecondaryText" />
 
@@ -115,7 +115,7 @@
                 android:paddingLeft="15sp"
                 android:paddingRight="15sp"
                 android:text="@string/about_text_content"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textColor="@color/colorPrimaryText"
                 android:textColorLink="@color/colorSecondaryText" />
 
@@ -128,7 +128,7 @@
                 android:paddingLeft="15sp"
                 android:paddingRight="15sp"
                 android:text="@string/about_developer"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textColor="@color/colorPrimaryText"
                 android:textColorLink="@color/colorSecondaryText" />
 
@@ -140,7 +140,7 @@
                 android:paddingLeft="15sp"
                 android:paddingRight="15sp"
                 android:text="@string/about_version"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textColor="@color/colorPrimaryText" />
 
         </LinearLayout>

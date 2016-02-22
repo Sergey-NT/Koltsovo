@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:paddingTop="15sp"
     android:paddingBottom="15sp"
-    android:paddingLeft="20sp"
-    android:paddingRight="20sp" >
+    android:paddingLeft="25sp"
+    android:paddingRight="25sp" >
 
     <TextView
         android:id="@+id/tvPlaneFlight"
@@ -23,8 +23,8 @@
         android:layout_height="wrap_content"
         android:layout_toEndOf="@+id/tvPlaneFlight"
         android:layout_toRightOf="@+id/tvPlaneFlight"
-        android:layout_marginStart="7sp"
-        android:layout_marginLeft="7sp"
+        android:layout_marginStart="9sp"
+        android:layout_marginLeft="9sp"
         android:textSize="26sp"
         android:textColor="@color/colorPrimaryText"
         android:textStyle="bold" />
@@ -41,11 +41,32 @@
         android:contentDescription="@string/image_tracking"
         android:visibility="gone" />
 
+    <ImageView
+        android:id="@+id/imageLogo"
+        android:layout_width="180sp"
+        android:layout_height="60sp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:contentDescription="@string/image_logo" />
+
+    <TextView
+        android:id="@+id/tvPlaneCombination"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvPlaneDirection"
+        android:layout_toEndOf="@+id/tvPlaneFlight"
+        android:layout_toRightOf="@+id/tvPlaneFlight"
+        android:layout_marginStart="9sp"
+        android:layout_marginLeft="9sp"
+        android:textSize="14sp"
+        android:textColor="@color/colorPrimaryText" />
+
     <TextView
         android:id="@+id/tvPlaneTypeDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvPlaneDirection"
+        android:layout_below="@+id/tvPlaneCombination"
         android:text="@string/plane_desc_type"
         android:textSize="18sp"
         android:textColor="@color/colorSecondaryText" />
@@ -54,11 +75,11 @@
         android:id="@+id/tvPlaneType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvPlaneDirection"
+        android:layout_below="@+id/tvPlaneCombination"
         android:layout_toEndOf="@+id/tvPlaneTypeDesc"
         android:layout_toRightOf="@+id/tvPlaneTypeDesc"
-        android:layout_marginStart="7sp"
-        android:layout_marginLeft="7sp"
+        android:layout_marginStart="9sp"
+        android:layout_marginLeft="9sp"
         android:textSize="18sp"
         android:textColor="@color/colorPrimaryText" />
 
@@ -78,8 +99,8 @@
         android:layout_below="@+id/tvPlaneType"
         android:layout_toEndOf="@+id/tvPlaneTimePlanDesc"
         android:layout_toRightOf="@+id/tvPlaneTimePlanDesc"
-        android:layout_marginStart="7sp"
-        android:layout_marginLeft="7sp"
+        android:layout_marginStart="9sp"
+        android:layout_marginLeft="9sp"
         android:textSize="18sp"
         android:textColor="@color/colorPrimaryText" />
 
@@ -87,11 +108,7 @@
         android:id="@+id/tvPlaneTimeFactDesc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvPlaneType"
-        android:layout_toEndOf="@+id/tvPlaneTimePlan"
-        android:layout_toRightOf="@+id/tvPlaneTimePlan"
-        android:layout_marginStart="15sp"
-        android:layout_marginLeft="15sp"
+        android:layout_below="@+id/tvPlaneTimePlan"
         android:text="@string/plane_desc_time_fast"
         android:textSize="18sp"
         android:textColor="@color/colorSecondaryText" />
@@ -100,11 +117,11 @@
         android:id="@+id/tvPlaneTimeFact"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvPlaneType"
+        android:layout_below="@+id/tvPlaneTimePlan"
         android:layout_toEndOf="@+id/tvPlaneTimeFactDesc"
         android:layout_toRightOf="@+id/tvPlaneTimeFactDesc"
-        android:layout_marginStart="7sp"
-        android:layout_marginLeft="7sp"
+        android:layout_marginStart="9sp"
+        android:layout_marginLeft="9sp"
         android:textSize="18sp"
         android:textColor="@color/colorPrimaryText" />
 
@@ -124,18 +141,114 @@
         android:layout_below="@+id/tvPlaneTimeFact"
         android:layout_toEndOf="@+id/tvPlaneStatusDesc"
         android:layout_toRightOf="@+id/tvPlaneStatusDesc"
-        android:layout_marginStart="7sp"
-        android:layout_marginLeft="7sp"
+        android:layout_marginStart="9sp"
+        android:layout_marginLeft="9sp"
         android:textSize="18sp"
         android:textColor="@color/colorPrimaryText" />
 
-    <ImageView
-        android:id="@+id/imageLogo"
-        android:layout_width="170sp"
-        android:layout_height="75sp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:contentDescription="@string/image_logo" />
+    <TextView
+        android:id="@+id/tvPlaneBaggageDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvPlaneStatus"
+        android:text="@string/plane_desc_baggage"
+        android:textSize="18sp"
+        android:textColor="@color/colorSecondaryText" />
+
+    <TextView
+        android:id="@+id/tvPlaneBaggage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvPlaneStatus"
+        android:layout_toEndOf="@+id/tvPlaneBaggageDesc"
+        android:layout_toRightOf="@+id/tvPlaneBaggageDesc"
+        android:layout_marginStart="9sp"
+        android:layout_marginLeft="9sp"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimaryText" />
+
+    <TextView
+        android:id="@+id/tvPlaneCheckInBeginDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvPlaneBaggage"
+        android:text="@string/plane_desc_check_in_begin"
+        android:textSize="18sp"
+        android:textColor="@color/colorSecondaryText" />
+
+    <TextView
+        android:id="@+id/tvPlaneCheckInBegin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvPlaneBaggage"
+        android:layout_toEndOf="@+id/tvPlaneCheckInBeginDesc"
+        android:layout_toRightOf="@+id/tvPlaneCheckInBeginDesc"
+        android:layout_marginStart="9sp"
+        android:layout_marginLeft="9sp"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimaryText" />
+
+    <TextView
+        android:id="@+id/tvPlaneCheckInEndDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvPlaneCheckInBegin"
+        android:text="@string/plane_desc_check_in_end"
+        android:textSize="18sp"
+        android:textColor="@color/colorSecondaryText" />
+
+    <TextView
+        android:id="@+id/tvPlaneCheckInEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvPlaneCheckInBegin"
+        android:layout_toEndOf="@+id/tvPlaneCheckInEndDesc"
+        android:layout_toRightOf="@+id/tvPlaneCheckInEndDesc"
+        android:layout_marginStart="9sp"
+        android:layout_marginLeft="9sp"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimaryText" />
+
+    <TextView
+        android:id="@+id/tvPlaneCheckInDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvPlaneCheckInEnd"
+        android:text="@string/plane_desc_check_in"
+        android:textSize="18sp"
+        android:textColor="@color/colorSecondaryText" />
+
+    <TextView
+        android:id="@+id/tvPlaneCheckIn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvPlaneCheckInEnd"
+        android:layout_toEndOf="@+id/tvPlaneCheckInDesc"
+        android:layout_toRightOf="@+id/tvPlaneCheckInDesc"
+        android:layout_marginStart="9sp"
+        android:layout_marginLeft="9sp"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimaryText" />
+
+    <TextView
+        android:id="@+id/tvPlaneGateDesc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvPlaneCheckIn"
+        android:text="@string/plane_desc_gate"
+        android:textSize="18sp"
+        android:textColor="@color/colorSecondaryText" />
+
+    <TextView
+        android:id="@+id/tvPlaneGate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvPlaneCheckIn"
+        android:layout_toEndOf="@+id/tvPlaneGateDesc"
+        android:layout_toRightOf="@+id/tvPlaneGateDesc"
+        android:layout_marginStart="9sp"
+        android:layout_marginLeft="9sp"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimaryText" />
 
 </RelativeLayout>

@@ -388,7 +388,7 @@ public class Fragment extends android.support.v4.app.Fragment {
             textView.setVisibility(View.GONE);
             btnRepeat.setVisibility(View.GONE);
             listView.setVisibility(View.VISIBLE);
-            getHTML(direction);
+            getXML(direction.substring(0,1));
         } else {
             setErrorTextAndButton();
         }
@@ -407,7 +407,7 @@ public class Fragment extends android.support.v4.app.Fragment {
     }
 
 
-    private void getHTML(final String direction) {
+    private void getXML(final String direction) {
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage(getString(R.string.main_load_dialog));
         progressDialog.setCancelable(false);
@@ -638,7 +638,7 @@ public class Fragment extends android.support.v4.app.Fragment {
                     textView.setVisibility(View.GONE);
                     btnRepeat.setVisibility(View.GONE);
                     listView.setVisibility(View.VISIBLE);
-                    getHTML(direction);
+                    getXML(direction.substring(0,1));
                 }
             }
         });

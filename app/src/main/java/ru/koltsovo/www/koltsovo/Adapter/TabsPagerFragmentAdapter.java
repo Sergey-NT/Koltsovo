@@ -29,16 +29,16 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
     public android.support.v4.app.Fragment getItem(int position) {
         switch (position) {
             case 0:
-                if (direction != null && direction.equals("a")) {
-                    return Fragment.getInstance("a", planeNumber);
+                if (direction != null && direction.equals("arrival")) {
+                    return Fragment.getInstance("arrival", planeNumber);
                 } else {
-                    return Fragment.getInstance("a", null);
+                    return Fragment.getInstance("arrival", null);
                 }
             case 1:
-                if (direction != null && direction.equals("d")) {
-                    return Fragment.getInstance("d", planeNumber);
+                if (direction != null && direction.equals("departure")) {
+                    return Fragment.getInstance("departure", planeNumber);
                 } else {
-                    return Fragment.getInstance("d", null);
+                    return Fragment.getInstance("departure", null);
                 }
         }
         return null;

@@ -51,7 +51,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/info_airline_desc"
                         android:layout_marginBottom="10sp"
-                        android:textSize="17sp"
+                        android:textSize="26sp"
                         android:textStyle="bold"
                         android:textColor="@color/colorPrimaryText" />
 
@@ -59,7 +59,7 @@
                         android:id="@+id/tvPlaneAirline"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorSecondaryText" />
 
                 </LinearLayout>
@@ -86,7 +86,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/info_combination_desc"
                         android:layout_marginBottom="10sp"
-                        android:textSize="17sp"
+                        android:textSize="26sp"
                         android:textStyle="bold"
                         android:textColor="@color/colorPrimaryText" />
 
@@ -94,7 +94,7 @@
                         android:id="@+id/tvPlaneCombination"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorSecondaryText" />
 
                 </LinearLayout>
@@ -121,7 +121,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/info_type_desc"
                         android:layout_marginBottom="10sp"
-                        android:textSize="17sp"
+                        android:textSize="26sp"
                         android:textStyle="bold"
                         android:textColor="@color/colorPrimaryText" />
 
@@ -129,7 +129,7 @@
                         android:id="@+id/tvType"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorSecondaryText" />
 
                 </LinearLayout>
@@ -155,7 +155,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/info_route_desc"
-                        android:textSize="17sp"
+                        android:textSize="26sp"
                         android:textStyle="bold"
                         android:textColor="@color/colorPrimaryText" />
 
@@ -164,7 +164,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/info_route_note_desc"
-                        android:textSize="10sp"
+                        android:textSize="14sp"
                         android:layout_marginBottom="10sp"
                         android:textColor="@color/colorSecondaryText"
                         tools:ignore="SmallSp" />
@@ -193,7 +193,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/info_baggage_desc"
                         android:layout_marginBottom="10sp"
-                        android:textSize="17sp"
+                        android:textSize="26sp"
                         android:textStyle="bold"
                         android:textColor="@color/colorPrimaryText" />
 
@@ -201,7 +201,7 @@
                         android:id="@+id/tvBaggage"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorSecondaryText" />
 
                 </LinearLayout>
@@ -228,7 +228,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/info_check_in_desc"
                         android:layout_marginBottom="10sp"
-                        android:textSize="17sp"
+                        android:textSize="26sp"
                         android:textStyle="bold"
                         android:textColor="@color/colorPrimaryText" />
 
@@ -237,14 +237,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/info_check_in_begin"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorPrimaryText" />
 
                     <TextView
                         android:id="@+id/tvCheckInBegin"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorSecondaryText" />
 
                     <TextView
@@ -252,14 +252,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/info_check_in_end"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorPrimaryText" />
 
                     <TextView
                         android:id="@+id/tvCheckInEnd"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorSecondaryText" />
 
                     <TextView
@@ -267,14 +267,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/info_check_in"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorPrimaryText" />
 
                     <TextView
                         android:id="@+id/tvCheckIn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorSecondaryText" />
 
                     <TextView
@@ -282,14 +282,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/info_check_in_status"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorPrimaryText" />
 
                     <TextView
                         android:id="@+id/tvCheckInStatus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorSecondaryText" />
 
                 </LinearLayout>
@@ -316,7 +316,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/info_boarding_desc"
                         android:layout_marginBottom="10sp"
-                        android:textSize="17sp"
+                        android:textSize="26sp"
                         android:textStyle="bold"
                         android:textColor="@color/colorPrimaryText" />
 
@@ -325,14 +325,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/info_boarding_end_desc"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorPrimaryText" />
 
                     <TextView
                         android:id="@+id/tvBoardingEnd"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorSecondaryText" />
 
                     <TextView
@@ -340,14 +340,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/info_boarding_gate_desc"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorPrimaryText" />
 
                     <TextView
                         android:id="@+id/tvBoardingGate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorSecondaryText" />
 
                     <TextView
@@ -355,14 +355,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/info_boarding_status_desc"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorPrimaryText" />
 
                     <TextView
                         android:id="@+id/tvBoardingStatus"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textSize="14sp"
+                        android:textSize="18sp"
                         android:textColor="@color/colorSecondaryText" />
 
                 </LinearLayout>

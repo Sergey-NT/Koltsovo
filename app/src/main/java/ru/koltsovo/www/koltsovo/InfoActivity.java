@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -53,6 +55,7 @@ public class InfoActivity extends AppCompatActivity {
         CardView cardViewBaggageStatus = (CardView) findViewById(R.id.cardViewBaggage);
         CardView cardViewCheckIn = (CardView) findViewById(R.id.cardViewCheckIn);
         CardView cardViewBoarding = (CardView) findViewById(R.id.cardViewBoarding);
+        CardView cardViewAirline = (CardView) findViewById(R.id.cardViewAirline);
 
         assert planeRoute != null;
         assert planeRouteStatus != null;
@@ -61,8 +64,13 @@ public class InfoActivity extends AppCompatActivity {
 
         TextView tvPlaneType = (TextView) findViewById(R.id.tvType);
         tvPlaneType.setText(planeType);
-        TextView tvPlaneAirline = (TextView) findViewById(R.id.tvPlaneAirline);
-        tvPlaneAirline.setText(planeAirline);
+
+        if (planeAirline == null || planeAirline.length() < 2) {
+            cardViewAirline.setVisibility(View.GONE);
+        } else {
+            TextView tvPlaneAirline = (TextView) findViewById(R.id.tvPlaneAirline);
+            tvPlaneAirline.setText(planeAirline);
+        }
 
         if (planeCombination == null || planeCombination.length() < 2) {
             cardViewCombination.setVisibility(View.GONE);
@@ -108,12 +116,28 @@ public class InfoActivity extends AppCompatActivity {
     private void addRouteInfoToView(LinearLayout linearLayout, String[] subStringRoute, String[] subStringRouteStatus) {
         int countRoute = subStringRoute.length;
 
+        DisplayMetrics metrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(metrics);
+        int widthPixels = metrics.widthPixels;
+        int heightPixels = metrics.heightPixels;
+        float scaleFactor = metrics.density;
+        float widthDp = widthPixels / scaleFactor;
+        float heightDp = heightPixels / scaleFactor;
+        float smallestWidth = Math.min(widthDp, heightDp);
+
         for (int i=0; i<countRoute; i++) {
             String[] subRouteStatus = subStringRouteStatus[i].split("(_!_)");
             TextView tvRoute = new TextView(this);
             tvRoute.setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             tvRoute.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimaryText));
             tvRoute.setText(subStringRoute[i]);
+            if (smallestWidth >= 720) {
+                tvRoute.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+            } else if (smallestWidth >= 600) {
+                tvRoute.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+            } else {
+                tvRoute.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+            }
             linearLayout.addView(tvRoute);
             for (String item : subRouteStatus) {
                 TextView tvRouteStatus = new TextView(this);
@@ -121,6 +145,13 @@ public class InfoActivity extends AppCompatActivity {
                 item = item.replace(" )(",")*").replace(" )",")*").replace(")О","О").replace(")П","П").replace("  "," ");
                 tvRouteStatus.setText(item);
                 tvRouteStatus.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorSecondaryText));
+                if (smallestWidth >= 720) {
+                    tvRouteStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, 18);
+                } else if (smallestWidth >= 600) {
+                    tvRouteStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, 16);
+                } else  {
+                    tvRouteStatus.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+                }
                 linearLayout.addView(tvRouteStatus);
             }
         }
