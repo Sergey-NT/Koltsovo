@@ -11,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,16 +54,19 @@ public class AboutActivity extends AppCompatActivity implements BillingProcessor
         bntAdsDisable = (Button) findViewById(R.id.btnAdsDisable);
         Button btnAdsDisableRestore = (Button) findViewById(R.id.btnAdsDisableRecovery);
         Button btnFeedback = (Button) findViewById(R.id.btnFeedback);
+        CheckBox checkBoxUpdate = (CheckBox) findViewById(R.id.checkBoxUpdate);
         TextView tv1 = (TextView) findViewById(R.id.tvIconsInfo);
         TextView tv2 = (TextView) findViewById(R.id.tvAndroidDeveloper);
         TextView tv3 = (TextView) findViewById(R.id.tvInfoContent);
         settings = getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
+        Boolean update = settings.getBoolean(Constants.APP_PREFERENCES_CANCEL_CHECK_VERSION, false);
         String price = settings.getString(Constants.APP_PREFERENCES_ADS_DISABLE_PRICE, "");
         String buttonText = getString(R.string.button_ads_disable) + " " + price;
 
         tv1.setMovementMethod(LinkMovementMethod.getInstance());
         tv2.setMovementMethod(LinkMovementMethod.getInstance());
         tv3.setMovementMethod(LinkMovementMethod.getInstance());
+        checkBoxUpdate.setChecked(update);
 
         bntAdsDisable.setText(buttonText);
 
@@ -72,6 +77,15 @@ public class AboutActivity extends AppCompatActivity implements BillingProcessor
             btnAdsDisableRestore.setVisibility(View.GONE);
             bntAdsDisable.setVisibility(View.GONE);
         }
+
+        checkBoxUpdate.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putBoolean(Constants.APP_PREFERENCES_CANCEL_CHECK_VERSION, isChecked);
+                editor.apply();
+            }
+        });
     }
 
     @SuppressWarnings("ConstantConditions")

@@ -7,7 +7,6 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -19,6 +18,11 @@ import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.android.volley.DefaultRetryPolicy;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -34,9 +38,8 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
-import org.jsoup.Jsoup;
-
-import java.io.IOException;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import ru.koltsovo.www.koltsovo.Adapter.TabsPagerFragmentAdapter;
 import ru.koltsovo.www.koltsovo.Fragment.InfoDialogFragment;
@@ -100,9 +103,7 @@ public class MainActivity extends AppCompatActivity {
         initToolbar(R.string.app_name);
         initTabs();
         initNavigationDrawer();
-
-        getVersionFromGooglePlay task = new getVersionFromGooglePlay();
-        task.execute();
+        getVersionFromGooglePlay();
 
         if (direction != null) {
             if (direction.equals("arrival")) {
@@ -290,24 +291,32 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean getSettingsParams(String params) {
-        boolean checkValue;
-        checkValue = settings.getBoolean(params, false);
-        return checkValue;
+        return settings.getBoolean(params, false);
     }
 
-    private class getVersionFromGooglePlay extends AsyncTask<Void, Void, Void> {
-        @Override
-        protected Void doInBackground(Void... params) {
-            try {
-                versionGooglePlay = Jsoup.connect("https://play.google.com/store/apps/details?id=ru.koltsovo.www.koltsovo&hl=ru").get()
-                        .select("div[itemprop=softwareVersion]").first()
-                        .ownText();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    private void getVersionFromGooglePlay() {
+        String url = "http://www.avtovokzal.org/php/app_koltsovo/requestVersion.php";
 
-            return null;
-        }
+        StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response != null) {
+                    try {
+                        JSONObject dataJsonObject = new JSONObject(response);
+                        versionGooglePlay = dataJsonObject.getString("version_app");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {}
+        });
+        // Установливаем TimeOut, Retry
+        strReq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        // Добавляем запрос в очередь
+        AppController.getInstance().addToRequestQueue(strReq);
     }
 
     private boolean checkPlayServices() {

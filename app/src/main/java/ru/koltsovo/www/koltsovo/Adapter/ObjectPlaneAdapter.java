@@ -392,6 +392,9 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
             case "IK":
                 holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_pegas_fly));
                 break;
+            case "EK":
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_emirates));
+                break;
             default:
                 holder.imageViewLogo.setVisibility(View.GONE);
                 break;
@@ -439,14 +442,15 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
         }
     }
 
-    public void setTrackingInfoFromServer(String sentFlight, String sentTimePlan) {
+    public void setTrackingInfoFromServer(String sentPlaneFlight, String sentPlaneDirection, String sentPlaneTimePlan) {
         int count = filteredList.size();
 
         for (int i = 0; i < count; i++) {
-            String flight = filteredList.get(i).getPlaneFlight();
-            String timePlan = filteredList.get(i).getPlaneTimePlan();
+            String planeFlight = filteredList.get(i).getPlaneFlight();
+            String planeDirection = filteredList.get(i).getPlaneDirection();
+            String planeTimePlan = filteredList.get(i).getPlaneTimePlan();
 
-            if (flight.contains(sentFlight) && timePlan.contains(sentTimePlan)) {
+            if (planeFlight.contains(sentPlaneFlight) && planeDirection.contains(sentPlaneDirection) && planeTimePlan.contains(sentPlaneTimePlan)) {
                 setInfoTrackingToTrue(i);
             }
         }

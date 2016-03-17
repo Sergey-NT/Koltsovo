@@ -461,11 +461,12 @@ public class Fragment extends android.support.v4.app.Fragment {
                                     JSONObject oneObject = arrayJson.getJSONObject(i);
 
                                     String directionFromServer = oneObject.getString("direction");
-                                    String flight = oneObject.getString("flight");
-                                    String timePlan = oneObject.getString("time_plan");
+                                    String planeFlight = oneObject.getString("flight");
+                                    String planeDirection = oneObject.getString("plane_direction");
+                                    String planeTimePlan = oneObject.getString("time_plan");
 
                                     if (directionFromServer.equals(direction)) {
-                                        adapter.setTrackingInfoFromServer(flight, timePlan);
+                                        adapter.setTrackingInfoFromServer(planeFlight, planeDirection, planeTimePlan);
                                     }
                                 }
                             }
@@ -579,7 +580,12 @@ public class Fragment extends android.support.v4.app.Fragment {
                 }
             } catch (XmlPullParserException | IOException e) {
                 progressDialogDismiss();
-                setErrorTextAndButton();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setErrorTextAndButton();
+                    }
+                });
                 e.printStackTrace();
             }
             return list;
@@ -590,7 +596,12 @@ public class Fragment extends android.support.v4.app.Fragment {
             super.onPostExecute(list);
 
             if (list == null || list.size() == 0) {
-                setErrorTextAndButton();
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        setErrorTextAndButton();
+                    }
+                });
             } else {
                 if (adapter == null) {
                     adapter = new ObjectPlaneAdapter(getActivity(), list);

@@ -4,7 +4,7 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlNormal">@color/colorText</item>
+        <item name="colorControlNormal">@color/colorSecondaryText</item>
         <item name="android:navigationBarColor">@color/colorPrimary</item>
     </style>
 </resources>

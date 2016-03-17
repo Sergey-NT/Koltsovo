@@ -93,10 +93,22 @@ public class InfoActivity extends AppCompatActivity {
             TextView tvCheckInEnd = (TextView) findViewById(R.id.tvCheckInEnd);
             TextView tvCheckIn = (TextView) findViewById(R.id.tvCheckIn);
             TextView tvCheckInStatus = (TextView) findViewById(R.id.tvCheckInStatus);
+            TextView descCheckIn = (TextView) findViewById(R.id.tvCheckInRegDesc);
+            TextView descCheckInStatus = (TextView) findViewById(R.id.tvCheckInStatusDesc);
+            if (checkIn.length() < 2) {
+                descCheckIn.setVisibility(View.GONE);
+                tvCheckIn.setVisibility(View.GONE);
+            } else {
+                tvCheckIn.setText(checkIn);
+            }
+            if (checkInStatus.length() < 2) {
+                descCheckInStatus.setVisibility(View.GONE);
+                tvCheckInStatus.setVisibility(View.GONE);
+            } else {
+                tvCheckInStatus.setText(checkInStatus);
+            }
             tvCheckInBegin.setText(checkInBegin);
             tvCheckInEnd.setText(checkInEnd);
-            tvCheckIn.setText(checkIn);
-            tvCheckInStatus.setText(checkInStatus);
         }
 
         if (boardingEnd == null || boardingEnd.length() < 2 || boardingGate == null || boardingStatus == null) {

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorText" >
+    android:background="@color/colorText">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -93,6 +94,32 @@
                 android:text="@string/button_feedback"
                 android:textSize="18sp"
                 android:textColor="@color/colorText" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="@color/colorDivider"
+                tools:ignore="SmallSp" />
+
+            <CheckBox
+                android:id="@+id/checkBoxUpdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15sp"
+                android:layout_marginStart="15sp"
+                android:paddingTop="20sp"
+                android:paddingBottom="20sp"
+                android:paddingRight="15sp"
+                android:paddingLeft="15sp"
+                android:text="@string/check_box_update_app"
+                android:textSize="16sp"
+                android:textColor="@color/colorPrimaryText" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1sp"
+                android:background="@color/colorDivider"
+                tools:ignore="SmallSp" />
 
             <TextView
                 android:id="@+id/tvIconsInfo"

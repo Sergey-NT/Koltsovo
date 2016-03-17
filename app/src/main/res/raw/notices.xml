@@ -36,10 +36,4 @@
         <copyright>Copyright 2016 Mike Penz</copyright>
         <license>Apache Software License 2.0</license>
     </notice>
-    <notice>
-        <name>jsoup: Java HTML Parser</name>
-        <url>http://jsoup.org/</url>
-        <copyright/>
-        <license>MIT License</license>
-    </notice>
 </notices>
