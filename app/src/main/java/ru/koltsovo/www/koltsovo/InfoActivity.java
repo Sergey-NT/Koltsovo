@@ -21,6 +21,7 @@ public class InfoActivity extends AppCompatActivity {
     private static final int LAYOUT = R.layout.activity_info;
 
     @Override
+    @SuppressWarnings("ConstantConditions")
     protected void onCreate(Bundle savedInstanceState) {
         setTheme(R.style.AppDefault);
         super.onCreate(savedInstanceState);

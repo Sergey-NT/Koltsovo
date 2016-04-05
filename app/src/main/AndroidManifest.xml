@@ -59,7 +59,7 @@
 
         <activity
             android:name=".MainActivity"
-            android:configChanges="orientation|screenSize"
+            android:configChanges="orientation|screenSize|locale"
             android:launchMode="singleTask"
             android:taskAffinity=""
             android:excludeFromRecents="true" >
@@ -73,12 +73,17 @@
 
         <activity
             android:name=".AboutActivity"
-            android:configChanges="orientation|screenSize" >
+            android:configChanges="orientation|screenSize|locale" >
         </activity>
 
         <activity
             android:name=".InfoActivity"
-            android:configChanges="orientation|screenSize" >
+            android:configChanges="orientation|screenSize|locale" >
+        </activity>
+
+        <activity
+            android:name=".SettingsActivity"
+            android:configChanges="orientation|screenSize|locale" >
         </activity>
 
     </application>

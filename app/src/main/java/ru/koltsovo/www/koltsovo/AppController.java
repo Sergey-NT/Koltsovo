@@ -1,6 +1,9 @@
 package ru.koltsovo.www.koltsovo;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -12,6 +15,7 @@ import org.acra.ACRA;
 import org.acra.annotation.ReportsCrashes;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 @ReportsCrashes(formUri = "http://www.avtovokzal.org/php/app_koltsovo/log/log.php")
 
@@ -20,6 +24,7 @@ public class AppController extends Application {
     public static final String TAG = AppController.class.getSimpleName();
 
     private RequestQueue mRequestQueue;
+    private Locale locale = null;
 
     private static AppController mInstance;
 
@@ -57,6 +62,29 @@ public class AppController extends Application {
 
         ACRA.init(this);
         FixNoClassDefFoundError81083();
+        setLocale();
+    }
+
+    private void setLocale() {
+        SharedPreferences settings = getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
+        String language = settings.getString(Constants.APP_PREFERENCES_LANGUAGE, "ru");
+
+        locale = new Locale(language);
+        Locale.setDefault(locale);
+        Configuration config = new Configuration();
+        config.locale = locale;
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+
+        if (locale != null) {
+            newConfig.locale = locale;
+            Locale.setDefault(locale);
+            getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
+        }
     }
 
     public static synchronized AppController getInstance() {

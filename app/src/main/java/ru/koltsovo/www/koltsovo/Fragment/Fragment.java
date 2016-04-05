@@ -70,6 +70,7 @@ public class Fragment extends android.support.v4.app.Fragment {
     private ImageButton btnClearEditText;
     private ProgressDialog progressDialog;
     private String direction;
+    private String language;
     private SwipeRefreshLayout swipeRefreshLayout;
     private EditText editText;
     private ObjectPlaneAdapter adapter;
@@ -106,6 +107,7 @@ public class Fragment extends android.support.v4.app.Fragment {
         direction = getArguments().getString("direction");
         planeNumber = getArguments().getString("planeNumber");
         settings = getActivity().getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
+        language = settings.getString(Constants.APP_PREFERENCES_LANGUAGE, "ru");
 
         clearEditTextListener();
         editTextListeners();
@@ -344,7 +346,7 @@ public class Fragment extends android.support.v4.app.Fragment {
         String timePlane = Uri.encode(params[4]);
         String timeFact = Uri.encode(params[5]);
         String status = Uri.encode(params[6]);
-        String url = "http://www.avtovokzal.org/php/app_koltsovo/query.php?token="+params[0]+"&direction="+params[1]+"&flight="+params[2]+"&plane_direction="+planeDirection+"&time_plan="+timePlane+"&time_fact="+timeFact+"&status="+status;
+        String url = "http://www.avtovokzal.org/php/app_koltsovo/query.php?token="+params[0]+"&direction="+params[1]+"&flight="+params[2]+"&plane_direction="+planeDirection+"&time_plan="+timePlane+"&time_fact="+timeFact+"&status="+status+"&language="+language;
 
         StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -521,49 +523,137 @@ public class Fragment extends android.support.v4.app.Fragment {
                         case XmlPullParser.START_TAG:
                             if (params[1].equals("a")) {
                                 if (parser.getName().compareTo("flight") == 0) {
-                                    String planeTypeArrive = parser.getAttributeValue(null, "tws_arrive");
-                                    planeDestination = parser.getAttributeValue(null, "daname");
+                                    String planeTypeArriveRU = parser.getAttributeValue(null, "tws_arrive");
+                                    String planeTypeArriveEN = parser.getAttributeValue(null, "tws_arrive_eng");
+                                    String planeDestinationRU = parser.getAttributeValue(null, "daname");
+                                    String planeDestinationEN = parser.getAttributeValue(null, "daname_eng");
                                     String flightName = parser.getAttributeValue(null, "rf");
                                     String flightNumber = parser.getAttributeValue(null, "flt");
-                                    planeTimePlan = parser.getAttributeValue(null, "dp");
-                                    planeTimeFact = parser.getAttributeValue(null, "dr");
-                                    planeStatus = parser.getAttributeValue(null, "statuzz");
-                                    planeCombination = parser.getAttributeValue(null, "sovm");
-                                    planeAirline = parser.getAttributeValue(null, "m2");
+                                    String planeTimePlanRU = parser.getAttributeValue(null, "dp");
+                                    String planeTimePlanEN = parser.getAttributeValue(null, "dp_eng");
+                                    String planeTimeFactRU = parser.getAttributeValue(null, "dr");
+                                    String planeTimeFactEN = parser.getAttributeValue(null, "dr_eng");
+                                    String planeStatusRU = parser.getAttributeValue(null, "statuzz");
+                                    String planeStatusEN = parser.getAttributeValue(null, "statuzz_eng");
+                                    String planeCombinationRU = parser.getAttributeValue(null, "sovm");
+                                    String planeCombinationEN = parser.getAttributeValue(null, "sovm_eng");
+                                    String planeAirlineRU = parser.getAttributeValue(null, "m2");
+                                    String planeAirlineEN = parser.getAttributeValue(null, "m2_eng");
                                     planeFlight = flightName + "-" + flightNumber;
-                                    planeType = planeTypeArrive;
+                                    if (language.equalsIgnoreCase("en")) {
+                                        planeDestination = planeDestinationEN;
+                                        planeType = planeTypeArriveEN;
+                                        planeTimePlan = planeTimePlanEN;
+                                        planeTimeFact = planeTimeFactEN;
+                                        planeStatus = planeStatusEN;
+                                        planeCombination = planeCombinationEN;
+                                        planeAirline = planeAirlineEN;
+                                    } else {
+                                        planeDestination = planeDestinationRU;
+                                        planeType = planeTypeArriveRU;
+                                        planeTimePlan = planeTimePlanRU;
+                                        planeTimeFact = planeTimeFactRU;
+                                        planeStatus = planeStatusRU;
+                                        planeCombination = planeCombinationRU;
+                                        planeAirline = planeAirlineRU;
+                                    }
                                 } else if (parser.getName().compareTo("route") == 0) {
-                                    planeRoute = parser.getAttributeValue(null, "name");
-                                    planeRouteStatus = parser.getAttributeValue(null, "status");
+                                    String planeRouteRU = parser.getAttributeValue(null, "name");
+                                    String planeRouteEN = parser.getAttributeValue(null, "name_eng");
+                                    String planeRouteStatusRU = parser.getAttributeValue(null, "status");
+                                    String planeRouteStatusEN = parser.getAttributeValue(null, "status_eng");
+                                    if (language.equalsIgnoreCase("en")) {
+                                        planeRoute = planeRouteEN;
+                                        planeRouteStatus = planeRouteStatusEN;
+                                    } else {
+                                        planeRoute = planeRouteRU;
+                                        planeRouteStatus = planeRouteStatusRU;
+                                    }
                                 } else if (parser.getName().compareTo("baggage") == 0) {
-                                    baggageStatus = parser.getAttributeValue(null, "status");
+                                    String baggageStatusRU = parser.getAttributeValue(null, "status");
+                                    String baggageStatusEN = parser.getAttributeValue(null, "status_eng");
+                                    if (language.equalsIgnoreCase("en")) {
+                                        baggageStatus = baggageStatusEN;
+                                    } else {
+                                        baggageStatus = baggageStatusRU;
+                                    }
                                 }
                                 break;
                             } else {
                                 if (parser.getName().compareTo("flight") == 0) {
-                                    String planeTypeDeparture = parser.getAttributeValue(null, "tws_depart");
-                                    planeDestination = parser.getAttributeValue(null, "daname");
+                                    String planeTypeDepartureRU = parser.getAttributeValue(null, "tws_depart");
+                                    String planeTypeDepartureEN = parser.getAttributeValue(null, "tws_depart_eng");
+                                    String planeDestinationRU = parser.getAttributeValue(null, "daname");
+                                    String planeDestinationEN = parser.getAttributeValue(null, "daname_eng");
                                     String flightName = parser.getAttributeValue(null, "rf");
                                     String flightNumber = parser.getAttributeValue(null, "flt");
-                                    planeTimePlan = parser.getAttributeValue(null, "dp");
-                                    planeTimeFact = parser.getAttributeValue(null, "dr");
-                                    planeStatus = parser.getAttributeValue(null, "statuzz");
-                                    planeCombination = parser.getAttributeValue(null, "sovm");
-                                    planeAirline = parser.getAttributeValue(null, "m2");
+                                    String planeTimePlanRU = parser.getAttributeValue(null, "dp");
+                                    String planeTimePlanEN = parser.getAttributeValue(null, "dp_eng");
+                                    String planeTimeFactRU = parser.getAttributeValue(null, "dr");
+                                    String planeTimeFactEN = parser.getAttributeValue(null, "dr_eng");
+                                    String planeStatusRU = parser.getAttributeValue(null, "statuzz");
+                                    String planeStatusEN = parser.getAttributeValue(null, "statuzz_eng");
+                                    String planeCombinationRU = parser.getAttributeValue(null, "sovm");
+                                    String planeCombinationEN = parser.getAttributeValue(null, "sovm_eng");
+                                    String planeAirlineRU = parser.getAttributeValue(null, "m2");
+                                    String planeAirlineEN = parser.getAttributeValue(null, "m2_eng");
                                     planeFlight = flightName + "-" + flightNumber;
-                                    planeType = planeTypeDeparture;
+                                    if (language.equalsIgnoreCase("en")) {
+                                        planeDestination = planeDestinationEN;
+                                        planeType = planeTypeDepartureEN;
+                                        planeTimePlan = planeTimePlanEN;
+                                        planeTimeFact = planeTimeFactEN;
+                                        planeStatus = planeStatusEN;
+                                        planeCombination = planeCombinationEN;
+                                        planeAirline = planeAirlineEN;
+                                    } else {
+                                        planeDestination = planeDestinationRU;
+                                        planeType = planeTypeDepartureRU;
+                                        planeTimePlan = planeTimePlanRU;
+                                        planeTimeFact = planeTimeFactRU;
+                                        planeStatus = planeStatusRU;
+                                        planeCombination = planeCombinationRU;
+                                        planeAirline = planeAirlineRU;
+                                    }
                                 } else if (parser.getName().compareTo("route") == 0) {
-                                    planeRoute = parser.getAttributeValue(null, "name");
-                                    planeRouteStatus = parser.getAttributeValue(null, "status");
+                                    String planeRouteRU = parser.getAttributeValue(null, "name");
+                                    String planeRouteEN = parser.getAttributeValue(null, "name_eng");
+                                    String planeRouteStatusRU = parser.getAttributeValue(null, "status");
+                                    String planeRouteStatusEN = parser.getAttributeValue(null, "status_eng");
+                                    if (language.equalsIgnoreCase("en")) {
+                                        planeRoute = planeRouteEN;
+                                        planeRouteStatus = planeRouteStatusEN;
+                                    } else {
+                                        planeRoute = planeRouteRU;
+                                        planeRouteStatus = planeRouteStatusRU;
+                                    }
                                 } else if (parser.getName().compareTo("check-in") == 0) {
-                                    checkInStatus = parser.getAttributeValue(null, "status");
-                                    checkIn = parser.getAttributeValue(null, "checkins");
+                                    String checkInStatusRU = parser.getAttributeValue(null, "status");
+                                    String checkInStatusEN = parser.getAttributeValue(null, "status_eng");
+                                    String checkInRU = parser.getAttributeValue(null, "checkins");
+                                    String checkInEN = parser.getAttributeValue(null, "checkins_eng");
                                     registrationBegin = parser.getAttributeValue(null, "dt_b");
                                     registrationEnd = parser.getAttributeValue(null, "dt_e");
+                                    if (language.equalsIgnoreCase("en")) {
+                                        checkInStatus = checkInStatusEN;
+                                        checkIn = checkInEN;
+                                    } else {
+                                        checkInStatus = checkInStatusRU;
+                                        checkIn = checkInRU;
+                                    }
                                 } else if (parser.getName().compareTo("boarding") == 0) {
-                                    boardingStatus = parser.getAttributeValue(null, "status");
+                                    String boardingStatusRU = parser.getAttributeValue(null, "status");
+                                    String boardingStatusEN = parser.getAttributeValue(null, "status_eng");
                                     boardingEnd = parser.getAttributeValue(null, "dt_e");
-                                    gate = parser.getAttributeValue(null, "gate");
+                                    String gateRU = parser.getAttributeValue(null, "gate");
+                                    String gateEN = parser.getAttributeValue(null, "gate_eng");
+                                    if (language.equalsIgnoreCase("en")) {
+                                        boardingStatus = boardingStatusEN;
+                                        gate = gateEN;
+                                    } else {
+                                        boardingStatus = boardingStatusRU;
+                                        gate = gateRU;
+                                    }
                                 }
                                 break;
                             }

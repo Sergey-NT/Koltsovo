@@ -8,6 +8,7 @@
     <color name="colorDivider">#B6B6B6</color>
     <color name="colorAccent">#8BC34A</color>
     <color name="colorBackgroundGreen">#C8E6C9</color>
+    <color name="colorBackgroundGreenLight">#B9F6CA</color>
     <color name="colorBackgroundRed">#F8BBD0</color>
     <color name="colorBackgroundYellow">#FFF9C4</color>
     <color name="colorBackgroundGrey">#EEEEEE</color>

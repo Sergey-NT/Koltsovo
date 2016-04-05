@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private String planeNumber;
     private String direction;
-    private String versionGooglePlay = null;
+    private int versionGooglePlay = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +103,10 @@ public class MainActivity extends AppCompatActivity {
         initToolbar(R.string.app_name);
         initTabs();
         initNavigationDrawer();
-        getVersionFromGooglePlay();
+
+        if (!getSettingsParams(Constants.APP_PREFERENCES_CANCEL_CHECK_VERSION)) {
+            getVersionFromGooglePlay();
+        }
 
         if (direction != null) {
             if (direction.equals("arrival")) {
@@ -122,6 +125,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressWarnings("ConstantConditions")
     private void initTabs() {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         TabsPagerFragmentAdapter adapter = new TabsPagerFragmentAdapter(getApplicationContext(), planeNumber, direction, getSupportFragmentManager());
@@ -165,9 +169,13 @@ public class MainActivity extends AppCompatActivity {
                                 .withIdentifier(1),
                         new DividerDrawerItem(),
                         new PrimaryDrawerItem()
+                                .withName(R.string.menu_settings)
+                                .withIcon(GoogleMaterial.Icon.gmd_settings)
+                                .withIdentifier(2),
+                        new PrimaryDrawerItem()
                                 .withName(R.string.menu_about)
                                 .withIcon(GoogleMaterial.Icon.gmd_info_outline)
-                                .withIdentifier(2)
+                                .withIdentifier(3)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -183,8 +191,13 @@ public class MainActivity extends AppCompatActivity {
                                 return true;
                             case 4:
                                 drawerResult.closeDrawer();
-                                Intent intent = new Intent(MainActivity.this, AboutActivity.class);
-                                startActivity(intent);
+                                Intent intentSettings = new Intent(MainActivity.this, SettingsActivity.class);
+                                startActivity(intentSettings);
+                                return true;
+                            case 5:
+                                drawerResult.closeDrawer();
+                                Intent intentAbout = new Intent(MainActivity.this, AboutActivity.class);
+                                startActivity(intentAbout);
                                 return true;
                         }
                         return false;
@@ -196,18 +209,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        String version = null;
+        int version = 0;
 
         try {
             PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0);
-            version = info.versionName;
+            version = info.versionCode;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
 
         if (drawerResult != null && drawerResult.isDrawerOpen()) {
             drawerResult.closeDrawer();
-        } else if (version != null && versionGooglePlay != null && !version.equals(versionGooglePlay) && !getSettingsParams(Constants.APP_PREFERENCES_CANCEL_CHECK_VERSION)) {
+        } else if (version != 0 && versionGooglePlay != 0 && versionGooglePlay > version && !getSettingsParams(Constants.APP_PREFERENCES_CANCEL_CHECK_VERSION)) {
             FragmentManager manager = getSupportFragmentManager();
             UpdateDialogFragment dialogFragment = new UpdateDialogFragment();
             dialogFragment.show(manager, "dialog");
@@ -221,6 +234,7 @@ public class MainActivity extends AppCompatActivity {
         // No call for super(). Bug on API Level > 11.
     }
 
+    @SuppressWarnings("ConstantConditions")
     public void initAd(int layoutId) {
         adView = new AdView(this);
         adView.setAdUnitId(getString(R.string.ad_view_banner));
@@ -230,17 +244,8 @@ public class MainActivity extends AppCompatActivity {
         layout.addView(adView);
 
         AdRequest request = new AdRequest.Builder()
+                // Nexus 5
                 .addTestDevice("4B954499F159024FD4EFD592E7A5F658")
-                .addTestDevice("4A47A797D4302A0BEC716C29A53C4881")
-                .addTestDevice("3184464AD3C4A51FB5B9A88B000B8559")
-                .addTestDevice("CD86C90AFF2735971D1B226E64BEC4F3")
-                .addTestDevice("B84123F681D84922D8ED7BA272410F11")
-                .addTestDevice("57BA423970D0C61804E20647A08CF694")
-                .addTestDevice("CF3563AAE9DCDD827CD723C834CAEC4C")
-                .addTestDevice("07B4BB1F6E99054B7ED99CF142644BBD")
-                .addTestDevice("3E1C4AF79C36409B4E180B56429BD5AE")
-                .addTestDevice("10F044BAE221D85007AC03C8E28ED870")
-                .addTestDevice("ACEEAD14FB750096A2CBF9C245C1EF33")
                 .build();
 
         adView.loadAd(request);
@@ -295,7 +300,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getVersionFromGooglePlay() {
-        String url = "http://www.avtovokzal.org/php/app_koltsovo/requestVersion.php";
+        String url = "http://www.avtovokzal.org/php/app_koltsovo/requestVersionCode.php";
 
         StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -303,7 +308,7 @@ public class MainActivity extends AppCompatActivity {
                 if (response != null) {
                     try {
                         JSONObject dataJsonObject = new JSONObject(response);
-                        versionGooglePlay = dataJsonObject.getString("version_app");
+                        versionGooglePlay = dataJsonObject.getInt("version_app");
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

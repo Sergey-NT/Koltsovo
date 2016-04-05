@@ -23,11 +23,11 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
     private List<ObjectPlane> originalList;
     private List<ObjectPlane> filteredList;
     private LayoutInflater layoutInflater;
-    private Context myContext;
+    private Context context;
     private ItemFilter itemsFilter = new ItemFilter();
 
     public ObjectPlaneAdapter(Context context, List<ObjectPlane> list) {
-        myContext = context;
+        this.context = context;
         this.originalList = list;
         this.filteredList = list;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -180,67 +180,42 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
         holder.itemGate.setVisibility(View.GONE);
         holder.descriptionGate.setVisibility(View.GONE);
 
-        switch (holder.itemStatus.getText().toString()) {
-            case "Прибыл":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundGreen));
-                if (holder.itemBaggageStatus.length() > 1) {
-                    holder.itemBaggageStatus.setVisibility(View.VISIBLE);
-                    holder.descriptionBaggage.setVisibility(View.VISIBLE);
-                }
-                break;
-            case "Вылетел":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundGreen));
-                break;
-            case "Идет посадка":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundGreen));
-                holder.itemGate.setVisibility(View.VISIBLE);
-                holder.descriptionGate.setVisibility(View.VISIBLE);
-                break;
-            case "Идет регистрация":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundGreen));
-                holder.itemCheckInBegin.setVisibility(View.VISIBLE);
-                holder.descriptionCheckInBegin.setVisibility(View.VISIBLE);
-                holder.itemCheckInEnd.setVisibility(View.VISIBLE);
-                holder.descriptionCheckInEnd.setVisibility(View.VISIBLE);
-                holder.itemCheckIn.setVisibility(View.VISIBLE);
-                holder.descriptionCheckIn.setVisibility(View.VISIBLE);
-                holder.itemGate.setVisibility(View.VISIBLE);
-                holder.descriptionGate.setVisibility(View.VISIBLE);
-                break;
-            case "Отмена":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundRed));
-                break;
-            case "Регистрация закончена":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
-                holder.itemGate.setVisibility(View.VISIBLE);
-                holder.descriptionGate.setVisibility(View.VISIBLE);
-                break;
-            case "Задержка":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
-                break;
-            case "Задержка Позднее прибытие":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
-                break;
-            case "Задержка Решение АК":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
-                break;
-            case "Задержка Метеоусловия":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
-                break;
-            case "Задержка Подготовка рейса":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
-                break;
-            case "Задержка Регламент АП":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
-                break;
-            case "Посадка закончена":
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorBackgroundYellow));
-                break;
-            default:
+        String status = holder.itemStatus.getText().toString();
+
+        if (status.contains("Прибыл") || status.contains("Arrived")) {
+            holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBackgroundGreen));
+            if (holder.itemBaggageStatus.length() > 1) {
+                holder.itemBaggageStatus.setVisibility(View.VISIBLE);
+                holder.descriptionBaggage.setVisibility(View.VISIBLE);
+            }
+        } else if (status.contains("Вылетел") || status.contains("Departed")) {
+            holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBackgroundGreen));
+        } else if (status.contains("Идет посадка") || status.contains("Boarding") || status.contains("Регистрация закончена") || status.contains("Check-in-close")) {
+            holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBackgroundGreenLight));
+            holder.itemGate.setVisibility(View.VISIBLE);
+            holder.descriptionGate.setVisibility(View.VISIBLE);
+        } else if (status.contains("Идет регистрация") || status.contains("Check-in-open")) {
+            holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBackgroundGreenLight));
+            holder.itemCheckInBegin.setVisibility(View.VISIBLE);
+            holder.descriptionCheckInBegin.setVisibility(View.VISIBLE);
+            holder.itemCheckInEnd.setVisibility(View.VISIBLE);
+            holder.descriptionCheckInEnd.setVisibility(View.VISIBLE);
+            holder.itemCheckIn.setVisibility(View.VISIBLE);
+            holder.descriptionCheckIn.setVisibility(View.VISIBLE);
+            holder.itemGate.setVisibility(View.VISIBLE);
+            holder.descriptionGate.setVisibility(View.VISIBLE);
+        } else if (status.contains("Посадка закончена") || status.contains("Gate closed")) {
+            holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBackgroundGreenLight));
+        } else if (status.contains("Отмена") || status.contains("Cancelled")) {
+            holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBackgroundRed));
+        } else if (status.contains("Задержка") || status.contains("Delayed")) {
+            holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBackgroundYellow));
+        } else {
+            holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorText));
+            if (holder.itemStatus.length() < 2) {
                 holder.itemStatus.setVisibility(View.GONE);
                 holder.descriptionStatus.setVisibility(View.GONE);
-                holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(myContext, R.color.colorText));
-                break;
+            }
         }
         setAirlineLogo(holder);
         return view;
@@ -249,151 +224,155 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
     private void setAirlineLogo(ViewHolder holder) {
         switch (holder.itemFlight.getText().toString().substring(0,2)) {
             case "DP":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_pobeda));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_pobeda));
                 break;
             case "7R":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_rusline));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_rusline));
                 break;
             case "SU":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_aeroflot));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_aeroflot));
                 break;
             case "U6":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_ural_airlines));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_ural_airlines));
                 break;
             case "KL":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_klm));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_klm));
                 break;
             case "IB":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_iberia));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_iberia));
                 break;
             case "9U":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_air_moldova));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_air_moldova));
                 break;
             case "BA":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_british_airways));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_british_airways));
                 break;
             case "S7":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_s7_airlines));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_s7_airlines));
                 break;
             case "AB":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_air_berlin));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_air_berlin));
                 break;
             case "TP":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_tap_portugal));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_tap_portugal));
                 break;
             case "EY":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_etihad_airways));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_etihad_airways));
                 break;
             case "YC":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_ymal));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_ymal));
                 break;
             case "KO":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_komiaviatrans));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_komiaviatrans));
                 break;
             case "AF":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_air_france));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_air_france));
                 break;
             case "A3":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_aegean_airlines));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_aegean_airlines));
                 break;
             case "LY":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_el_al));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_el_al));
                 break;
             case "UT":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_utair));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_utair));
                 break;
             case "FV":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_rossia));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_rossia));
                 break;
             case "R2":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_orenair));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_orenair));
                 break;
             case "J2":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_azal));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_azal));
                 break;
             case "OK":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_czech_airlines));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_czech_airlines));
                 break;
             case "AZ":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_alitalia));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_alitalia));
                 break;
             case "B2":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_belavia));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_belavia));
                 break;
             case "AY":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_finnair));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_finnair));
                 break;
             case "O7":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_orenburgie));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_orenburgie));
                 break;
             case "Y7":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_nordstar_airlines));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_nordstar_airlines));
                 break;
             case "KC":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_air_astana));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_air_astana));
                 break;
             case "FZ":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_fly_dubai));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_fly_dubai));
                 break;
             case "4G":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_gazpromavia));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_gazpromavia));
                 break;
             case "7J":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_tajikair));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_tajikair));
                 break;
             case "ZF":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_azur_air));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_azur_air));
                 break;
             case "6R":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_alrosa));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_alrosa));
                 break;
             case "D9":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_donavia));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_donavia));
                 break;
             case "JL":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_japan_airlines));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_japan_airlines));
                 break;
             case "5B":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_euro_asia_air));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_euro_asia_air));
                 break;
             case "6Z":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_euro_asia_air));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_euro_asia_air));
                 break;
             case "GH":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_globus));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_globus));
                 break;
             case "TK":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_turkish_airlines));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_turkish_airlines));
                 break;
             case "ZM":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_air_manas));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_air_manas));
                 break;
             case "R3":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_yakutia));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_yakutia));
                 break;
             case "SZ":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_somon_air));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_somon_air));
                 break;
             case "YK":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_avia_traffic_company));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_avia_traffic_company));
                 break;
             case "HY":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_uzbekistan_airways));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_uzbekistan_airways));
                 break;
             case "4R":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_royal_flight));
+            case "RL":
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_royal_flight));
                 break;
             case "RU":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_air_bridge_cargo));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_air_bridge_cargo));
                 break;
             case "ZG":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_grozny_avia));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_grozny_avia));
                 break;
             case "IK":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_pegas_fly));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_pegas_fly));
                 break;
             case "EK":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(myContext, R.drawable.drawable_logo_emirates));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_emirates));
+                break;
+            case "D2":
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_severstal_avia));
                 break;
             default:
                 holder.imageViewLogo.setVisibility(View.GONE);

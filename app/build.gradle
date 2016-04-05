@@ -2,13 +2,13 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 23
-    buildToolsVersion "23.0.2"
+    buildToolsVersion "23.0.3"
     defaultConfig {
         applicationId "ru.koltsovo.www.koltsovo"
         minSdkVersion 10
         targetSdkVersion 23
-        versionCode 24
-        versionName "1.1.1"
+        versionCode 25
+        versionName "1.1.2"
     }
     buildTypes {
         release {
@@ -29,12 +29,12 @@ dependencies {
     compile 'com.google.android.gms:play-services-analytics:8.4.0'
     compile 'com.anjlab.android.iab.v3:library:1.0.31'
     compile 'com.mcxiaoke.volley:library:1.0.19'
-    compile('com.mikepenz:materialdrawer:5.1.3@aar') {
+    compile('com.mikepenz:materialdrawer:5.1.8@aar') {
         transitive = true
     }
     compile 'com.mikepenz:google-material-typeface:2.2.0.1.original@aar'
     compile 'de.psdev.licensesdialog:licensesdialog:1.8.0'
-    compile 'ch.acra:acra:4.8.2'
+    compile 'ch.acra:acra:4.8.5'
 }
 
 apply plugin: 'com.google.gms.google-services'
