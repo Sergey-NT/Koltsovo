@@ -1,5 +1,7 @@
 package ru.koltsovo.www.koltsovo;
 
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -33,10 +35,22 @@ public class AboutActivity extends AppCompatActivity {
         TextView tv1 = (TextView) findViewById(R.id.tvIconsInfo);
         TextView tv2 = (TextView) findViewById(R.id.tvAndroidDeveloper);
         TextView tv3 = (TextView) findViewById(R.id.tvInfoContent);
+        TextView tvAppVersion = (TextView) findViewById(R.id.tvAppVersion);
 
         tv1.setMovementMethod(LinkMovementMethod.getInstance());
         tv2.setMovementMethod(LinkMovementMethod.getInstance());
         tv3.setMovementMethod(LinkMovementMethod.getInstance());
+
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo(getPackageName(), 0);
+            String version = info.versionName;
+            String desc = getString(R.string.about_version);
+            String text = desc + " " + version;
+
+            tvAppVersion.setText(text);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @SuppressWarnings("ConstantConditions")

@@ -31,21 +31,21 @@ public class InfoActivity extends AppCompatActivity {
         Tracker t = ((AppController) getApplication()).getTracker(AppController.TrackerName.APP_TRACKER);
         t.enableAdvertisingIdCollection(true);
 
-        String planeFlight = getIntent().getExtras().getString("planeFlight");
-        String planeDirection = getIntent().getExtras().getString("planeDirection");
-        String planeType = getIntent().getExtras().getString("planeType");
-        String planeRoute = getIntent().getExtras().getString("planeRoute");
-        String planeRouteStatus = getIntent().getExtras().getString("planeRouteStatus");
-        String planeCombination = getIntent().getExtras().getString("planeCombination");
-        String planeAirline = getIntent().getExtras().getString("planeAirline");
-        String baggageStatus = getIntent().getExtras().getString("baggageStatus");
-        String checkInBegin = getIntent().getExtras().getString("checkInBegin");
-        String checkInEnd = getIntent().getExtras().getString("checkInEnd");
-        String checkIn = getIntent().getExtras().getString("checkIn");
-        String checkInStatus = getIntent().getExtras().getString("checkInStatus");
-        String boardingEnd = getIntent().getExtras().getString("boardingEnd");
-        String boardingGate = getIntent().getExtras().getString("boardingGate");
-        String boardingStatus = getIntent().getExtras().getString("boardingStatus");
+        String planeFlight = getIntent().getStringExtra("planeFlight");
+        String planeDirection = getIntent().getStringExtra("planeDirection");
+        String planeType = getIntent().getStringExtra("planeType");
+        String planeRoute = getIntent().getStringExtra("planeRoute");
+        String planeRouteStatus = getIntent().getStringExtra("planeRouteStatus");
+        String planeCombination = getIntent().getStringExtra("planeCombination");
+        String planeAirline = getIntent().getStringExtra("planeAirline");
+        String baggageStatus = getIntent().getStringExtra("baggageStatus");
+        String checkInBegin = getIntent().getStringExtra("checkInBegin");
+        String checkInEnd = getIntent().getStringExtra("checkInEnd");
+        String checkIn = getIntent().getStringExtra("checkIn");
+        String checkInStatus = getIntent().getStringExtra("checkInStatus");
+        String boardingEnd = getIntent().getStringExtra("boardingEnd");
+        String boardingGate = getIntent().getStringExtra("boardingGate");
+        String boardingStatus = getIntent().getStringExtra("boardingStatus");
 
         String subtitle = getString(R.string.menu_info_subtitle) + " "  + planeFlight + " " + planeDirection;
 
@@ -155,7 +155,7 @@ public class InfoActivity extends AppCompatActivity {
             for (String item : subRouteStatus) {
                 TextView tvRouteStatus = new TextView(this);
                 tvRouteStatus.setLayoutParams(new LinearLayoutCompat.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-                item = item.replace(" )(",")*").replace(" )",")*").replace(")О","О").replace(")П","П").replace("  "," ");
+                item = item.replace(" )(",")*").replace(" )",")*").replace(")О","О").replace(")П","П").replace("  "," ").replace(")A","A").replace(")D","D");
                 tvRouteStatus.setText(item);
                 tvRouteStatus.setTextColor(ContextCompat.getColor(getApplicationContext(), R.color.colorSecondaryText));
                 if (smallestWidth >= 720) {

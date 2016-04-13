@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">Koltsovo</string>
     <string name="about_developer">Developer: <a href="http://vk.com/id5170658" title="Сергей Ухарский">Сергей Ухарский</a></string>
-    <string name="about_version">Version: 1.1.2</string>
+    <string name="about_version">Version:</string>
     <string name="button_ads_disable">Disable Ads:</string>
     <string name="button_clear_edit_text">Clear</string>
     <string name="button_feedback">Feedback</string>

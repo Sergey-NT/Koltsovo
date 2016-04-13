@@ -669,10 +669,10 @@ public class Fragment extends android.support.v4.app.Fragment {
                     parser.next();
                 }
             } catch (XmlPullParserException | IOException e) {
-                progressDialogDismiss();
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        progressDialogDismiss();
                         setErrorTextAndButton();
                     }
                 });
@@ -689,12 +689,13 @@ public class Fragment extends android.support.v4.app.Fragment {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
+                        progressDialogDismiss();
                         setErrorTextAndButton();
                     }
                 });
             } else {
                 if (adapter == null) {
-                    adapter = new ObjectPlaneAdapter(getActivity(), list);
+                    adapter = new ObjectPlaneAdapter(getActivity().getApplicationContext(), list);
                     listView.setAdapter(adapter);
                     adapter.getFilter().filter(editText.getText().toString());
                     getQueryFromServer();
