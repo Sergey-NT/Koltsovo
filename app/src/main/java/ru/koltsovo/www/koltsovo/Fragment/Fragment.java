@@ -412,7 +412,7 @@ public class Fragment extends android.support.v4.app.Fragment {
     private void getXML(final String direction) {
         progressDialog = new ProgressDialog(getActivity());
         progressDialog.setMessage(getString(R.string.main_load_dialog));
-        progressDialog.setCancelable(false);
+        progressDialog.setCancelable(true);
         progressDialog.show();
 
         String url = "http://www.koltsovo.ru/1linetablo.card.5.19.php?0&0&"+direction;
@@ -433,7 +433,7 @@ public class Fragment extends android.support.v4.app.Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if(Constants.LOG_ON) VolleyLog.d(TAG, "Error: " + error.getMessage());
+                if(Constants.LOG_ON) {VolleyLog.d(TAG, "Error: " + error.getMessage());}
                 progressDialogDismiss();
                 setErrorTextAndButton();
             }
@@ -747,6 +747,18 @@ public class Fragment extends android.support.v4.app.Fragment {
     }
 
     private void showToast(String message) {
-        Toast.makeText(getActivity().getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity().getApplication(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        progressDialogDismiss();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        progressDialogDismiss();
     }
 }

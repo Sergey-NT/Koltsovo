@@ -220,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (drawerResult != null && drawerResult.isDrawerOpen()) {
             drawerResult.closeDrawer();
-        } else if (version != 0 && versionGooglePlay != 0 && versionGooglePlay > version && !getSettingsParams(Constants.APP_PREFERENCES_CANCEL_CHECK_VERSION)) {
+        } else if (version != 0 & versionGooglePlay != 0 & versionGooglePlay > version & !getSettingsParams(Constants.APP_PREFERENCES_CANCEL_CHECK_VERSION)) {
             FragmentManager manager = getSupportFragmentManager();
             UpdateDialogFragment dialogFragment = new UpdateDialogFragment();
             dialogFragment.show(manager, "dialog");
@@ -246,6 +246,8 @@ public class MainActivity extends AppCompatActivity {
         AdRequest request = new AdRequest.Builder()
                 // Nexus 5
                 .addTestDevice("4B954499F159024FD4EFD592E7A5F658")
+                // Nexus 4 4.4.4
+                .addTestDevice("769FA0ABAACE6F42A12E2AF6BA03F1FC")
                 .build();
 
         adView.loadAd(request);
