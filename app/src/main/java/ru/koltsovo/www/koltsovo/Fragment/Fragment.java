@@ -685,6 +685,10 @@ public class Fragment extends android.support.v4.app.Fragment {
         protected void onPostExecute(List<ObjectPlane> list) {
             super.onPostExecute(list);
 
+            if(!isAdded()) {
+                return;
+            }
+
             if (list == null || list.size() == 0) {
                 getActivity().runOnUiThread(new Runnable() {
                     @Override
