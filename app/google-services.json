@@ -1,1 +1,31 @@
-{"project_info":{"project_id":"koltsovo-1d25d","project_number":"322818366920","name":"Koltsovo"},"client":[{"client_info":{"mobilesdk_app_id":"1:322818366920:android:d66c972d1b4d3423","client_id":"android:ru.koltsovo.www.koltsovo","client_type":1,"android_client_info":{"package_name":"ru.koltsovo.www.koltsovo"}},"oauth_client":[],"api_key":[],"services":{"analytics_service":{"status":1},"cloud_messaging_service":{"status":2,"apns_config":[]},"appinvite_service":{"status":1,"other_platform_oauth_client":[]},"google_signin_service":{"status":1},"ads_service":{"status":1}}}],"client_info":[],"ARTIFACT_VERSION":"1"}
+{
+  "project_info": {
+    "project_number": "322818366920",
+    "project_id": "koltsovo-1d25d"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322818366920:android:d66c972d1b4d3423",
+        "android_client_info": {
+          "package_name": "ru.koltsovo.www.koltsovo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [{ "current_key": "" }],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

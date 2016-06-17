@@ -57,11 +57,15 @@ public class InfoActivity extends AppCompatActivity {
         CardView cardViewCheckIn = (CardView) findViewById(R.id.cardViewCheckIn);
         CardView cardViewBoarding = (CardView) findViewById(R.id.cardViewBoarding);
         CardView cardViewAirline = (CardView) findViewById(R.id.cardViewAirline);
+        CardView cardViewRoute = (CardView) findViewById(R.id.cardViewRoute);
 
-        assert planeRoute != null;
-        assert planeRouteStatus != null;
-        String[] subStringRoute = planeRoute.split(";");
-        String[] subStringRouteStatus = planeRouteStatus.split(";");
+        if (planeRoute == null || planeRouteStatus == null) {
+            cardViewRoute.setVisibility(View.GONE);
+        } else {
+            String[] subStringRoute = planeRoute.split(";");
+            String[] subStringRouteStatus = planeRouteStatus.split(";");
+            addRouteInfoToView(linearLayoutRoute, subStringRoute, subStringRouteStatus);
+        }
 
         TextView tvPlaneType = (TextView) findViewById(R.id.tvType);
         tvPlaneType.setText(planeType);
@@ -122,8 +126,6 @@ public class InfoActivity extends AppCompatActivity {
             tvBoardingGate.setText(boardingGate);
             tvBoardingStatus.setText(boardingStatus);
         }
-
-        addRouteInfoToView(linearLayoutRoute, subStringRoute, subStringRouteStatus);
     }
 
     private void addRouteInfoToView(LinearLayout linearLayout, String[] subStringRoute, String[] subStringRouteStatus) {
