@@ -248,6 +248,8 @@ public class MainActivity extends AppCompatActivity {
                 .addTestDevice("4B954499F159024FD4EFD592E7A5F658")
                 // Nexus 4 4.4.4
                 .addTestDevice("769FA0ABAACE6F42A12E2AF6BA03F1FC")
+                // Samsung GT-P5200
+                .addTestDevice("36F1281CF85BE19471A7B8BD82141BDF")
                 .build();
 
         adView.loadAd(request);

@@ -81,7 +81,8 @@ public class AppController extends Application {
         super.onConfigurationChanged(newConfig);
 
         if (locale != null) {
-            newConfig.locale = locale;
+            Configuration config = new Configuration(newConfig);
+            config.locale = locale;
             Locale.setDefault(locale);
             getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
         }

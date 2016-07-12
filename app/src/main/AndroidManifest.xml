@@ -61,7 +61,7 @@
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize|locale"
             android:launchMode="singleTask"
-            android:taskAffinity=""
+            android:taskAffinity=".MainActivity"
             android:excludeFromRecents="true" >
 
             <intent-filter>
@@ -73,17 +73,20 @@
 
         <activity
             android:name=".AboutActivity"
-            android:configChanges="orientation|screenSize|locale" >
+            android:configChanges="orientation|screenSize|locale"
+            android:launchMode="singleTask" >
         </activity>
 
         <activity
             android:name=".InfoActivity"
-            android:configChanges="orientation|screenSize|locale" >
+            android:configChanges="orientation|screenSize|locale"
+            android:launchMode="singleTask" >
         </activity>
 
         <activity
             android:name=".SettingsActivity"
-            android:configChanges="orientation|screenSize|locale" >
+            android:configChanges="orientation|screenSize|locale"
+            android:launchMode="singleTask" >
         </activity>
 
     </application>

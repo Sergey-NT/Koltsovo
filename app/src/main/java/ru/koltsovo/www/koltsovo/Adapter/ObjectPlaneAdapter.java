@@ -392,6 +392,9 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
             case "4B-":
                 holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_aviastar_tu));
                 break;
+            case "QR-":
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_qatar_airways));
+                break;
             default:
                 holder.imageViewLogo.setVisibility(View.GONE);
                 break;
