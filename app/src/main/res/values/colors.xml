@@ -14,4 +14,5 @@
     <color name="colorBackgroundGrey">#EEEEEE</color>
     <color name="colorAccentOrange">#FF5722</color>
     <color name="colorAccentBlue">#448AFF</color>
+    <color name="colorBlackSemiTransparent">#B2000000</color>
 </resources>

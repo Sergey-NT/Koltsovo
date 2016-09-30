@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -38,6 +39,11 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
+import com.mikepenz.google_material_typeface_library.GoogleMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
+
+import net.i2p.android.ext.floatingactionbutton.FloatingActionButton;
+import net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,6 +55,8 @@ import org.xmlpull.v1.XmlPullParserFactory;
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 import ru.koltsovo.www.koltsovo.Adapter.ObjectPlaneAdapter;
@@ -75,6 +83,8 @@ public class Fragment extends android.support.v4.app.Fragment {
     private EditText editText;
     private ObjectPlaneAdapter adapter;
     private SharedPreferences settings;
+    private FloatingActionsMenu floatingActionsMenu;
+    private List<String> dates;
 
     public static Fragment getInstance(String direction, String planeNumber) {
         Bundle args = new Bundle();
@@ -108,6 +118,7 @@ public class Fragment extends android.support.v4.app.Fragment {
         planeNumber = getArguments().getString("planeNumber");
         settings = getActivity().getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
         language = settings.getString(Constants.APP_PREFERENCES_LANGUAGE, "ru");
+        floatingActionsMenu = (FloatingActionsMenu) view.findViewById(R.id.fam);
 
         clearEditTextListener();
         editTextListeners();
@@ -509,6 +520,7 @@ public class Fragment extends android.support.v4.app.Fragment {
             String checkInStatus = null;
             String boardingStatus = null;
             String boardingEnd = null;
+            dates = new ArrayList<>();
 
             list.clear();
 
@@ -659,6 +671,9 @@ public class Fragment extends android.support.v4.app.Fragment {
                             }
                         case XmlPullParser.END_TAG:
                             if (parser.getName().compareTo("flight") == 0) {
+                                String planeDate = planeTimePlan.substring(0, 6);
+                                dates.add(planeDate);
+
                                 list.add(new ObjectPlane(planeFlight, planeDestination, planeType, planeTimePlan, planeTimeFact, planeStatus, false, baggageStatus, gate, checkIn, planeCombination, planeRoute, planeRouteStatus, registrationBegin, registrationEnd, checkInStatus, boardingEnd, boardingStatus, planeAirline));
                             }
                             break;
@@ -712,6 +727,35 @@ public class Fragment extends android.support.v4.app.Fragment {
                 swipeRefreshLayout.setRefreshing(false);
             }
             progressDialogDismiss();
+            addFilterButtons();
+        }
+    }
+
+    private void addFilterButtons() {
+        final String[] unique = new HashSet<>(dates).toArray(new String[0]);
+        Arrays.sort(unique);
+        for (final String title : unique) {
+            final FloatingActionButton fab = new FloatingActionButton(getActivity().getApplication());
+            fab.setColorNormalResId(R.color.colorPrimary);
+            fab.setColorPressedResId(R.color.colorPrimaryDark);
+            fab.setTitle(title);
+
+            fab.setIconDrawable(new IconicsDrawable(getActivity().getApplication())
+                    .icon(GoogleMaterial.Icon.gmd_date_range)
+                    .color(Color.WHITE)
+                    .sizeDp(24));
+            floatingActionsMenu.addButton(fab);
+
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showToast(fab.getTitle());
+                    if (adapter != null) {
+                        editText.setText(title);
+                    }
+                    floatingActionsMenu.collapse();
+                }
+            });
         }
     }
 

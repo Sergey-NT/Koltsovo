@@ -33,7 +33,7 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    static class ViewHolder {
+    private static class ViewHolder {
         private TextView itemFlight;
         private TextView itemDirection;
         private TextView itemType;
@@ -395,6 +395,21 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
             case "QR-":
                 holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_qatar_airways));
                 break;
+            case "QH-":
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_air_kyrgyzstan));
+                break;
+            case "KK-":
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_atlasjet_airlines));
+                break;
+            case "8Q-":
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_onur_air));
+                break;
+            case "I8-":
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_igavia));
+                break;
+            case "NN-":
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_vim_airlines));
+                break;
             default:
                 holder.imageViewLogo.setVisibility(View.GONE);
                 break;
@@ -418,14 +433,16 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
 
             String filterableStringFlight;
             String filterableStringDirection;
+            String filterableStringDate;
 
             List<ObjectPlane> listWithFilter = new ArrayList<>();
 
             for (int i = 0; i < count; i++) {
                 filterableStringFlight = originalList.get(i).getPlaneFlight();
                 filterableStringDirection = originalList.get(i).getPlaneDirection();
+                filterableStringDate = originalList.get(i).getPlaneTimePlan();
 
-                if (filterableStringFlight.toLowerCase().contains(filterString) || filterableStringDirection.toLowerCase().contains(filterString)) {
+                if (filterableStringFlight.toLowerCase().contains(filterString) || filterableStringDirection.toLowerCase().contains(filterString) || filterableStringDate.toLowerCase().contains(filterString)) {
                     listWithFilter.add(originalList.get(i));
                 }
             }

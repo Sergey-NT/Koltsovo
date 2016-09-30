@@ -7,6 +7,18 @@
         <license>Apache Software License 2.0</license>
     </notice>
     <notice>
+        <name>Android Compatibility Library v7</name>
+        <url/>
+        <copyright>Copyright 2005-2011, The Android Open Source Project</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>Android Desing Support Library</name>
+        <url/>
+        <copyright>Copyright 2005-2011, The Android Open Source Project</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
         <name>Android-Iconics</name>
         <url>https://github.com/mikepenz/Android-Iconics</url>
         <copyright>Copyright 2016 Mike Penz</copyright>
@@ -22,6 +34,12 @@
         <name>Android Volley</name>
         <url>https://github.com/mcxiaoke/android-volley</url>
         <copyright>Copyright (C) 2014 Xiaoke Zhang Copyright (C) 2011 The Android Open Source Project</copyright>
+        <license>Apache Software License 2.0</license>
+    </notice>
+    <notice>
+        <name>FloatingActionButton</name>
+        <url>https://github.com/str4d/android-floating-action-button</url>
+        <copyright>Copyright (C) 2014 str4d Copyright (C) 2014 Jerzy Chalupski</copyright>
         <license>Apache Software License 2.0</license>
     </notice>
     <notice>
