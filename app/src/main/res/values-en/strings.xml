@@ -67,4 +67,5 @@
     <string name="dialog_button_positive_language">Save</string>
     <string name="dialog_title_language">Language</string>
     <string name="menu_settings">Settings</string>
+    <string name="tabs_item_search">Flight search</string>
 </resources>

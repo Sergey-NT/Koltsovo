@@ -2,6 +2,7 @@
     <string name="app_name">Кольцово</string>
     <string name="tabs_item_arrival">Прибытие</string>
     <string name="tabs_item_departure">Отправление</string>
+    <string name="tabs_item_search">Поиск авиабилетов</string>
     <string name="plane_desc_type">Тип воздушного судна:</string>
     <string name="plane_desc_time_plan">Плановое время:</string>
     <string name="plane_desc_time_fast">Ожидаемое время:</string>

@@ -13,5 +13,6 @@
     <screenName name="ru.koltsovo.www.koltsovo.AboutActivity">About Activity</screenName>
     <screenName name="ru.koltsovo.www.koltsovo.InfoActivity">Info Activity</screenName>
     <screenName name="ru.koltsovo.www.koltsovo.SettingsActivity">Settings Activity</screenName>
+    <screenName name="ru.koltsovo.www.koltsovo.SearchActivity">Aviasales Activity</screenName>
     <screenName name="com.google.android.gms.ads.AdActivity">Ad Activity</screenName>
 </resources>

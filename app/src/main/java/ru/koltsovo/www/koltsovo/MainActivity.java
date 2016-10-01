@@ -169,13 +169,18 @@ public class MainActivity extends AppCompatActivity {
                                 .withIdentifier(1),
                         new DividerDrawerItem(),
                         new PrimaryDrawerItem()
+                                .withName(R.string.tabs_item_search)
+                                .withIcon(GoogleMaterial.Icon.gmd_search)
+                                .withIdentifier(2),
+                        new DividerDrawerItem(),
+                        new PrimaryDrawerItem()
                                 .withName(R.string.menu_settings)
                                 .withIcon(GoogleMaterial.Icon.gmd_settings)
-                                .withIdentifier(2),
+                                .withIdentifier(3),
                         new PrimaryDrawerItem()
                                 .withName(R.string.menu_about)
                                 .withIcon(GoogleMaterial.Icon.gmd_info_outline)
-                                .withIdentifier(3)
+                                .withIdentifier(4)
                 )
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
@@ -191,10 +196,15 @@ public class MainActivity extends AppCompatActivity {
                                 return true;
                             case 4:
                                 drawerResult.closeDrawer();
+                                Intent intentSearch = new Intent(MainActivity.this, SearchActivity.class);
+                                startActivity(intentSearch);
+                                return true;
+                            case 6:
+                                drawerResult.closeDrawer();
                                 Intent intentSettings = new Intent(MainActivity.this, SettingsActivity.class);
                                 startActivity(intentSettings);
                                 return true;
-                            case 5:
+                            case 7:
                                 drawerResult.closeDrawer();
                                 Intent intentAbout = new Intent(MainActivity.this, AboutActivity.class);
                                 startActivity(intentAbout);

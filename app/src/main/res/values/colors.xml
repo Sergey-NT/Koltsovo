@@ -15,4 +15,7 @@
     <color name="colorAccentOrange">#FF5722</color>
     <color name="colorAccentBlue">#448AFF</color>
     <color name="colorBlackSemiTransparent">#B2000000</color>
+    <color name="colorAsPrimary">#4CAF50</color>
+    <color name="colorAsPrimaryDark">#388E3C</color>
+    <color name="colorAviasalesMain">#4CAF50</color>
 </resources>
