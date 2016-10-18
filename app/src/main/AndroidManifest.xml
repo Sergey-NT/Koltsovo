@@ -61,6 +61,7 @@
             android:name=".MainActivity"
             android:configChanges="orientation|screenSize|locale"
             android:launchMode="singleTask"
+            android:theme="@style/AppLauncherTheme"
             android:taskAffinity=".MainActivity"
             android:excludeFromRecents="true" >
 
