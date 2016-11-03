@@ -2,20 +2,41 @@
 <resources>
     <color name="colorPrimary">#4CAF50</color>
     <color name="colorPrimaryDark">#388E3C</color>
+    <color name="colorAccent">#8BC34A</color>
+
     <color name="colorText">#FFFFFF</color>
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#727272</color>
     <color name="colorDivider">#B6B6B6</color>
-    <color name="colorAccent">#8BC34A</color>
+
     <color name="colorBackgroundGreen">#C8E6C9</color>
     <color name="colorBackgroundGreenLight">#B9F6CA</color>
     <color name="colorBackgroundRed">#F8BBD0</color>
     <color name="colorBackgroundYellow">#FFF9C4</color>
     <color name="colorBackgroundGrey">#EEEEEE</color>
+
+
+    <color name="colorPrimaryBlueGrey">#607D8B</color>
+    <color name="colorPrimaryDarkBlueGrey">#455A64</color>
+    <color name="colorAccentBlueGrey">#607D8B</color>
+
+    <color name="colorPrimaryGrey">#9E9E9E</color>
+    <color name="colorPrimaryDarkGrey">#616161</color>
+    <color name="colorAccentGrey">#9E9E9E</color>
+
+    <!-- Цвета оформления Aviasales -->
+    <color name="colorAsPrimary">?attr/colorPrimary</color>
+    <color name="colorAsPrimaryDark">?attr/colorPrimaryDark</color>
+    <color name="colorAviasalesMain">?attr/colorPrimary</color>
+
+    <!-- Цвет фона фильтра даты -->
+    <color name="colorBlackSemiTransparent">#B2000000</color>
+
+    <!-- Цвета SwipeRefreshLayout -->
+    <color name="colorAccentGreen">#8BC34A</color>
     <color name="colorAccentOrange">#FF5722</color>
     <color name="colorAccentBlue">#448AFF</color>
-    <color name="colorBlackSemiTransparent">#B2000000</color>
-    <color name="colorAsPrimary">#4CAF50</color>
-    <color name="colorAsPrimaryDark">#388E3C</color>
-    <color name="colorAviasalesMain">#4CAF50</color>
+
+    <!-- Цвета текста статуса рейса -->
+    <color name="colorAccentYellow">#FFC107</color>
 </resources>

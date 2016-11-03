@@ -24,10 +24,12 @@ import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
 
 import ru.koltsovo.www.koltsovo.Fragment.LanguageFragment;
+import ru.koltsovo.www.koltsovo.Fragment.ThemeDialogFragment;
 
 public class SettingsActivity extends AppCompatActivity implements BillingProcessor.IBillingHandler {
 
     private static final int LAYOUT = R.layout.activity_settings;
+    private static final int APP_THEME = R.style.AppDefault;
 
     private static final String PRODUCT_ID = "www.koltsovo.ru.ads.disable";
     private static final String LICENSE_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAg0wiLxwMYZZz1j0bDvnDcO/BjSZV2qB3zTNhXB73c9GrPaed3HujZQbqpDr8MGmq50wil6egznh4eH2k28/Ym3LXJQutORp1CvVs64tlU0k6egGEtOdZXhQxFGGvOKtaiFRfc/kXa7qDzwY9g5ar5sgi0ny1JTql/6GRnAsHFnNxJmMzwX2pSANlZh74AREdfR5jTdyjAaar4mrG9Cx4So2Z1lmIRsw9uoBDF7CzBT6EaFgHsVXExZIGP/rOfDfBqrAgUZZ/CmjrpB2rGYlyLPKxpG6kyS7ideMnvuX34+UxOZXWiRo6vSG0155O74FFg6X7XqiD0x1eifUElNWwzQIDAQAB";
@@ -39,11 +41,16 @@ public class SettingsActivity extends AppCompatActivity implements BillingProces
 
     private boolean readyToPurchase = false;
 
+    private int appTheme;
+
 
     @Override
     @SuppressWarnings("ConstantConditions")
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        setTheme(R.style.AppDefault);
+        settings = getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
+        appTheme = settings.getInt(Constants.APP_PREFERENCES_APP_THEME, APP_THEME);
+        setTheme(appTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
 
@@ -59,7 +66,6 @@ public class SettingsActivity extends AppCompatActivity implements BillingProces
         Button btnFeedback = (Button) findViewById(R.id.btnFeedback);
         CheckBox checkBoxUpdate = (CheckBox) findViewById(R.id.checkBoxUpdate);
 
-        settings = getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
         Boolean update = settings.getBoolean(Constants.APP_PREFERENCES_CANCEL_CHECK_VERSION, false);
         String price = settings.getString(Constants.APP_PREFERENCES_ADS_DISABLE_PRICE, "");
         String buttonPriceText = getString(R.string.button_ads_disable) + " " + price;
@@ -163,6 +169,13 @@ public class SettingsActivity extends AppCompatActivity implements BillingProces
         super.onDestroy();
     }
 
+    @Override
+    protected void onPause() {
+        appTheme = settings.getInt(Constants.APP_PREFERENCES_APP_THEME, APP_THEME);
+        setTheme(appTheme);
+        super.onPause();
+    }
+
     private class getSkuDetails extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
@@ -248,9 +261,15 @@ public class SettingsActivity extends AppCompatActivity implements BillingProces
         startActivity(intent);
     }
 
-    public void bntLanguageOnClick (View view) {
+    public void btnLanguageOnClick (View view) {
         FragmentManager manager = getSupportFragmentManager();
         LanguageFragment dialogFragment = new LanguageFragment();
+        dialogFragment.show(manager, "dialog");
+    }
+
+    public void btnThemeOnClick (View view) {
+        FragmentManager manager = getSupportFragmentManager();
+        ThemeDialogFragment dialogFragment = new ThemeDialogFragment();
         dialogFragment.show(manager, "dialog");
     }
 

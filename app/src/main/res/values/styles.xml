@@ -5,9 +5,24 @@
     <style name="AppDefault" parent="AppTheme">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorButtonNormal">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="colorControlNormal">@color/colorSecondaryText</item>
         <item name="android:background">@null</item>
+    </style>
+
+    <style name="AppDefaultBlueGrey" parent="AppDefault">
+        <item name="colorPrimary">@color/colorPrimaryBlueGrey</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkBlueGrey</item>
+        <item name="colorButtonNormal">@color/colorPrimaryBlueGrey</item>
+        <item name="colorAccent">@color/colorAccentBlueGrey</item>
+    </style>
+
+    <style name="AppDefaultGrey" parent="AppDefault">
+        <item name="colorPrimary">@color/colorPrimaryGrey</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDarkGrey</item>
+        <item name="colorButtonNormal">@color/colorPrimaryGrey</item>
+        <item name="colorAccent">@color/colorAccentGrey</item>
     </style>
 
     <style name="AppLauncherTheme" parent="Theme.AppCompat.Light.NoActionBar">

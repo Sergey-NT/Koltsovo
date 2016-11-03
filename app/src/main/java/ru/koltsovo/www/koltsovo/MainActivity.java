@@ -7,14 +7,17 @@ import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.IntentCompat;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -26,6 +29,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.google.android.gms.common.ConnectionResult;
@@ -50,21 +54,27 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int LAYOUT = R.layout.activity_main;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    private static final int APP_THEME = R.style.AppDefault;
     private static final String TAG = "MainActivity";
 
     private Toolbar toolbar;
     private ViewPager viewPager;
     private Drawer drawerResult;
+    private Drawer drawerResultRight;
     private AdView adView;
     private SharedPreferences settings;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private String planeNumber;
     private String direction;
     private int versionGooglePlay = 0;
+    private int appTheme;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppDefault);
+        settings = getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
+        appTheme = settings.getInt(Constants.APP_PREFERENCES_APP_THEME, APP_THEME);
+        setTheme(appTheme);
+
         super.onCreate(savedInstanceState);
         setContentView(LAYOUT);
 
@@ -72,10 +82,10 @@ public class MainActivity extends AppCompatActivity {
         Tracker t = ((AppController) getApplication()).getTracker(AppController.TrackerName.APP_TRACKER);
         t.enableAdvertisingIdCollection(true);
 
-        settings = getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
         boolean adDisable = settings.getBoolean(Constants.APP_PREFERENCES_ADS_DISABLE, false);
 
         if (!adDisable) {
+            MobileAds.initialize(getApplicationContext(), getString(R.string.app_identifier));
             initAd(R.id.main_activity_layout);
         }
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
@@ -170,18 +180,38 @@ public class MainActivity extends AppCompatActivity {
                         new DividerDrawerItem(),
                         new PrimaryDrawerItem()
                                 .withName(R.string.tabs_item_search)
-                                .withIcon(GoogleMaterial.Icon.gmd_search)
-                                .withIdentifier(2),
+                                .withIcon(GoogleMaterial.Icon.gmd_search),
+                        new PrimaryDrawerItem()
+                                .withName(R.string.menu_other_airports)
+                                .withIcon(GoogleMaterial.Icon.gmd_airplanemode_active),
                         new DividerDrawerItem(),
                         new PrimaryDrawerItem()
                                 .withName(R.string.menu_settings)
-                                .withIcon(GoogleMaterial.Icon.gmd_settings)
-                                .withIdentifier(3),
+                                .withIcon(GoogleMaterial.Icon.gmd_settings),
                         new PrimaryDrawerItem()
                                 .withName(R.string.menu_about)
                                 .withIcon(GoogleMaterial.Icon.gmd_info_outline)
-                                .withIdentifier(4)
                 )
+                .withOnDrawerListener(new Drawer.OnDrawerListener() {
+                    @Override
+                    public void onDrawerOpened(View drawerView) {
+                        if (drawerView == drawerResultRight.getSlider() & getSettingsParams(Constants.APP_PREFERENCES_SHOW_RIGHT_DRAWER)) {
+                            SharedPreferences.Editor editor = settings.edit();
+                            editor.putBoolean(Constants.APP_PREFERENCES_SHOW_RIGHT_DRAWER, false);
+                            editor.apply();
+                        }
+                    }
+
+                    @Override
+                    public void onDrawerClosed(View drawerView) {
+                        if (drawerView == drawerResult.getSlider() & getSettingsParams(Constants.APP_PREFERENCES_SHOW_RIGHT_DRAWER)) {
+                            drawerResultRight.openDrawer();
+                        }
+                    }
+
+                    @Override
+                    public void onDrawerSlide(View drawerView, float slideOffset) {}
+                })
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int position, IDrawerItem iDrawerItem) {
@@ -199,12 +229,18 @@ public class MainActivity extends AppCompatActivity {
                                 Intent intentSearch = new Intent(MainActivity.this, SearchActivity.class);
                                 startActivity(intentSearch);
                                 return true;
-                            case 6:
+                            case 5:
+                                SharedPreferences.Editor editor = settings.edit();
+                                editor.putBoolean(Constants.APP_PREFERENCES_SHOW_RIGHT_DRAWER, true);
+                                editor.apply();
+                                drawerResult.closeDrawer();
+                                return true;
+                            case 7:
                                 drawerResult.closeDrawer();
                                 Intent intentSettings = new Intent(MainActivity.this, SettingsActivity.class);
                                 startActivity(intentSettings);
                                 return true;
-                            case 7:
+                            case 8:
                                 drawerResult.closeDrawer();
                                 Intent intentAbout = new Intent(MainActivity.this, AboutActivity.class);
                                 startActivity(intentAbout);
@@ -215,6 +251,53 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .build();
         drawerResult.setSelection(0);
+
+        drawerResultRight = new DrawerBuilder()
+                .withActivity(this)
+                .addDrawerItems(
+                        new SectionDrawerItem()
+                                .withName(R.string.menu_title_right),
+                        new PrimaryDrawerItem()
+                                .withName(R.string.menu_kurumoch)
+                                .withDescription(R.string.menu_kurumoch_subtitle)
+                                .withIcon(GoogleMaterial.Icon.gmd_airplanemode_active),
+                        new PrimaryDrawerItem()
+                                .withName(R.string.menu_rostov_on_don)
+                                .withIcon(GoogleMaterial.Icon.gmd_airplanemode_active),
+                        new PrimaryDrawerItem()
+                                .withName(R.string.menu_strigino)
+                                .withDescription(R.string.menu_strigino_subtitle)
+                                .withIcon(GoogleMaterial.Icon.gmd_airplanemode_active)
+
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int position, IDrawerItem drawerItem) {
+                        switch (position) {
+                            case 1:
+                                drawerResultRight.closeDrawer();
+                                Intent intentKurumoch = new Intent(Intent.ACTION_VIEW);
+                                intentKurumoch.setData(Uri.parse("market://details?id=ru.samara.airport.www.kurumoch"));
+                                startActivity(intentKurumoch);
+                                return true;
+                            case 2:
+                                drawerResultRight.closeDrawer();
+                                Intent intentRostovOnDon = new Intent(Intent.ACTION_VIEW);
+                                intentRostovOnDon.setData(Uri.parse("market://details?id=ru.rnd_airport.rostov_on_don"));
+                                startActivity(intentRostovOnDon);
+                                return true;
+                            case 3:
+                                drawerResultRight.closeDrawer();
+                                Intent intentStrigino = new Intent(Intent.ACTION_VIEW);
+                                intentStrigino.setData(Uri.parse("market://details?id=ru.airportnn.www.strigino"));
+                                startActivity(intentStrigino);
+                                return true;
+                        }
+                        return false;
+                    }
+                })
+                .withDrawerGravity(Gravity.END)
+                .append(drawerResult);
     }
 
     @Override
@@ -230,6 +313,8 @@ public class MainActivity extends AppCompatActivity {
 
         if (drawerResult != null && drawerResult.isDrawerOpen()) {
             drawerResult.closeDrawer();
+        } else if (drawerResultRight != null && drawerResultRight.isDrawerOpen()) {
+            drawerResultRight.closeDrawer();
         } else if (version != 0 & versionGooglePlay != 0 & versionGooglePlay > version & !getSettingsParams(Constants.APP_PREFERENCES_CANCEL_CHECK_VERSION)) {
             FragmentManager manager = getSupportFragmentManager();
             UpdateDialogFragment dialogFragment = new UpdateDialogFragment();
@@ -290,6 +375,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+        if (appTheme != settings.getInt(Constants.APP_PREFERENCES_APP_THEME, APP_THEME)) {
+            changeActivityAppTheme();
+        }
         super.onResume();
         if (adView != null) {
             adView.resume();
@@ -309,6 +397,13 @@ public class MainActivity extends AppCompatActivity {
             adView.destroy();
         }
         super.onDestroy();
+    }
+
+    private void changeActivityAppTheme() {
+        finish();
+        final Intent intent = getIntent();
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | IntentCompat.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
     }
 
     private boolean getSettingsParams(String params) {

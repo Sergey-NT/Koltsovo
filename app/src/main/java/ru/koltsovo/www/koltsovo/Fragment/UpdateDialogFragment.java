@@ -46,10 +46,4 @@ public class UpdateDialogFragment extends DialogFragment {
 
         return builder.create();
     }
-
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        super.onDismiss(dialog);
-        getActivity().finish();
-    }
 }

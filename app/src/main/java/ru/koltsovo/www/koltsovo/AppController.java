@@ -1,9 +1,11 @@
 package ru.koltsovo.www.koltsovo;
 
+import android.annotation.TargetApi;
 import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.os.Build;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -72,8 +74,13 @@ public class AppController extends Application {
         locale = new Locale(language);
         Locale.setDefault(locale);
         Configuration config = new Configuration();
-        config.locale = locale;
-        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            setSystemLocale(config, locale);
+            updateConfiguration(config);
+        }else{
+            setSystemLocaleLegacy(config, locale);
+            updateConfigurationLegacy(config);
+        }
     }
 
     @Override
@@ -82,9 +89,15 @@ public class AppController extends Application {
 
         if (locale != null) {
             Configuration config = new Configuration(newConfig);
-            config.locale = locale;
-            Locale.setDefault(locale);
-            getBaseContext().getResources().updateConfiguration(newConfig, getBaseContext().getResources().getDisplayMetrics());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                setSystemLocale(config, locale);
+                Locale.setDefault(locale);
+                updateConfiguration(newConfig);
+            }else{
+                setSystemLocaleLegacy(config, locale);
+                Locale.setDefault(locale);
+                updateConfigurationLegacy(newConfig);
+            }
         }
     }
 
@@ -109,5 +122,25 @@ public class AppController extends Application {
             Class.forName("android.os.AsyncTask");
         }
         catch(Throwable ignore) {}
+    }
+
+    @SuppressWarnings("deprecation")
+    public void setSystemLocaleLegacy(Configuration config, Locale locale){
+        config.locale = locale;
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    public void setSystemLocale(Configuration config, Locale locale){
+        config.setLocale(locale);
+    }
+
+    @SuppressWarnings("deprecation")
+    private void updateConfigurationLegacy(Configuration config) {
+        getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+    }
+
+    @TargetApi(Build.VERSION_CODES.N)
+    private void updateConfiguration(Configuration config) {
+        getBaseContext().createConfigurationContext(config);
     }
 }

@@ -353,23 +353,30 @@ public class Fragment extends android.support.v4.app.Fragment {
     }
 
     private void sendQueryToDb(String... params) {
+        String token = params[0];
         String planeDirection = Uri.encode(params[3]);
         String timePlane = Uri.encode(params[4]);
         String timeFact = Uri.encode(params[5]);
         String status = Uri.encode(params[6]);
-        String url = "http://www.avtovokzal.org/php/app_koltsovo/query.php?token="+params[0]+"&direction="+params[1]+"&flight="+params[2]+"&plane_direction="+planeDirection+"&time_plan="+timePlane+"&time_fact="+timeFact+"&status="+status+"&language="+language;
+        if (token.length() > 0) {
+            String url = "http://www.avtovokzal.org/php/app_koltsovo/query.php?token=" + token + "&direction=" + params[1] + "&flight=" + params[2] + "&plane_direction=" + planeDirection + "&time_plan=" + timePlane + "&time_fact=" + timeFact + "&status=" + status + "&language=" + language;
 
-        StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {}
+            StringRequest strReq = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                @Override
+                public void onResponse(String response) {
+                }
             }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {}
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                }
             });
             // Установливаем TimeOut, Retry
             strReq.setRetryPolicy(new DefaultRetryPolicy(DefaultRetryPolicy.DEFAULT_TIMEOUT_MS, 3, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
             // Добавляем запрос в очередь
             AppController.getInstance().addToRequestQueue(strReq);
+        } else {
+            showToast(getString(R.string.toast_token));
+        }
     }
 
     private void hideSoftKeyboard () {
@@ -379,7 +386,7 @@ public class Fragment extends android.support.v4.app.Fragment {
     }
 
     private void refreshListener() {
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccent, R.color.colorAccentOrange, R.color.colorAccentBlue);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccentGreen, R.color.colorAccentOrange, R.color.colorAccentBlue);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
