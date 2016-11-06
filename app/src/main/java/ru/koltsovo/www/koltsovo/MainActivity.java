@@ -196,9 +196,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onDrawerOpened(View drawerView) {
                         if (drawerView == drawerResultRight.getSlider() & getSettingsParams(Constants.APP_PREFERENCES_SHOW_RIGHT_DRAWER)) {
-                            SharedPreferences.Editor editor = settings.edit();
-                            editor.putBoolean(Constants.APP_PREFERENCES_SHOW_RIGHT_DRAWER, false);
-                            editor.apply();
+                            setSettingsParams(Constants.APP_PREFERENCES_SHOW_RIGHT_DRAWER, false);
 
                             if (drawerResult != null && viewPager != null) {
                                 drawerResult.setSelection(viewPager.getCurrentItem());
@@ -210,6 +208,18 @@ public class MainActivity extends AppCompatActivity {
                     public void onDrawerClosed(View drawerView) {
                         if (drawerView == drawerResult.getSlider() & getSettingsParams(Constants.APP_PREFERENCES_SHOW_RIGHT_DRAWER)) {
                             drawerResultRight.openDrawer();
+                        } else if (drawerView == drawerResult.getSlider() & getSettingsParams(Constants.APP_PREFERENCES_SETTINGS)) {
+                            setSettingsParams(Constants.APP_PREFERENCES_SETTINGS, false);
+                            Intent intentSettings = new Intent(MainActivity.this, SettingsActivity.class);
+                            startActivity(intentSettings);
+                        } else if (drawerView == drawerResult.getSlider() & getSettingsParams(Constants.APP_PREFERENCES_ABOUT)) {
+                            setSettingsParams(Constants.APP_PREFERENCES_ABOUT, false);
+                            Intent intentAbout = new Intent(MainActivity.this, AboutActivity.class);
+                            startActivity(intentAbout);
+                        } else if (drawerView == drawerResult.getSlider() & getSettingsParams(Constants.APP_PREFERENCES_SEARCH)) {
+                            setSettingsParams(Constants.APP_PREFERENCES_SEARCH, false);
+                            Intent intentSearch = new Intent(MainActivity.this, SearchActivity.class);
+                            startActivity(intentSearch);
                         }
                     }
 
@@ -229,25 +239,20 @@ public class MainActivity extends AppCompatActivity {
                                 viewPager.setCurrentItem(Constants.TAB_TWO);
                                 return true;
                             case 4:
+                                setSettingsParams(Constants.APP_PREFERENCES_SEARCH, true);
                                 drawerResult.closeDrawer();
-                                Intent intentSearch = new Intent(MainActivity.this, SearchActivity.class);
-                                startActivity(intentSearch);
                                 return true;
                             case 5:
-                                SharedPreferences.Editor editor = settings.edit();
-                                editor.putBoolean(Constants.APP_PREFERENCES_SHOW_RIGHT_DRAWER, true);
-                                editor.apply();
+                                setSettingsParams(Constants.APP_PREFERENCES_SHOW_RIGHT_DRAWER, true);
                                 drawerResult.closeDrawer();
                                 return true;
                             case 7:
+                                setSettingsParams(Constants.APP_PREFERENCES_SETTINGS, true);
                                 drawerResult.closeDrawer();
-                                Intent intentSettings = new Intent(MainActivity.this, SettingsActivity.class);
-                                startActivity(intentSettings);
                                 return true;
                             case 8:
+                                setSettingsParams(Constants.APP_PREFERENCES_ABOUT, true);
                                 drawerResult.closeDrawer();
-                                Intent intentAbout = new Intent(MainActivity.this, AboutActivity.class);
-                                startActivity(intentAbout);
                                 return true;
                         }
                         return false;
@@ -412,6 +417,12 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean getSettingsParams(String params) {
         return settings.getBoolean(params, false);
+    }
+
+    private void setSettingsParams(String params, boolean value) {
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putBoolean(params, value);
+        editor.apply();
     }
 
     private void getVersionFromGooglePlay() {
