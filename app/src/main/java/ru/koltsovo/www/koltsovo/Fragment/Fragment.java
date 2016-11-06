@@ -743,8 +743,8 @@ public class Fragment extends android.support.v4.app.Fragment {
         Arrays.sort(unique);
         for (final String title : unique) {
             final FloatingActionButton fab = new FloatingActionButton(getActivity().getApplication());
-            fab.setColorNormalResId(R.color.colorPrimary);
-            fab.setColorPressedResId(R.color.colorPrimaryDark);
+            fab.setColorNormalResId(R.color.colorPrimaryGreen);
+            fab.setColorPressedResId(R.color.colorPrimaryDarkGreen);
             fab.setTitle(title);
 
             fab.setIconDrawable(new IconicsDrawable(getActivity().getApplication())

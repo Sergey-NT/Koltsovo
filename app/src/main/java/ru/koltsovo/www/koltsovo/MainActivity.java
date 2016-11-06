@@ -199,6 +199,10 @@ public class MainActivity extends AppCompatActivity {
                             SharedPreferences.Editor editor = settings.edit();
                             editor.putBoolean(Constants.APP_PREFERENCES_SHOW_RIGHT_DRAWER, false);
                             editor.apply();
+
+                            if (drawerResult != null && viewPager != null) {
+                                drawerResult.setSelection(viewPager.getCurrentItem());
+                            }
                         }
                     }
 

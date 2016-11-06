@@ -1,42 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#4CAF50</color>
-    <color name="colorPrimaryDark">#388E3C</color>
-    <color name="colorAccent">#8BC34A</color>
+    <color name="material_drawer_primary">#4CAF50</color>
+    <color name="colorAsPrimary">#4CAF50</color>
+    <color name="colorAsPrimaryDark">#4CAF50</color>
+    <color name="colorAviasalesMain">#4CAF50</color>
+
+    <!-- Цвета темы оформления Green -->
+    <color name="colorPrimaryGreen">#4CAF50</color>
+    <color name="colorPrimaryDarkGreen">#388E3C</color>
+    <color name="colorAccentGreen">#8BC34A</color>
+    <color name="colorBackgroundGreen">#C8E6C9</color>
+
+    <!-- Цвета темы оформления Blue Grey -->
+    <color name="colorPrimaryBlueGrey">#607D8B</color>
+    <color name="colorPrimaryDarkBlueGrey">#455A64</color>
+    <color name="colorBackgroundBlueGrey">#CFD8DC</color>
+
+    <!-- Цвета темы оформления Grey -->
+    <color name="colorPrimaryGrey">#9E9E9E</color>
+    <color name="colorPrimaryDarkGrey">#616161</color>
+    <color name="colorBackgroundGrey">#F5F5F5</color>
+
+    <!-- Цвета темы оформления Red -->
+    <color name="colorPrimaryRed">#F44336</color>
+    <color name="colorPrimaryDarkRed">#D32F2F</color>
+    <color name="colorBackgroundRed">#FFCDD2</color>
+
+    <!-- Цвета темы оформления Brown -->
+    <color name="colorPrimaryBrown">#795548</color>
+    <color name="colorPrimaryDarkBrown">#5D4037</color>
+    <color name="colorBackgroundBrown">#D7CCC8</color>
+
+    <!-- Цвета темы оформления Indigo -->
+    <color name="colorPrimaryIndigo">#3F51B5</color>
+    <color name="colorPrimaryDarkIndigo">#303F9F</color>
+    <color name="colorBackgroundIndigo">#C5CAE9</color>
+
+    <!-- Цвета темы оформления Teal -->
+    <color name="colorPrimaryTeal">#009688</color>
+    <color name="colorPrimaryDarkTeal">#00796B</color>
+    <color name="colorBackgroundTeal">#B2DFDB</color>
+
+    <!-- Цвета темы оформления Blue -->
+    <color name="colorPrimaryBlue">#2196F3</color>
+    <color name="colorPrimaryDarkBlue">#1976D2</color>
+    <color name="colorBackgroundBlue">#BBDEFB</color>
+
+    <!-- Цвета темы оформления Deep Purple -->
+    <color name="colorPrimaryDeepPurple">#673AB7</color>
+    <color name="colorPrimaryDarkDeepPurple">#512DA8</color>
+    <color name="colorBackgroundDeepPurple">#D1C4E9</color>
 
     <color name="colorText">#FFFFFF</color>
     <color name="colorPrimaryText">#212121</color>
-    <color name="colorSecondaryText">#727272</color>
-    <color name="colorDivider">#B6B6B6</color>
-
-    <color name="colorBackgroundGreen">#C8E6C9</color>
-    <color name="colorBackgroundGreenLight">#B9F6CA</color>
-    <color name="colorBackgroundRed">#F8BBD0</color>
-    <color name="colorBackgroundYellow">#FFF9C4</color>
-    <color name="colorBackgroundGrey">#EEEEEE</color>
-
-
-    <color name="colorPrimaryBlueGrey">#607D8B</color>
-    <color name="colorPrimaryDarkBlueGrey">#455A64</color>
-    <color name="colorAccentBlueGrey">#607D8B</color>
-
-    <color name="colorPrimaryGrey">#9E9E9E</color>
-    <color name="colorPrimaryDarkGrey">#616161</color>
-    <color name="colorAccentGrey">#9E9E9E</color>
-
-    <!-- Цвета оформления Aviasales -->
-    <color name="colorAsPrimary">?attr/colorPrimary</color>
-    <color name="colorAsPrimaryDark">?attr/colorPrimaryDark</color>
-    <color name="colorAviasalesMain">?attr/colorPrimary</color>
+    <color name="colorSecondaryText">#757575</color>
+    <color name="colorDivider">#BDBDBD</color>
 
     <!-- Цвет фона фильтра даты -->
     <color name="colorBlackSemiTransparent">#B2000000</color>
 
     <!-- Цвета SwipeRefreshLayout -->
-    <color name="colorAccentGreen">#8BC34A</color>
     <color name="colorAccentOrange">#FF5722</color>
     <color name="colorAccentBlue">#448AFF</color>
 
     <!-- Цвета текста статуса рейса -->
-    <color name="colorAccentYellow">#FFC107</color>
+    <color name="colorAccentYellow">#FFA000</color>
 </resources>

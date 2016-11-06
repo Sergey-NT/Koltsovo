@@ -1,7 +1,5 @@
 package ru.koltsovo.www.koltsovo.Fragment;
 
-
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -18,10 +16,16 @@ import ru.koltsovo.www.koltsovo.R;
 
 public class ThemeDialogFragment extends DialogFragment {
 
-    final CharSequence[] items = {"Green","Blue Grey", "Grey"};
+    final CharSequence[] items = {"Green", "Blue Grey", "Grey", "Red", "Brown", "Indigo", "Teal", "Blue", "Deep Purple"};
     private static final int APP_THEME = R.style.AppDefault;
     private static final int APP_THEME_BLUE_GREY = R.style.AppDefaultBlueGrey;
     private static final int APP_THEME_GREY = R.style.AppDefaultGrey;
+    private static final int APP_THEME_RED = R.style.AppDefaultRed;
+    private static final int APP_THEME_BROWN = R.style.AppDefaultBrown;
+    private static final int APP_THEME_INDIGO = R.style.AppDefaultIndigo;
+    private static final int APP_THEME_TEAL = R.style.AppDefaultTeal;
+    private static final int APP_THEME_BLUE = R.style.AppDefaultBlue;
+    private static final int APP_THEME_DEEP_PURPLE = R.style.AppDefaultDeepPurple;
 
     private SharedPreferences settings;
 
@@ -43,8 +47,25 @@ public class ThemeDialogFragment extends DialogFragment {
             case APP_THEME_GREY:
                 checkedItem = 2;
                 break;
+            case APP_THEME_RED:
+                checkedItem = 3;
+                break;
+            case APP_THEME_BROWN:
+                checkedItem = 4;
+                break;
+            case APP_THEME_INDIGO:
+                checkedItem = 5;
+                break;
+            case APP_THEME_TEAL:
+                checkedItem = 6;
+                break;
+            case APP_THEME_BLUE:
+                checkedItem = 7;
+                break;
+            case APP_THEME_DEEP_PURPLE:
+                checkedItem = 8;
+                break;
         }
-
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.dialog_title_theme))
@@ -64,12 +85,31 @@ public class ThemeDialogFragment extends DialogFragment {
                                 setAppTheme(APP_THEME_GREY);
                                 changeActivityAppTheme();
                                 break;
+                            case 3:
+                                setAppTheme(APP_THEME_RED);
+                                changeActivityAppTheme();
+                                break;
+                            case 4:
+                                setAppTheme(APP_THEME_BROWN);
+                                changeActivityAppTheme();
+                                break;
+                            case 5:
+                                setAppTheme(APP_THEME_INDIGO);
+                                changeActivityAppTheme();
+                                break;
+                            case 6:
+                                setAppTheme(APP_THEME_TEAL);
+                                changeActivityAppTheme();
+                                break;
+                            case 7:
+                                setAppTheme(APP_THEME_BLUE);
+                                changeActivityAppTheme();
+                                break;
+                            case 8:
+                                setAppTheme(APP_THEME_DEEP_PURPLE);
+                                changeActivityAppTheme();
+                                break;
                         }
-                    }
-                })
-                .setPositiveButton(getString(R.string.dialog_button_positive_theme), new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
                     }
                 });
 

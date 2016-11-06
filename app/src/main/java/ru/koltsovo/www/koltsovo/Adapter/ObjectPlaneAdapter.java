@@ -183,66 +183,45 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
 
         String status = holder.itemStatus.getText().toString();
 
-        if (status.contains("Прибыл") || status.contains("Arrived")) {
-            holder.itemStatus.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
-            holder.itemStatus.setText(holder.itemStatus.getText().toString().toUpperCase());
-            holder.itemStatus.setTypeface(null, Typeface.BOLD);
-            if (holder.itemBaggageStatus.length() > 1) {
-                holder.itemBaggageStatus.setVisibility(View.VISIBLE);
-                holder.descriptionBaggage.setVisibility(View.VISIBLE);
-                holder.itemBaggageStatus.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
-                holder.itemBaggageStatus.setText(holder.itemBaggageStatus.getText().toString().toUpperCase());
-                holder.itemBaggageStatus.setTypeface(null, Typeface.BOLD);
-            }
-        } else if (status.contains("Вылетел") || status.contains("Departed")) {
-            holder.itemStatus.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
-            holder.itemStatus.setText(holder.itemStatus.getText().toString().toUpperCase());
-            holder.itemStatus.setTypeface(null, Typeface.BOLD);
-        } else if (status.contains("Идет посадка") || status.contains("Boarding") || status.contains("Регистрация закончена") || status.contains("Check-in-close")) {
-            holder.itemStatus.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
-            holder.itemStatus.setText(holder.itemStatus.getText().toString().toUpperCase());
-            holder.itemStatus.setTypeface(null, Typeface.BOLD);
-            holder.itemGate.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
-            holder.itemGate.setText(holder.itemGate.getText().toString().toUpperCase());
-            holder.itemGate.setTypeface(null, Typeface.BOLD);
+        holder.itemStatus.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
+        holder.itemStatus.setText(holder.itemStatus.getText().toString().toUpperCase());
+        holder.itemStatus.setTypeface(null, Typeface.BOLD);
+        holder.itemBaggageStatus.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
+        holder.itemBaggageStatus.setText(holder.itemBaggageStatus.getText().toString().toUpperCase());
+        holder.itemBaggageStatus.setTypeface(null, Typeface.BOLD);
+        holder.itemGate.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
+        holder.itemGate.setText(holder.itemGate.getText().toString().toUpperCase());
+        holder.itemGate.setTypeface(null, Typeface.BOLD);
+        holder.itemCheckInBegin.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
+        holder.itemCheckInBegin.setText(holder.itemCheckInBegin.getText().toString().toUpperCase());
+        holder.itemCheckInBegin.setTypeface(null, Typeface.BOLD);
+        holder.itemCheckInEnd.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
+        holder.itemCheckInEnd.setText(holder.itemCheckInEnd.getText().toString().toUpperCase());
+        holder.itemCheckInEnd.setTypeface(null, Typeface.BOLD);
+        holder.itemCheckIn.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
+        holder.itemCheckIn.setText(holder.itemCheckIn.getText().toString().toUpperCase());
+        holder.itemCheckIn.setTypeface(null, Typeface.BOLD);
+
+        if (holder.itemBaggageStatus.length() > 1) {
+            holder.itemBaggageStatus.setVisibility(View.VISIBLE);
+            holder.descriptionBaggage.setVisibility(View.VISIBLE);
+        }
+        if (status.contains("Идет посадка") || status.contains("Boarding") || status.contains("Регистрация закончена") || status.contains("Check-in-close")) {
             holder.itemGate.setVisibility(View.VISIBLE);
             holder.descriptionGate.setVisibility(View.VISIBLE);
         } else if (status.contains("Идет регистрация") || status.contains("Check-in-open")) {
-            holder.itemStatus.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
-            holder.itemStatus.setText(holder.itemStatus.getText().toString().toUpperCase());
-            holder.itemStatus.setTypeface(null, Typeface.BOLD);
-            holder.itemGate.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
-            holder.itemGate.setText(holder.itemGate.getText().toString().toUpperCase());
-            holder.itemGate.setTypeface(null, Typeface.BOLD);
             holder.itemGate.setVisibility(View.VISIBLE);
-            holder.itemCheckInBegin.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
-            holder.itemCheckInBegin.setText(holder.itemCheckInBegin.getText().toString().toUpperCase());
-            holder.itemCheckInBegin.setTypeface(null, Typeface.BOLD);
-            holder.itemCheckInEnd.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
-            holder.itemCheckInEnd.setText(holder.itemCheckInEnd.getText().toString().toUpperCase());
-            holder.itemCheckInEnd.setTypeface(null, Typeface.BOLD);
-            holder.itemCheckIn.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
-            holder.itemCheckIn.setText(holder.itemCheckIn.getText().toString().toUpperCase());
-            holder.itemCheckIn.setTypeface(null, Typeface.BOLD);
-            holder.itemGate.setVisibility(View.VISIBLE);
-            holder.itemCheckInBegin.setVisibility(View.VISIBLE);
-            holder.descriptionCheckInBegin.setVisibility(View.VISIBLE);
-            holder.itemCheckInEnd.setVisibility(View.VISIBLE);
-            holder.descriptionCheckInEnd.setVisibility(View.VISIBLE);
             holder.itemCheckIn.setVisibility(View.VISIBLE);
-            holder.descriptionCheckIn.setVisibility(View.VISIBLE);
-            holder.itemGate.setVisibility(View.VISIBLE);
+            holder.itemCheckInEnd.setVisibility(View.VISIBLE);
+            holder.itemCheckInBegin.setVisibility(View.VISIBLE);
             holder.descriptionGate.setVisibility(View.VISIBLE);
-        } else if (status.contains("Посадка закончена") || status.contains("Gate closed")) {
-            holder.itemStatus.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
-            holder.itemStatus.setText(holder.itemStatus.getText().toString().toUpperCase());
-            holder.itemStatus.setTypeface(null, Typeface.BOLD);
+            holder.descriptionCheckIn.setVisibility(View.VISIBLE);
+            holder.descriptionCheckInEnd.setVisibility(View.VISIBLE);
+            holder.descriptionCheckInBegin.setVisibility(View.VISIBLE);
         } else if (status.contains("Отмена") || status.contains("Cancelled")) {
-            holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorBackgroundRed));
+            holder.itemStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryRed));
         } else if (status.contains("Задержка") || status.contains("Delayed")) {
             holder.itemStatus.setTextColor(ContextCompat.getColor(context, R.color.colorAccentYellow));
-            holder.itemStatus.setText(holder.itemStatus.getText().toString().toUpperCase());
-            holder.itemStatus.setTypeface(null, Typeface.BOLD);
         } else {
             holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorText));
             if (holder.itemStatus.length() < 2) {
