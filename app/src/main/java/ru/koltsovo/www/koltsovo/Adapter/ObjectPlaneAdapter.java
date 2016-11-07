@@ -10,7 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -53,7 +52,6 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
         private TextView descriptionCheckIn;
         private TextView descriptionCheckInBegin;
         private TextView descriptionCheckInEnd;
-        private RelativeLayout relativeLayout;
         private ImageView imageViewTracking;
         private ImageView imageViewLogo;
     }
@@ -121,7 +119,6 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
             holder.descriptionCheckIn = (TextView) view.findViewById(R.id.tvPlaneCheckInDesc);
             holder.descriptionCheckInBegin = (TextView) view.findViewById(R.id.tvPlaneCheckInBeginDesc);
             holder.descriptionCheckInEnd = (TextView) view.findViewById(R.id.tvPlaneCheckInEndDesc);
-            holder.relativeLayout = (RelativeLayout) view.findViewById(R.id.listViewItem);
             holder.imageViewTracking = (ImageView) view.findViewById(R.id.imageTracking);
             holder.imageViewLogo = (ImageView) view.findViewById(R.id.imageLogo);
 
@@ -183,22 +180,22 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
 
         String status = holder.itemStatus.getText().toString();
 
-        holder.itemStatus.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
+        holder.itemStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryLightGreen));
         holder.itemStatus.setText(holder.itemStatus.getText().toString().toUpperCase());
         holder.itemStatus.setTypeface(null, Typeface.BOLD);
-        holder.itemBaggageStatus.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
+        holder.itemBaggageStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryLightGreen));
         holder.itemBaggageStatus.setText(holder.itemBaggageStatus.getText().toString().toUpperCase());
         holder.itemBaggageStatus.setTypeface(null, Typeface.BOLD);
-        holder.itemGate.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
+        holder.itemGate.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryLightGreen));
         holder.itemGate.setText(holder.itemGate.getText().toString().toUpperCase());
         holder.itemGate.setTypeface(null, Typeface.BOLD);
-        holder.itemCheckInBegin.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
+        holder.itemCheckInBegin.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryLightGreen));
         holder.itemCheckInBegin.setText(holder.itemCheckInBegin.getText().toString().toUpperCase());
         holder.itemCheckInBegin.setTypeface(null, Typeface.BOLD);
-        holder.itemCheckInEnd.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
+        holder.itemCheckInEnd.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryLightGreen));
         holder.itemCheckInEnd.setText(holder.itemCheckInEnd.getText().toString().toUpperCase());
         holder.itemCheckInEnd.setTypeface(null, Typeface.BOLD);
-        holder.itemCheckIn.setTextColor(ContextCompat.getColor(context, R.color.colorAccentGreen));
+        holder.itemCheckIn.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryLightGreen));
         holder.itemCheckIn.setText(holder.itemCheckIn.getText().toString().toUpperCase());
         holder.itemCheckIn.setTypeface(null, Typeface.BOLD);
 
@@ -206,6 +203,12 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
             holder.itemBaggageStatus.setVisibility(View.VISIBLE);
             holder.descriptionBaggage.setVisibility(View.VISIBLE);
         }
+
+        if (holder.itemStatus.length() < 2) {
+            holder.itemStatus.setVisibility(View.GONE);
+            holder.descriptionStatus.setVisibility(View.GONE);
+        }
+
         if (status.contains("Идет посадка") || status.contains("Boarding") || status.contains("Регистрация закончена") || status.contains("Check-in-close")) {
             holder.itemGate.setVisibility(View.VISIBLE);
             holder.descriptionGate.setVisibility(View.VISIBLE);
@@ -219,16 +222,15 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
             holder.descriptionCheckInEnd.setVisibility(View.VISIBLE);
             holder.descriptionCheckInBegin.setVisibility(View.VISIBLE);
         } else if (status.contains("Отмена") || status.contains("Cancelled")) {
+            holder.itemBaggageStatus.setVisibility(View.GONE);
+            holder.descriptionBaggage.setVisibility(View.GONE);
             holder.itemStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryRed));
         } else if (status.contains("Задержка") || status.contains("Delayed")) {
-            holder.itemStatus.setTextColor(ContextCompat.getColor(context, R.color.colorAccentYellow));
-        } else {
-            holder.relativeLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.colorText));
-            if (holder.itemStatus.length() < 2) {
-                holder.itemStatus.setVisibility(View.GONE);
-                holder.descriptionStatus.setVisibility(View.GONE);
-            }
+            holder.itemBaggageStatus.setVisibility(View.GONE);
+            holder.descriptionBaggage.setVisibility(View.GONE);
+            holder.itemStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDarkAmber));
         }
+
         setAirlineLogo(holder);
         return view;
     }

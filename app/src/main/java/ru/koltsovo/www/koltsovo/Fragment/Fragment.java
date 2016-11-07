@@ -386,7 +386,7 @@ public class Fragment extends android.support.v4.app.Fragment {
     }
 
     private void refreshListener() {
-        swipeRefreshLayout.setColorSchemeResources(R.color.colorAccentGreen, R.color.colorAccentOrange, R.color.colorAccentBlue);
+        swipeRefreshLayout.setColorSchemeResources(R.color.colorPrimaryLightGreen, R.color.colorPrimaryDeepOrange, R.color.colorPrimaryBlue);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
