@@ -1,5 +1,6 @@
 package ru.koltsovo.www.koltsovo;
 
+import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -256,9 +257,13 @@ public class SettingsActivity extends AppCompatActivity implements BillingProces
                 .setAction(getString(R.string.analytics_action_feedback))
                 .build());
 
-        Intent intent = new Intent(Intent.ACTION_VIEW);
-        intent.setData(Uri.parse("market://details?id=ru.koltsovo.www.koltsovo"));
-        startActivity(intent);
+        Uri uri = Uri.parse("market://details?id=" + getPackageName());
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        try {
+            startActivity(intent);
+        } catch (ActivityNotFoundException e) {
+            showToast(getString(R.string.toast_error_google_play));
+        }
     }
 
     public void btnLanguageOnClick (View view) {
