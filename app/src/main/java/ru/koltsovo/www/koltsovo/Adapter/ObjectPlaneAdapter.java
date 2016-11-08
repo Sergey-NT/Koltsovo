@@ -439,7 +439,7 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
                 holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_singapore_airlines));
                 break;
             case "LO-":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawabre_logo_lot_polish_airlines));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_lot_polish_airlines));
                 break;
             case "6W-":
                 holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_saratov_airlines));
