@@ -42,14 +42,11 @@ public class SettingsActivity extends AppCompatActivity implements BillingProces
 
     private boolean readyToPurchase = false;
 
-    private int appTheme;
-
-
     @Override
     @SuppressWarnings("ConstantConditions")
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         settings = getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
-        appTheme = settings.getInt(Constants.APP_PREFERENCES_APP_THEME, APP_THEME);
+        int appTheme = settings.getInt(Constants.APP_PREFERENCES_APP_THEME, APP_THEME);
         setTheme(appTheme);
 
         super.onCreate(savedInstanceState);
@@ -168,13 +165,6 @@ public class SettingsActivity extends AppCompatActivity implements BillingProces
             bp.release();
 
         super.onDestroy();
-    }
-
-    @Override
-    protected void onPause() {
-        appTheme = settings.getInt(Constants.APP_PREFERENCES_APP_THEME, APP_THEME);
-        setTheme(appTheme);
-        super.onPause();
     }
 
     private class getSkuDetails extends AsyncTask<Void, Void, Void> {
