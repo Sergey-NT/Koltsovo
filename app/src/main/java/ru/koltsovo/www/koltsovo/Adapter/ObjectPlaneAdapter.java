@@ -179,23 +179,28 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
         holder.descriptionGate.setVisibility(View.GONE);
 
         String status = holder.itemStatus.getText().toString();
+        String statusUpperCase = status.toUpperCase();
 
-        holder.itemStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryLightGreen));
-        holder.itemStatus.setText(holder.itemStatus.getText().toString().toUpperCase());
+        int colorGreen = ContextCompat.getColor(context, R.color.colorPrimaryLightGreen);
+        int colorRed = ContextCompat.getColor(context, R.color.colorPrimaryRed);
+        int colorOrange = ContextCompat.getColor(context, R.color.colorPrimaryDarkAmber);
+
+        holder.itemStatus.setTextColor(colorGreen);
+        holder.itemStatus.setText(statusUpperCase);
         holder.itemStatus.setTypeface(null, Typeface.BOLD);
-        holder.itemBaggageStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryLightGreen));
+        holder.itemBaggageStatus.setTextColor(colorGreen);
         holder.itemBaggageStatus.setText(holder.itemBaggageStatus.getText().toString().toUpperCase());
         holder.itemBaggageStatus.setTypeface(null, Typeface.BOLD);
-        holder.itemGate.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryLightGreen));
+        holder.itemGate.setTextColor(colorGreen);
         holder.itemGate.setText(holder.itemGate.getText().toString().toUpperCase());
         holder.itemGate.setTypeface(null, Typeface.BOLD);
-        holder.itemCheckInBegin.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryLightGreen));
+        holder.itemCheckInBegin.setTextColor(colorGreen);
         holder.itemCheckInBegin.setText(holder.itemCheckInBegin.getText().toString().toUpperCase());
         holder.itemCheckInBegin.setTypeface(null, Typeface.BOLD);
-        holder.itemCheckInEnd.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryLightGreen));
+        holder.itemCheckInEnd.setTextColor(colorGreen);
         holder.itemCheckInEnd.setText(holder.itemCheckInEnd.getText().toString().toUpperCase());
         holder.itemCheckInEnd.setTypeface(null, Typeface.BOLD);
-        holder.itemCheckIn.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryLightGreen));
+        holder.itemCheckIn.setTextColor(colorGreen);
         holder.itemCheckIn.setText(holder.itemCheckIn.getText().toString().toUpperCase());
         holder.itemCheckIn.setTypeface(null, Typeface.BOLD);
 
@@ -224,11 +229,11 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
         } else if (status.contains("Отмена") || status.contains("Cancelled")) {
             holder.itemBaggageStatus.setVisibility(View.GONE);
             holder.descriptionBaggage.setVisibility(View.GONE);
-            holder.itemStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryRed));
+            holder.itemStatus.setTextColor(colorRed);
         } else if (status.contains("Задержка") || status.contains("Delayed")) {
             holder.itemBaggageStatus.setVisibility(View.GONE);
             holder.descriptionBaggage.setVisibility(View.GONE);
-            holder.itemStatus.setTextColor(ContextCompat.getColor(context, R.color.colorPrimaryDarkAmber));
+            holder.itemStatus.setTextColor(colorOrange);
         }
 
         setAirlineLogo(holder);
@@ -434,7 +439,7 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
                 holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_singapore_airlines));
                 break;
             case "LO-":
-                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawabre_logo_lot_polish_airlines));
+                holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_lot_polish_airlines));
                 break;
             case "6W-":
                 holder.imageViewLogo.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.drawable_logo_saratov_airlines));

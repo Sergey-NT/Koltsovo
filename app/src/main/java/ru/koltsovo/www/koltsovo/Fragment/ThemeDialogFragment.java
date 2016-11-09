@@ -16,7 +16,8 @@ import ru.koltsovo.www.koltsovo.R;
 
 public class ThemeDialogFragment extends DialogFragment {
 
-    final CharSequence[] items = {"Green", "Blue Grey", "Grey", "Brown", "Red", "Pink", "Purple", "Deep Purple", "Indigo", "Blue", "Light Blue", "Cyan", "Teal", "Light Green", "Lime", "Yellow", "Amber", "Orange", "Deep Orange"};
+    private static final CharSequence[] items = {"Green", "Blue Grey", "Grey", "Brown", "Red", "Pink", "Purple", "Deep Purple", "Indigo", "Blue", "Light Blue", "Cyan", "Teal", "Light Green", "Lime", "Yellow", "Amber", "Orange", "Deep Orange"};
+
     private static final int APP_THEME = R.style.AppDefault;
     private static final int APP_THEME_BLUE_GREY = R.style.AppDefaultBlueGrey;
     private static final int APP_THEME_GREY = R.style.AppDefaultGrey;
