@@ -44,7 +44,6 @@
     <string name="dialog_button_positive_update">Обновить</string>
     <string name="dialog_button_positive_language">Сохранить</string>
     <string name="dialog_button_negative">Напомнить позже</string>
-    <string name="dialog_button_positive_theme">ОК</string>
     <string name="dialog_button_negative_update">Не напоминать</string>
     <string name="dialog_button_negative_language">Отмена</string>
     <string name="menu_about">О приложении</string>
