@@ -834,6 +834,7 @@ public class Fragment extends android.support.v4.app.Fragment {
     public void onResume() {
         super.onResume();
         if (adapter != null & activateBackground != settings.getBoolean(Constants.APP_PREFERENCES_ACTIVATE_BACKGROUND, false)) {
+            activateBackground = settings.getBoolean(Constants.APP_PREFERENCES_ACTIVATE_BACKGROUND, false);
             adapter.notifyDataSetChanged();
         }
     }
