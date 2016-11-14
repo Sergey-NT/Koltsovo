@@ -63,8 +63,10 @@ public class SettingsActivity extends AppCompatActivity implements BillingProces
         Button btnAdsDisableRestore = (Button) findViewById(R.id.btnAdsDisableRecovery);
         Button btnFeedback = (Button) findViewById(R.id.btnFeedback);
         CheckBox checkBoxUpdate = (CheckBox) findViewById(R.id.checkBoxUpdate);
+        CheckBox checkBoxActivateBackground = (CheckBox) findViewById(R.id.checkBoxActivateBackground);
 
         Boolean update = settings.getBoolean(Constants.APP_PREFERENCES_CANCEL_CHECK_VERSION, false);
+        Boolean activate = settings.getBoolean(Constants.APP_PREFERENCES_ACTIVATE_BACKGROUND, false);
         String price = settings.getString(Constants.APP_PREFERENCES_ADS_DISABLE_PRICE, "");
         String buttonPriceText = getString(R.string.button_ads_disable) + " " + price;
         String language = settings.getString(Constants.APP_PREFERENCES_LANGUAGE, "ru");
@@ -78,6 +80,7 @@ public class SettingsActivity extends AppCompatActivity implements BillingProces
 
 
         checkBoxUpdate.setChecked(update);
+        checkBoxActivateBackground.setChecked(activate);
 
         btnAdsDisable.setText(buttonPriceText);
 
@@ -94,6 +97,15 @@ public class SettingsActivity extends AppCompatActivity implements BillingProces
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 SharedPreferences.Editor editor = settings.edit();
                 editor.putBoolean(Constants.APP_PREFERENCES_CANCEL_CHECK_VERSION, isChecked);
+                editor.apply();
+            }
+        });
+
+        checkBoxActivateBackground.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                SharedPreferences.Editor editor = settings.edit();
+                editor.putBoolean(Constants.APP_PREFERENCES_ACTIVATE_BACKGROUND, isChecked);
                 editor.apply();
             }
         });

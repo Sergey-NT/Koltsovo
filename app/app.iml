@@ -208,5 +208,6 @@
     <orderEntry type="library" exported="" name="firebase-analytics-9.8.0" level="project" />
     <orderEntry type="library" exported="" name="okhttp-3.2.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="junit-4.12" level="project" />
+    <orderEntry type="library" exported="" name="android-android-24" level="project" />
   </component>
 </module>
