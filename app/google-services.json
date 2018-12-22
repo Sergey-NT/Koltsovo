@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "322818366920",
-    "project_id": "koltsovo-1d25d"
+    "firebase_url": "https://koltsovo-1d25d.firebaseio.com",
+    "project_id": "koltsovo-1d25d",
+    "storage_bucket": "koltsovo-1d25d.appspot.com"
   },
   "client": [
     {
@@ -11,8 +13,25 @@
           "package_name": "ru.koltsovo.www.koltsovo"
         }
       },
-      "oauth_client": [],
-      "api_key": [{ "current_key": "" }],
+      "oauth_client": [
+        {
+          "client_id": "322818366920-6o6ds5ic7r63ou4huqil5hpm21cjk49a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "ru.koltsovo.www.koltsovo",
+            "certificate_hash": "5f51ed71dd404c9fe3f1e2341c1c915ce6f44eca"
+          }
+        },
+        {
+          "client_id": "322818366920-u53cdhu12kl07mre7n7aju1v93il7tl4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDEPdNDLFV0ryjbexip2jLioJVkDqkGWKY"
+        }
+      ],
       "services": {
         "analytics_service": {
           "status": 1
@@ -22,9 +41,10 @@
           "other_platform_oauth_client": []
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
-      }
+      },
+      "admob_app_id": "ca-app-pub-3253485608797245~3158487103"
     }
   ],
   "configuration_version": "1"

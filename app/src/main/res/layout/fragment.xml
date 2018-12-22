@@ -12,52 +12,53 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:elevation="5dp"
-        android:background="?attr/backgroundColor"
+        android:background="?android:attr/colorBackground"
         tools:ignore="UnusedAttribute" >
 
-            <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:layout_marginTop="7sp"
+            android:layout_marginBottom="7sp" >
+
+            <EditText
+                android:id="@+id/searchListView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10sp"
-                android:layout_marginRight="10sp"
-                android:layout_marginTop="7sp"
-                android:layout_marginBottom="7sp" >
+                android:paddingTop="7sp"
+                android:paddingBottom="7sp"
+                android:paddingStart="7sp"
+                android:paddingLeft="7sp"
+                android:paddingEnd="30sp"
+                android:paddingRight="30sp"
+                android:textSize="14sp"
+                android:textColor="@color/colorPrimaryText"
+                android:background="@drawable/shape"
+                android:drawableLeft="@mipmap/ic_search_black_24dp"
+                android:drawableStart="@mipmap/ic_search_black_24dp"
+                android:drawablePadding="5sp"
+                android:inputType="textNoSuggestions"
+                android:hint="@string/edit_text_hint"
+                android:textColorHint="@color/colorDivider"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:importantForAutofill="no" />
 
-                <EditText
-                    android:id="@+id/searchListView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="7sp"
-                    android:paddingBottom="7sp"
-                    android:paddingStart="7sp"
-                    android:paddingLeft="7sp"
-                    android:paddingEnd="30sp"
-                    android:paddingRight="30sp"
-                    android:textSize="14sp"
-                    android:textColor="@color/colorPrimaryText"
-                    android:background="@drawable/shape"
-                    android:drawableLeft="@mipmap/ic_search_black_24dp"
-                    android:drawableStart="@mipmap/ic_search_black_24dp"
-                    android:drawablePadding="5sp"
-                    android:inputType="textNoSuggestions"
-                    android:hint="@string/edit_text_hint"
-                    android:textColorHint="@color/colorDivider"
-                    android:maxLines="1"
-                    android:ellipsize="end" />
+            <ImageButton
+                android:id="@+id/btnClearEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:background="@android:color/transparent"
+                android:src="@mipmap/ic_clear_black_24dp"
+                android:padding="5sp"
+                android:layout_centerVertical="true"
+                android:contentDescription="@string/button_clear_edit_text" />
 
-                <ImageButton
-                    android:id="@+id/btnClearEditText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:background="@android:color/transparent"
-                    android:src="@mipmap/ic_clear_black_24dp"
-                    android:padding="5sp"
-                    android:layout_centerVertical="true"
-                    android:contentDescription="@string/button_clear_edit_text" />
-
-            </RelativeLayout>
+        </RelativeLayout>
     </LinearLayout>
 
     <TextView
@@ -92,7 +93,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
-        <android.support.v4.widget.SwipeRefreshLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/fragment_swipe_refresh"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" >
@@ -104,7 +105,7 @@
                 android:divider="@color/colorDivider"
                 android:dividerHeight="1sp" />
 
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <net.i2p.android.ext.floatingactionbutton.FloatingActionsMenu
             android:layout_width="wrap_content"
