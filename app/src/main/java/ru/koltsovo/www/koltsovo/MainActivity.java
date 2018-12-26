@@ -56,11 +56,13 @@ import ru.koltsovo.www.koltsovo.Adapter.TabsPagerFragmentAdapter;
 import ru.koltsovo.www.koltsovo.Fragment.InfoDialogFragment;
 import ru.koltsovo.www.koltsovo.Fragment.UpdateDialogFragment;
 
+import static ru.koltsovo.www.koltsovo.Constants.APP_THEME;
+
+
 public class MainActivity extends AppCompatActivity {
 
     private static final int LAYOUT = R.layout.activity_main;
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    private static final int APP_THEME = R.style.AppDefault;
     private static final String TAG = "MainActivity";
     private static final String REQUEST_VERSION_APP_URL = "https://www.avtovokzal.org/php/app_koltsovo/requestVersionCode.php";
     private static final String SHARE_URL = "https://play.google.com/store/apps/details?id=ru.koltsovo.www.koltsovo&referrer=utm_source%3Dstrigino%26utm_medium%3Dandroid%26utm_campaign%3Dshare";
@@ -85,7 +87,6 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
 
-        setTheme(appTheme);
         setContentView(LAYOUT);
 
         // Google Analytics

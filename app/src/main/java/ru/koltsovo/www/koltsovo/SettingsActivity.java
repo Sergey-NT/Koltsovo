@@ -30,10 +30,11 @@ import com.google.android.gms.analytics.Tracker;
 import ru.koltsovo.www.koltsovo.Fragment.LanguageFragment;
 import ru.koltsovo.www.koltsovo.Fragment.ThemeDialogFragment;
 
+import static ru.koltsovo.www.koltsovo.Constants.APP_THEME;
+
 public class SettingsActivity extends AppCompatActivity implements BillingProcessor.IBillingHandler {
 
     private static final int LAYOUT = R.layout.activity_settings;
-    private static final int APP_THEME = R.style.AppDefault;
 
     private static final String PRODUCT_ID = "www.koltsovo.ru.ads.disable";
     private static final String LICENSE_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAg0wiLxwMYZZz1j0bDvnDcO/BjSZV2qB3zTNhXB73c9GrPaed3HujZQbqpDr8MGmq50wil6egznh4eH2k28/Ym3LXJQutORp1CvVs64tlU0k6egGEtOdZXhQxFGGvOKtaiFRfc/kXa7qDzwY9g5ar5sgi0ny1JTql/6GRnAsHFnNxJmMzwX2pSANlZh74AREdfR5jTdyjAaar4mrG9Cx4So2Z1lmIRsw9uoBDF7CzBT6EaFgHsVXExZIGP/rOfDfBqrAgUZZ/CmjrpB2rGYlyLPKxpG6kyS7ideMnvuX34+UxOZXWiRo6vSG0155O74FFg6X7XqiD0x1eifUElNWwzQIDAQAB";

@@ -19,10 +19,11 @@ import com.google.android.gms.analytics.Tracker;
 
 import de.psdev.licensesdialog.LicensesDialog;
 
+import static ru.koltsovo.www.koltsovo.Constants.APP_THEME;
+
 public class AboutActivity extends AppCompatActivity {
 
     private static final int LAYOUT = R.layout.activity_about;
-    private static final int APP_THEME = R.style.AppDefault;
     private static final String PRIVATE_POLICY_ULR = "https://www.avtovokzal.org/privacy_policy/koltsovo.html";
 
     @Override

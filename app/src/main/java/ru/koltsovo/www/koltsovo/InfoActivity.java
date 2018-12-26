@@ -18,10 +18,11 @@ import android.widget.TextView;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
+import static ru.koltsovo.www.koltsovo.Constants.APP_THEME;
+
 public class InfoActivity extends AppCompatActivity {
 
     private static final int LAYOUT = R.layout.activity_info;
-    private static final int APP_THEME = R.style.AppDefault;
 
     @Override
     @SuppressWarnings("ConstantConditions")
