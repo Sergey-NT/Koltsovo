@@ -9,6 +9,7 @@
     <!-- Указывает, сколько времени (в секундах) ваше приложение может оставаться в фоновом режиме до завершения сеанса. -->
     <integer name="ga_sessionTimeout">-1</integer>
 
+    <screenName name="ru.koltsovo.www.koltsovo.SplashActivity">Splash Activity</screenName>
     <screenName name="ru.koltsovo.www.koltsovo.MainActivity">Main Activity</screenName>
     <screenName name="ru.koltsovo.www.koltsovo.AboutActivity">About Activity</screenName>
     <screenName name="ru.koltsovo.www.koltsovo.InfoActivity">Info Activity</screenName>
