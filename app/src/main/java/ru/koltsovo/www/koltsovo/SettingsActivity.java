@@ -31,8 +31,6 @@ import com.google.android.gms.analytics.Tracker;
 import ru.koltsovo.www.koltsovo.Fragment.LanguageFragment;
 import ru.koltsovo.www.koltsovo.Fragment.ThemeDialogFragment;
 
-import static ru.koltsovo.www.koltsovo.Constants.APP_THEME;
-
 public class SettingsActivity extends AppCompatActivity implements BillingProcessor.IBillingHandler {
 
     private static final int LAYOUT = R.layout.activity_settings;
@@ -51,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity implements BillingProces
     @SuppressWarnings("ConstantConditions")
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         settings = getSharedPreferences(Constants.APP_PREFERENCES, MODE_PRIVATE);
-        int appTheme = settings.getInt(Constants.APP_PREFERENCES_APP_THEME, APP_THEME);
+        int appTheme = settings.getInt(Constants.APP_PREFERENCES_APP_THEME, Constants.APP_THEME);
 
         if (Build.VERSION.SDK_INT >= 23) {
             onApplyThemeResource(getTheme(), appTheme, false);

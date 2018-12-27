@@ -18,8 +18,6 @@ import ru.aviasales.core.AviasalesSDK;
 import ru.aviasales.core.identification.SdkConfig;
 import ru.aviasales.template.ui.fragment.AviasalesFragment;
 
-import static ru.koltsovo.www.koltsovo.Constants.APP_THEME;
-
 public class SearchActivity extends AppCompatActivity {
 
     private static final int LAYOUT = R.layout.activity_search;
@@ -33,7 +31,7 @@ public class SearchActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         settings = getSharedPreferences(Constants.APP_PREFERENCES, MODE_PRIVATE);
-        int appTheme = settings.getInt(Constants.APP_PREFERENCES_APP_THEME, APP_THEME);
+        int appTheme = settings.getInt(Constants.APP_PREFERENCES_APP_THEME, Constants.APP_THEME);
 
         if (Build.VERSION.SDK_INT >= 23) {
             onApplyThemeResource(getTheme(), appTheme, false);

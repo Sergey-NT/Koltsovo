@@ -59,9 +59,6 @@ import ru.koltsovo.www.koltsovo.Adapter.TabsPagerFragmentAdapter;
 import ru.koltsovo.www.koltsovo.Fragment.InfoDialogFragment;
 import ru.koltsovo.www.koltsovo.Fragment.UpdateDialogFragment;
 
-import static ru.koltsovo.www.koltsovo.Constants.APP_THEME;
-
-
 public class MainActivity extends AppCompatActivity {
 
     private static final int LAYOUT = R.layout.activity_main;
@@ -85,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         settings = getSharedPreferences(Constants.APP_PREFERENCES, MODE_PRIVATE);
-        appTheme = settings.getInt(Constants.APP_PREFERENCES_APP_THEME, APP_THEME);
+        appTheme = settings.getInt(Constants.APP_PREFERENCES_APP_THEME, Constants.APP_THEME);
 
         if (Build.VERSION.SDK_INT >= 23) {
             onApplyThemeResource(getTheme(), appTheme, false);
@@ -424,7 +421,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onResume() {
-        if (appTheme != settings.getInt(Constants.APP_PREFERENCES_APP_THEME, APP_THEME)) {
+        if (appTheme != settings.getInt(Constants.APP_PREFERENCES_APP_THEME, Constants.APP_THEME)) {
             changeActivityAppTheme();
         }
         super.onResume();
