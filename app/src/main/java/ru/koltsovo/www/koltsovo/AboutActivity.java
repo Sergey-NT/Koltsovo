@@ -1,6 +1,5 @@
 package ru.koltsovo.www.koltsovo;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
@@ -26,10 +25,12 @@ public class AboutActivity extends AppCompatActivity {
     private static final int LAYOUT = R.layout.activity_about;
     private static final String PRIVATE_POLICY_ULR = "https://www.avtovokzal.org/privacy_policy/koltsovo.html";
 
+    private SharedPreferences settings;
+
     @Override
     @SuppressWarnings("ConstantConditions")
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences settings = getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
+        settings = getSharedPreferences(Constants.APP_PREFERENCES, MODE_PRIVATE);
         int appTheme = settings.getInt(Constants.APP_PREFERENCES_APP_THEME, APP_THEME);
         setTheme(appTheme);
 
@@ -92,7 +93,6 @@ public class AboutActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        SharedPreferences settings = getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(Constants.APP_PREFERENCES_UPDATE_LIST_FLAG, false);
         editor.apply();
