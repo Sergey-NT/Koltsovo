@@ -268,7 +268,7 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
     }
 
     private void setAirlineLogo(final ViewHolder holder) {
-        String string = holder.itemFlight.getText().toString().toLowerCase();
+        final String string = holder.itemFlight.getText().toString().toLowerCase();
         String[] split = string.split("-");
         String imageFileName = split[0];
         Picasso.get().load("https://www.avtovokzal.org/image_android/" + imageFileName + ".png").into(holder.imageViewLogo, new Callback() {
@@ -278,6 +278,7 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
             @Override
             public void onError(Exception e) {
                 Crashlytics.logException(e);
+                Crashlytics.log(1, "SET_AIRLINE_LOGO", string);
                 holder.imageViewLogo.setVisibility(View.GONE);
             }
         });
