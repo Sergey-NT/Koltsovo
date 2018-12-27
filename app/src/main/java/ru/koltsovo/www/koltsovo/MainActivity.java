@@ -10,6 +10,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.crashlytics.android.Crashlytics;
@@ -85,7 +86,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         settings = getSharedPreferences(Constants.APP_PREFERENCES, MODE_PRIVATE);
         appTheme = settings.getInt(Constants.APP_PREFERENCES_APP_THEME, APP_THEME);
-        setTheme(appTheme);
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            onApplyThemeResource(getTheme(), appTheme, false);
+        } else {
+            setTheme(appTheme);
+        }
 
         super.onCreate(savedInstanceState);
 

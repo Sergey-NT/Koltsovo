@@ -1,6 +1,7 @@
 package ru.koltsovo.www.koltsovo;
 
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -33,7 +34,12 @@ public class SearchActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         settings = getSharedPreferences(Constants.APP_PREFERENCES, MODE_PRIVATE);
         int appTheme = settings.getInt(Constants.APP_PREFERENCES_APP_THEME, APP_THEME);
-        setTheme(appTheme);
+
+        if (Build.VERSION.SDK_INT >= 23) {
+            onApplyThemeResource(getTheme(), appTheme, false);
+        } else {
+            setTheme(appTheme);
+        }
 
         super.onCreate(savedInstanceState);
 
