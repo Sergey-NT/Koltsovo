@@ -1,8 +1,9 @@
 package ru.koltsovo.www.koltsovo;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,11 +25,13 @@ public class SearchActivity extends AppCompatActivity {
     private final static String TRAVEL_PAYOUTS_MARKER = "64818";
     private final static String TRAVEL_PAYOUTS_TOKEN = "56006c981e1ebbcff3430c6ef2519b1f";
     private final static String SDK_HOST = "www.travel-api.pw";
+
+    private SharedPreferences settings;
     private AviasalesFragment aviasalesFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SharedPreferences settings = getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
+        settings = getSharedPreferences(Constants.APP_PREFERENCES, MODE_PRIVATE);
         int appTheme = settings.getInt(Constants.APP_PREFERENCES_APP_THEME, APP_THEME);
         setTheme(appTheme);
 
@@ -88,7 +91,7 @@ public class SearchActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onSaveInstanceState(Bundle outState) {
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
     }
 
@@ -102,7 +105,6 @@ public class SearchActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
 
-        SharedPreferences settings = getSharedPreferences(Constants.APP_PREFERENCES, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = settings.edit();
         editor.putBoolean(Constants.APP_PREFERENCES_UPDATE_LIST_FLAG, false);
         editor.apply();
