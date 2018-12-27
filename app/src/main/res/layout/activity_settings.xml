@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -44,8 +43,7 @@
                 android:layout_gravity="center_vertical"
                 android:text="@string/check_box_update_app"
                 android:textSize="14sp"
-                android:textColor="@color/colorPrimaryText"
-                app:useMaterialThemeColors="false"/>
+                android:textColor="@color/colorPrimaryText"/>
 
             <CheckBox
                 android:id="@+id/checkBoxActivateBackground"
@@ -60,8 +58,7 @@
                 android:layout_gravity="center_vertical"
                 android:text="@string/check_box_activate_background"
                 android:textSize="14sp"
-                android:textColor="@color/colorPrimaryText"
-                app:useMaterialThemeColors="false"/>
+                android:textColor="@color/colorPrimaryText"/>
 
             <View
                 android:layout_width="match_parent"
@@ -74,17 +71,15 @@
                 android:onClick="btnLanguageOnClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
+                android:layout_marginTop="25sp"
+                android:layout_marginBottom="10sp"
                 android:layout_marginLeft="15sp"
                 android:layout_marginRight="15sp"
                 android:layout_gravity="center"
                 android:background="?attr/colorPrimary"
-                android:paddingLeft="5sp"
-                android:paddingRight="5sp"
-                android:paddingTop="10sp"
-                android:paddingBottom="10sp"
+                android:padding="10sp"
                 android:text="@string/button_language"
-                android:textSize="16sp"
+                android:textSize="17sp"
                 android:textColor="@color/colorText"/>
 
             <Button
@@ -92,17 +87,15 @@
                 android:onClick="btnThemeOnClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="10sp"
                 android:layout_marginLeft="15sp"
                 android:layout_marginRight="15sp"
                 android:layout_gravity="center"
                 android:background="?attr/colorPrimary"
-                android:paddingLeft="5sp"
-                android:paddingRight="5sp"
-                android:paddingTop="10sp"
-                android:paddingBottom="10sp"
+                android:padding="10sp"
                 android:text="@string/dialog_title_theme"
-                android:textSize="16sp"
+                android:textSize="17sp"
                 android:textColor="@color/colorText"/>
 
             <Button
@@ -110,17 +103,15 @@
                 android:onClick="btnAdsDisableOnClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="10sp"
                 android:layout_marginLeft="15sp"
                 android:layout_marginRight="15sp"
                 android:layout_gravity="center"
                 android:background="?attr/colorPrimary"
-                android:paddingLeft="5sp"
-                android:paddingRight="5sp"
-                android:paddingTop="10sp"
-                android:paddingBottom="10sp"
+                android:padding="10sp"
                 android:text="@string/button_ads_disable"
-                android:textSize="16sp"
+                android:textSize="17sp"
                 android:textColor="@color/colorText"/>
 
             <Button
@@ -128,17 +119,15 @@
                 android:onClick="btnAdsDisableRecoveryOnClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="10sp"
                 android:layout_marginLeft="15sp"
                 android:layout_marginRight="15sp"
                 android:layout_gravity="center"
                 android:background="?attr/colorPrimary"
-                android:paddingLeft="5sp"
-                android:paddingRight="5sp"
-                android:paddingTop="10sp"
-                android:paddingBottom="10sp"
+                android:padding="10sp"
                 android:text="@string/button_ads_disable_recovery"
-                android:textSize="16sp"
+                android:textSize="17sp"
                 android:textColor="@color/colorText"/>
 
             <Button
@@ -146,17 +135,15 @@
                 android:onClick="btnFeedbackOnClick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5sp"
+                android:layout_marginTop="10sp"
+                android:layout_marginBottom="10sp"
                 android:layout_marginLeft="15sp"
                 android:layout_marginRight="15sp"
                 android:layout_gravity="center"
                 android:background="?attr/colorPrimary"
-                android:paddingLeft="5sp"
-                android:paddingRight="5sp"
-                android:paddingTop="10sp"
-                android:paddingBottom="10sp"
+                android:padding="10sp"
                 android:text="@string/button_feedback"
-                android:textSize="16sp"
+                android:textSize="17sp"
                 android:textColor="@color/colorText"/>
 
         </LinearLayout>
