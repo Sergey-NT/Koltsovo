@@ -451,7 +451,7 @@ public class MainActivity extends AppCompatActivity {
     private void changeActivityAppTheme() {
         finish();
         final Intent intent = getIntent();
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         startActivity(intent);
     }
 

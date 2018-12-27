@@ -205,7 +205,7 @@ public class ThemeDialogFragment extends DialogFragment {
     private void changeActivityAppTheme() {
         requireActivity().finish();
         final Intent intent = requireActivity().getIntent();
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
         requireActivity().startActivity(intent);
     }
 }
