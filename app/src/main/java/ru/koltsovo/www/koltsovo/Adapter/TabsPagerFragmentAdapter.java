@@ -14,7 +14,6 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
     private String[] tabs;
     private String planeNumber;
     private String direction;
-    private Fragment fragment = null;
 
     public TabsPagerFragmentAdapter(Context context, String planeNumber, String direction, FragmentManager fm) {
         super(fm);
@@ -28,24 +27,26 @@ public class TabsPagerFragmentAdapter extends FragmentPagerAdapter {
         };
     }
 
+    @SuppressWarnings("ConstantConditions")
     @NonNull
     @Override
     public androidx.fragment.app.Fragment getItem(int position) {
         switch (position) {
             case 0:
                 if (direction != null && direction.equals("arrival")) {
-                    fragment = Fragment.getInstance("arrival", planeNumber);
+                    return Fragment.getInstance("arrival", planeNumber);
                 } else {
-                    fragment = Fragment.getInstance("arrival", null);
+                    return Fragment.getInstance("arrival", null);
                 }
             case 1:
                 if (direction != null && direction.equals("departure")) {
-                    fragment = Fragment.getInstance("departure", planeNumber);
+                    return Fragment.getInstance("departure", planeNumber);
                 } else {
-                    fragment = Fragment.getInstance("departure", null);
+                    return Fragment.getInstance("departure", null);
                 }
+            default:
+                return null;
         }
-        return fragment;
     }
 
     @Override
