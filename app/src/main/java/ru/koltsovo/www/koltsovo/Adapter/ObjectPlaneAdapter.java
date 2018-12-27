@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.crashlytics.android.Crashlytics;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -276,6 +277,7 @@ public class ObjectPlaneAdapter extends BaseAdapter implements Filterable {
 
             @Override
             public void onError(Exception e) {
+                Crashlytics.logException(e);
                 holder.imageViewLogo.setVisibility(View.GONE);
             }
         });
