@@ -365,6 +365,7 @@ public class Fragment extends androidx.fragment.app.Fragment {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    Crashlytics.logException(error);
                     Crashlytics.log(1, "SEND_DELETE_QUERY_TO_DB", error.getMessage());
                 }
             });
@@ -393,6 +394,7 @@ public class Fragment extends androidx.fragment.app.Fragment {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    Crashlytics.logException(error);
                     Crashlytics.log(1, "SEND_QUERY_TO_DB", error.getMessage());
                 }
             });
@@ -472,7 +474,6 @@ public class Fragment extends androidx.fragment.app.Fragment {
                     parsingXML task = new parsingXML();
                     task.execute(response, direction);
                 } else {
-                    Crashlytics.log("RESPONSE_IS_NULL");
                     progressDialogDismiss();
                     setErrorTextAndButton();
                 }
@@ -480,6 +481,7 @@ public class Fragment extends androidx.fragment.app.Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Crashlytics.logException(error);
                 Crashlytics.log(1, "GET_XML", error.getMessage());
                 progressDialogDismiss();
                 setErrorTextAndButton();
@@ -527,6 +529,7 @@ public class Fragment extends androidx.fragment.app.Fragment {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    Crashlytics.logException(error);
                     Crashlytics.log(1, "GET_QUERY_FROM_SERVER", error.getMessage());
                 }
             });
@@ -744,7 +747,6 @@ public class Fragment extends androidx.fragment.app.Fragment {
             }
 
             if ((list == null || list.size() == 0)) {
-                Crashlytics.log("LIST_SIZE_NULL_OR_0");
                 requireActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -803,7 +805,9 @@ public class Fragment extends androidx.fragment.app.Fragment {
     private boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) requireActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-
+        if (networkInfo == null) {
+            return false;
+        }
         return networkInfo.isConnectedOrConnecting();
     }
 
