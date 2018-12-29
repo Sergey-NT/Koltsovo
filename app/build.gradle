@@ -16,8 +16,8 @@ android {
         applicationId "ru.koltsovo.www.koltsovo"
         minSdkVersion 15
         targetSdkVersion 28
-        versionCode 48
-        versionName "1.2.14"
+        versionCode 49
+        versionName "1.2.15"
         multiDexEnabled true
     }
     buildTypes {
