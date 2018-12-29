@@ -2,5 +2,7 @@
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">svx.aero</domain>
+        <domain includeSubdomains="true">old.svx.aero</domain>
+        <domain includeSubdomains="true">193.107.237.127</domain>
     </domain-config>
 </network-security-config>
