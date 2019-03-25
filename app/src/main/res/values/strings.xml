@@ -49,6 +49,7 @@
     <string name="menu_about">О приложении</string>
     <string name="menu_settings">Настройки</string>
     <string name="menu_other_airports">Другие аэропорты</string>
+    <string name="menu_other_airports_subtitle">Установить приложения для других аэропортов</string>
     <string name="menu_strigino">Стригино</string>
     <string name="menu_strigino_subtitle">г.Нижний Новгород</string>
     <string name="menu_kurumoch">Курумоч</string>

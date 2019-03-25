@@ -221,6 +221,7 @@ public class MainActivity extends AppCompatActivity {
                                 .withIcon(GoogleMaterial.Icon.gmd_search),
                         new PrimaryDrawerItem()
                                 .withName(R.string.menu_other_airports)
+                                .withDescription(R.string.menu_other_airports_subtitle)
                                 .withIcon(GoogleMaterial.Icon.gmd_airplanemode_active),
                         new DividerDrawerItem(),
                         new PrimaryDrawerItem()
